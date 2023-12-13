@@ -1,9 +1,6 @@
-export function helloAnything(thing: string): string {
-    return `Hello ${thing}!`
-}
+import PredefinedPosition from './src/enum/PredefinedPosition';
+import BoundedOverlayManager from './src/components/BoundedOverlayManager';
 
-export { Button } from './src/components/Button'
+export { PredefinedPosition };
 
-import { Button as OtherButton } from './src/components/Other/Button'
-
-export { OtherButton }
+export default BoundedOverlayManager;
