@@ -1,5 +1,5 @@
 import './App.css'
-import BoundedOverlayManager, { PredefinedPosition } from '../dist/main';
+import BoundedOverlayManager, { Overlay, PredefinedPosition } from '../dist/main';
 import { useRef } from 'react';
 
 const YourMainComponent = () => {
@@ -35,14 +35,14 @@ const App = () => {
           <div ref={mainComponentRef}>
               <YourMainComponent />
           </div>
-          <BoundedOverlayManager 
-              boundingComponentRef={mainComponentRef} 
-              overlaysInfo={[
-                  { position: PredefinedPosition.BOTTOM_CENTER, component: ControlComponent1 },
-                  { position: PredefinedPosition.TOP_LEFT, component: ControlComponent2 } // Example positioning
-                  // You can add more control components with different positions as needed
-              ]} 
-          />
+          <BoundedOverlayManager boundingComponentRef={mainComponentRef} >
+            <Overlay position={PredefinedPosition.BOTTOM_CENTER}>
+              <ControlComponent1 />
+            </Overlay>
+            <Overlay position={PredefinedPosition.TOP_LEFT}>
+              <ControlComponent2 />
+            </Overlay>
+          </BoundedOverlayManager>
       </div>
   );
 };

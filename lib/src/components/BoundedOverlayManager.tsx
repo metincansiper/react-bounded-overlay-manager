@@ -1,18 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, ReactElement } from 'react';
 import ReactDOM from 'react-dom';
-import PredefinedPosition from '../enum/PredefinedPosition';
-
-type OverlayInfo = {
-    component: React.ElementType,
-    position: PredefinedPosition
-};
+import Overlay from './Overlay';
 
 type BoundedOverlayManagerOptions = {
-    boundingComponentRef:React.RefObject<HTMLElement>,
-    overlaysInfo: OverlayInfo[]
+    boundingComponentRef: React.RefObject<HTMLElement>,
+    children: ReactElement<typeof Overlay>[] | ReactElement<typeof Overlay>
 };
 
-const BoundedOverlayManager: React.FC<BoundedOverlayManagerOptions> = ({ boundingComponentRef, overlaysInfo }: BoundedOverlayManagerOptions) => {
+const BoundedOverlayManager: React.FC<BoundedOverlayManagerOptions> = ({ boundingComponentRef, children }: BoundedOverlayManagerOptions) => {
     const [showControls, setShowControls] = useState(false);
     const overlaysContainerRef = useRef<HTMLDivElement>(null);
     let mouseMoveTimeout: any = null;
@@ -27,15 +22,6 @@ const BoundedOverlayManager: React.FC<BoundedOverlayManagerOptions> = ({ boundin
             overlaysContainerRef.current.style.width = `${width}px`;
             overlaysContainerRef.current.style.height = `${height}px`;
         }
-    };
-
-    const getControlComponentStyle = (position: PredefinedPosition): React.CSSProperties => {
-        const styles: { [key: string]: React.CSSProperties } = {
-            [PredefinedPosition.BOTTOM_CENTER]: { position: 'absolute', bottom: '0%', left: '50%', transform: 'translateX(-50%)' },
-            [PredefinedPosition.TOP_LEFT]: { position: 'absolute', top: '0%', left: '0%' },
-            // Add more positions as needed
-        };
-        return styles[position] || {};
     };
 
     const handleMouseMove = () => {
@@ -68,11 +54,7 @@ const BoundedOverlayManager: React.FC<BoundedOverlayManagerOptions> = ({ boundin
     const controlWrapper = (
         <div ref={overlaysContainerRef} style={{ position: 'absolute', zIndex: 1, display: showControls ? 'block' : 'none' }}>
             <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-                {overlaysInfo.map(({ component: OverlayComponent, position }, index) => (
-                    <div key={index} style={getControlComponentStyle(position)}>
-                        <OverlayComponent />
-                    </div>
-                ))}
+                { children }
             </div>
         </div>
     );
