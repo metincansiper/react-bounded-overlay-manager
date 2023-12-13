@@ -42,7 +42,7 @@ const BoundedOverlayManager: React.FC<BoundedOverlayManagerOptions> = ({ boundin
         return () => {
             window.removeEventListener('resize', updateOverlaysContainerBoundingBox);
         };
-    }, [boundingComponentRef]);
+    }, []);
 
     const controlWrapper = (
         <OverlaysContainer ref={overlaysContainerRef} boundingComponentRef={boundingComponentRef} show={showOverlays}>
