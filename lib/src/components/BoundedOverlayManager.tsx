@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef, ReactElement } from 'react';
 import ReactDOM from 'react-dom';
 import Overlay from './Overlay';
+import OverlaysContainer from './OverlaysContainer';
+import useBoundingComponentEvents from '../hooks/useBoundingComponentEvents';
 
 type BoundedOverlayManagerOptions = {
     boundingComponentRef: React.RefObject<HTMLElement>,
@@ -8,11 +10,20 @@ type BoundedOverlayManagerOptions = {
 };
 
 const BoundedOverlayManager: React.FC<BoundedOverlayManagerOptions> = ({ boundingComponentRef, children }: BoundedOverlayManagerOptions) => {
-    const [showControls, setShowControls] = useState(false);
+    const [showOverlays, setShowOverlays] = useState(false);
     const overlaysContainerRef = useRef<HTMLDivElement>(null);
-    let mouseMoveTimeout: any = null;
 
-    const updateControlContainerPosition = () => {
+    useBoundingComponentEvents({
+        boundingComponentRef,
+        handleShow: () => {
+            setShowOverlays(true);
+        },
+        handleHide: () => {
+            setShowOverlays(false);
+        }
+    });
+
+    const updateOverlaysContainerBoundingBox = () => {
         if (boundingComponentRef.current && overlaysContainerRef.current) {
             const { top, left, width, height } = boundingComponentRef.current.getBoundingClientRect();
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -24,39 +35,19 @@ const BoundedOverlayManager: React.FC<BoundedOverlayManagerOptions> = ({ boundin
         }
     };
 
-    const handleMouseMove = () => {
-        setShowControls(true);
-        clearTimeout(mouseMoveTimeout);
-        mouseMoveTimeout = setTimeout(() => {
-            setShowControls(false);
-        }, 3000);
-    };
-
     useEffect(() => {
-        updateControlContainerPosition();
-        window.addEventListener('resize', updateControlContainerPosition);
-
-        if (boundingComponentRef.current) {
-            boundingComponentRef.current.addEventListener('mousemove', handleMouseMove);
-        }
+        updateOverlaysContainerBoundingBox();
+        window.addEventListener('resize', updateOverlaysContainerBoundingBox);
 
         return () => {
-            window.removeEventListener('resize', updateControlContainerPosition);
-            if (mouseMoveTimeout) {
-                clearTimeout(mouseMoveTimeout);
-            }
-            if (boundingComponentRef.current) {
-                boundingComponentRef.current.removeEventListener('mousemove', handleMouseMove);
-            }
+            window.removeEventListener('resize', updateOverlaysContainerBoundingBox);
         };
     }, [boundingComponentRef]);
 
     const controlWrapper = (
-        <div ref={overlaysContainerRef} style={{ position: 'absolute', zIndex: 1, display: showControls ? 'block' : 'none' }}>
-            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-                { children }
-            </div>
-        </div>
+        <OverlaysContainer ref={overlaysContainerRef} boundingComponentRef={boundingComponentRef} show={showOverlays}>
+            { children }
+        </OverlaysContainer>
     );
 
     return ReactDOM.createPortal(controlWrapper, document.body);
