@@ -12,6 +12,9 @@ type BoundedOverlayManagerOptions = {
     children: ReactElement<typeof Overlay>[] | ReactElement<typeof Overlay>
 };
 
+// TODO: Provide options for customizing the timeout duration, deciding whether to listen to some events (hideOnMouseLeave etc.)
+// and an option to show layovers persistently
+// Provide an api exposing the functions to trigger show and hide events etc.
 const BoundedOverlayManager: React.FC<BoundedOverlayManagerOptions> = ({ boundingComponentRef, children }: BoundedOverlayManagerOptions) => {
     const [showOverlays, setShowOverlays] = useState(false);
     const overlaysContainerRef = useRef<HTMLDivElement>(null);
