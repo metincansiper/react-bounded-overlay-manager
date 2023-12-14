@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef, ReactElement, useCallback } from 'react';
+import React, { useState, useEffect, useRef, ReactElement, useCallback, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import Overlay from './Overlay';
 import OverlaysContainer from './OverlaysContainer';
 import useBoundingComponentEvents from '../hooks/useBoundingComponentEvents';
 import useWindowResize from '../hooks/useWindowResize';
 import { copyComponentBoundingBox } from '../util';
+import TimedEventManager from '../timer/TimedEventManager';
 
 type BoundedOverlayManagerOptions = {
     boundingComponentRef: React.RefObject<HTMLElement>,
@@ -15,18 +16,21 @@ const BoundedOverlayManager: React.FC<BoundedOverlayManagerOptions> = ({ boundin
     const [showOverlays, setShowOverlays] = useState(false);
     const overlaysContainerRef = useRef<HTMLDivElement>(null);
 
-    const handleShow = useCallback(() => {
-        setShowOverlays(true);
-    }, []);
+    const timedEventManager = useMemo(() => {
+        const onStart = () => setShowOverlays(true);
+        const onStop = () => setShowOverlays(false);
+        const timeoutDuration = 2000;
 
-    const handleHide = useCallback(() => {
-        setShowOverlays(false);
+        return new TimedEventManager({
+            onStart,
+            onStop,
+            timeoutDuration,
+        });
     }, []);
 
     useBoundingComponentEvents({
         boundingComponentRef,
-        handleShow,
-        handleHide
+        timedEventManager
     });
     
     const updateOverlaysContainerBoundingBox = useCallback(() => {

@@ -1,30 +1,21 @@
 import { useEffect } from 'react';
+import TimedEventManager from '../timer/TimedEventManager';
 
 type Props = {
     boundingComponentRef: React.RefObject<HTMLElement>;
-    handleShow: () => void;
-    handleHide: () => void;
+    timedEventManager: TimedEventManager;
 }
 
-const useBoundingComponentEvents = ({ boundingComponentRef, handleShow, handleHide }: Props) => {
-    let mouseMoveTimeout: any = null;
-
+const useBoundingComponentEvents = ({ boundingComponentRef, timedEventManager }: Props) => {
     const handleMouseMove = () => {
-        handleShow();
-        clearTimeout(mouseMoveTimeout);
-        mouseMoveTimeout = setTimeout(() => {
-            handleHide();
-        }, 3000);
+        timedEventManager.requestStart();
     };
 
     useEffect(() => {
         boundingComponentRef.current?.addEventListener('mousemove', handleMouseMove);
 
         return () => {
-            if (mouseMoveTimeout) {
-                clearTimeout(mouseMoveTimeout);
-            }
-            
+            timedEventManager.requestStop();
             boundingComponentRef.current?.removeEventListener('mousemove', handleMouseMove);
         };
     }, [boundingComponentRef]);
