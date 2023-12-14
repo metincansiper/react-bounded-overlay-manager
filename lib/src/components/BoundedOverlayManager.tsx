@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, ReactElement, useCallback } from 'r
 import ReactDOM from 'react-dom';
 import Overlay from './Overlay';
 import OverlaysContainer from './OverlaysContainer';
-import useBoundingComponentEvents from '../hooks/useBoundingComponentEvents';
+import useInteractiveAreaEvents from '../hooks/useInteractiveAreaEvents';
 import useWindowResize from '../hooks/useWindowResize';
 import { copyComponentBoundingBox } from '../util';
 import useTimedEventManager from '../hooks/useTimedEventManager';
@@ -22,9 +22,10 @@ const BoundedOverlayManager: React.FC<BoundedOverlayManagerOptions> = ({ boundin
 
     const timedEventManager = useTimedEventManager({ onStart, onStop, timeoutDuration });
 
-    useBoundingComponentEvents({
+    useInteractiveAreaEvents({
         boundingComponentRef,
-        timedEventManager
+        timedEventManager,
+        overlaysContainerRef
     });
     
     const updateOverlaysContainerBoundingBox = useCallback(() => {
