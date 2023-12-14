@@ -15,7 +15,7 @@ const useBoundingComponentEvents = ({ boundingComponentRef, timedEventManager }:
         boundingComponentRef.current?.addEventListener('mousemove', handleMouseMove);
 
         return () => {
-            // Todo check if this is necessary or if calling requestStop() in cleanup function of useTimedEventManager is enough
+            // TODO: check if this is necessary or if calling requestStop() in cleanup function of useTimedEventManager is enough
             timedEventManager.requestStop(); 
             boundingComponentRef.current?.removeEventListener('mousemove', handleMouseMove);
         };
