@@ -1,4 +1,4 @@
-type Options = {
+export type TimeoutManagerOptions = {
     onStart: () => void;
     onStop: () => void;
     timeoutDuration: number;
@@ -10,7 +10,7 @@ class TimedEventManager {
     private timeoutDuration: number;
     private timeoutId: any = null;
 
-    constructor({ onStart, onStop, timeoutDuration }: Options) {
+    constructor({ onStart, onStop, timeoutDuration }: TimeoutManagerOptions) {
         this.onStart = onStart;
         this.onStop = onStop;
         this.timeoutDuration = timeoutDuration;
