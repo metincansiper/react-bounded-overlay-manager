@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, ReactElement, useCallback } from 'react';
+import React, { useState, useRef, ReactElement, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import Overlay from './Overlay';
 import OverlaysContainer from './OverlaysContainer';
@@ -6,6 +6,7 @@ import useInteractiveAreaEvents from '../hooks/useInteractiveAreaEvents';
 import useWindowResize from '../hooks/useWindowResize';
 import { copyComponentBoundingBox } from '../util';
 import useTimedEventManager from '../hooks/useTimedEventManager';
+import useResizeObserver from '../hooks/useResizeObserver';
 
 type BoundedOverlayManagerOptions = {
     boundingComponentRef: React.RefObject<HTMLElement>,
@@ -51,10 +52,12 @@ const BoundedOverlayManager: React.FC<BoundedOverlayManagerOptions> = ({
     }, [boundingComponentRef, overlaysContainerRef]);
 
     useWindowResize({ handleResize: updateOverlaysContainerBoundingBox });
+    useResizeObserver(boundingComponentRef, { handleResize: updateOverlaysContainerBoundingBox });
 
-    useEffect(() => {
-        updateOverlaysContainerBoundingBox();
-    }, []);
+    // TODO: this is probably not needed since using useResizeObserver() would be enough?
+    // useLayoutEffect(() => {
+    //     updateOverlaysContainerBoundingBox();
+    // }, [updateOverlaysContainerBoundingBox]);
 
     const controlWrapper = (
         <OverlaysContainer ref={overlaysContainerRef} boundingComponentRef={boundingComponentRef} show={showOverlays}>

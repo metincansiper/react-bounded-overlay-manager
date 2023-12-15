@@ -11,19 +11,11 @@ const YourMainComponent = () => {
   );
 };
 
-const ControlComponent1 = () => {
+const ControlComponent = ({ text }: { text: string }) => {
   return (
-      <button style={{ padding: '10px' }}>
-          Control Button 1
+      <button style={{ padding: 0, margin: 0 }}>
+          { text }
       </button>
-  );
-};
-
-const ControlComponent2 = () => {
-  return (
-      <div style={{ margin: '10px', padding: '10px', backgroundColor: '#eee', borderRadius: '5px' }}>
-          <p>Info Panel</p>
-      </div>
   );
 };
 
@@ -35,12 +27,15 @@ const App = () => {
           <div ref={mainComponentRef}>
               <YourMainComponent />
           </div>
-          <BoundedOverlayManager boundingComponentRef={mainComponentRef} >
+          <BoundedOverlayManager boundingComponentRef={mainComponentRef} persistentlyShowOverlays={true} >
             <Overlay position={PredefinedPosition.BOTTOM_CENTER}>
-              <ControlComponent1 />
+              <ControlComponent text="component 1" />
             </Overlay>
             <Overlay position={PredefinedPosition.TOP_LEFT}>
-              <ControlComponent2 />
+              <ControlComponent text="component 2" />
+            </Overlay>
+            <Overlay position={PredefinedPosition.TOP_RIGHT}>
+              <ControlComponent text="component 3" />
             </Overlay>
           </BoundedOverlayManager>
       </div>
