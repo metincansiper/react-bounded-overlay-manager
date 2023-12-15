@@ -28,10 +28,10 @@ const App = () => {
               <YourMainComponent />
           </div>
           <BoundedOverlayManager boundingComponentRef={mainComponentRef} persistentlyShowOverlays={true} >
-            <Overlay position={PredefinedPosition.BOTTOM_CENTER}>
+            <Overlay position={PredefinedPosition.BOTTOM_CENTER} offset={{ bottom: '10%' }}>
               <ControlComponent text="component 1" />
             </Overlay>
-            <Overlay position={PredefinedPosition.TOP_LEFT}>
+            <Overlay position={PredefinedPosition.TOP_LEFT} offset={{ top: '10px', left: '10px' }}>
               <ControlComponent text="component 2" />
             </Overlay>
             <Overlay position={PredefinedPosition.TOP_RIGHT}>

@@ -1,23 +1,31 @@
+import { CSSProperties } from "react";
+
 export type TopLeftOffsetProps = {
-    top?: number,
-    left?: number,
+    top?: CSSProperties['top'],
+    left?: CSSProperties['left'],
 };
 
 export type TopRightOffsetProps = {
-    top?: number,
-    right?: number,
+    top?: CSSProperties['top'],
+    right?: CSSProperties['right'],
 };
 
 export type BottomLeftOffsetProps = {
-    bottom?: number,
-    left?: number,
+    bottom?: CSSProperties['bottom'],
+    left?: CSSProperties['left'],
 };
 
 export type BottomRightOffsetProps = {
-    bottom?: number,
-    right?: number,
+    bottom?: CSSProperties['bottom'],
+    right?: CSSProperties['right'],
 };
 
-export type TopCenterOffsetProps = TopLeftOffsetProps;
-export type BottomCenterOffsetProps = BottomLeftOffsetProps;
-export type CenterOffsetProps = TopLeftOffsetProps;
+export type TopCenterOffsetProps = {
+    top?: CSSProperties['top'],
+};
+
+export type BottomCenterOffsetProps = {
+    bottom?: CSSProperties['bottom'],
+};
+
+// export type CenterOffsetProps = TopLeftOffsetProps;
