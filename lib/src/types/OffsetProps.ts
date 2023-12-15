@@ -1,10 +1,3 @@
-export type OffsetProps = {
-    top?: number,
-    left?: number,
-    right?: number,
-    bottom?: number,
-};
-
 export type TopLeftOffsetProps = {
     top?: number,
     left?: number,
