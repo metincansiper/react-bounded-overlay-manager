@@ -6,6 +6,8 @@ enum PredefinedPosition {
     BOTTOM_LEFT = 'bottom_left',
     TOP_CENTER = 'top_center',
     BOTTOM_RIGHT = 'bottom_right',
+    MID_LEFT = 'mid_left',
+    MID_RIGHT = 'mid_right',
 }
 
 export default PredefinedPosition;

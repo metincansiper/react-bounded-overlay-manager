@@ -2,6 +2,9 @@ import './App.css'
 import BoundedOverlayManager, { Overlay, PredefinedPosition } from '../dist/main';
 import { useRef } from 'react';
 
+// TODO: consider implemeting a slider where controls appear at the sides
+// on mouse move and there is a pin button at top left to pin the controls 
+
 const YourMainComponent = () => {
   return (
       <div style={{ height: '300px', backgroundColor: '#ddd', padding: '20px', borderRadius: '10px', margin: 0 }}>
@@ -36,6 +39,15 @@ const App = () => {
             </Overlay>
             <Overlay position={PredefinedPosition.TOP_RIGHT}>
               <ControlComponent text="component 3" />
+            </Overlay>
+            <Overlay position={PredefinedPosition.CENTER}>
+              <ControlComponent text="component 4" />
+            </Overlay>
+            <Overlay position={PredefinedPosition.MID_LEFT}>
+              <ControlComponent text="component 5" />
+            </Overlay>
+            <Overlay position={PredefinedPosition.MID_RIGHT}>
+              <ControlComponent text="component 6" />
             </Overlay>
           </BoundedOverlayManager>
       </div>

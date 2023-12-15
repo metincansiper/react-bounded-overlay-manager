@@ -28,4 +28,10 @@ export type BottomCenterOffsetProps = {
     bottom?: CSSProperties['bottom'],
 };
 
-// export type CenterOffsetProps = TopLeftOffsetProps;
+export type MidLeftOffsetProps = {
+    left?: CSSProperties['left'],
+};
+
+export type MidRightOffsetProps = {
+    right?: CSSProperties['right'],
+};

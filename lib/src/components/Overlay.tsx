@@ -1,5 +1,5 @@
 import PredefinedPosition from "../enum/PredefinedPosition";
-import { BottomCenterOffsetProps, BottomLeftOffsetProps, TopCenterOffsetProps, TopLeftOffsetProps, TopRightOffsetProps } from "../types/OffsetProps";
+import { BottomCenterOffsetProps, BottomLeftOffsetProps, MidLeftOffsetProps, MidRightOffsetProps, TopCenterOffsetProps, TopLeftOffsetProps, TopRightOffsetProps } from "../types/OffsetProps";
 
 type PositionOffsetMapping = {
     [PredefinedPosition.TOP_LEFT]: TopLeftOffsetProps,
@@ -8,6 +8,8 @@ type PositionOffsetMapping = {
     [PredefinedPosition.BOTTOM_LEFT]: BottomLeftOffsetProps,
     [PredefinedPosition.BOTTOM_RIGHT]: BottomLeftOffsetProps,
     [PredefinedPosition.TOP_CENTER]: TopCenterOffsetProps,
+    [PredefinedPosition.MID_LEFT]: MidLeftOffsetProps,
+    [PredefinedPosition.MID_RIGHT]: MidRightOffsetProps,
     [PredefinedPosition.CENTER]: null,
 };
 
@@ -20,7 +22,6 @@ type OverlayPositionProps = {
 
 type Props = OverlayPositionProps & {
     children?: React.ReactNode;
-    // positionProps: PositionProps;
 };
 
 const defaultOffsets = {
@@ -48,7 +49,9 @@ const getOverlayContainerStyle = (positionProps: OverlayPositionProps): React.CS
         [PredefinedPosition.CENTER]: { top: '50%', left: '50%', transform: 'translate(-50%, -50%)'},
         [PredefinedPosition.BOTTOM_LEFT]: { bottom, left },
         [PredefinedPosition.BOTTOM_RIGHT]: { bottom, right },
-        [PredefinedPosition.TOP_CENTER]: { top, left: '50%', transform: 'translateX(-50%)' }
+        [PredefinedPosition.TOP_CENTER]: { top, left: '50%', transform: 'translateX(-50%)' },
+        [PredefinedPosition.MID_LEFT]: { top: '50%', left, transform: 'translateY(-50%)' },
+        [PredefinedPosition.MID_RIGHT]: { top: '50%', right, transform: 'translateY(-50%)' },
     };
 
     const styles = {
