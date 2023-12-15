@@ -14,18 +14,18 @@ type BoundedOverlayManagerOptions = {
     persistentlyShowOverlays?: boolean,
     hideOverlaysOnMouseLeave?: boolean,
     showOverlaysOnMouseMove?: boolean,
+    skipAllPredefinedEvents?: boolean,
 };
 
-// TODO: Provide options for customizing the timeout duration, deciding whether to listen to some events (hideOnMouseLeave etc.)
-// and an option to show layovers persistently
-// Provide an api exposing the functions to trigger show and hide events etc.
+// TODO: Provide an api exposing the functions to trigger show and hide events etc.?
 const BoundedOverlayManager: React.FC<BoundedOverlayManagerOptions> = ({ 
     boundingComponentRef, 
     children,
     overlaysShowTimeout = 2000,
-    persistentlyShowOverlays = true, 
-    // hideOverlaysOnMouseLeave = true,
-    // showOverlaysOnMouseMove = true,
+    persistentlyShowOverlays = false, 
+    skipAllPredefinedEvents = false,
+    hideOverlaysOnMouseLeave = true,
+    showOverlaysOnMouseMove = true,
 }: BoundedOverlayManagerOptions) => {
     const [showOverlays, setShowOverlays] = useState(persistentlyShowOverlays);
     const overlaysContainerRef = useRef<HTMLDivElement>(null);
@@ -35,11 +35,15 @@ const BoundedOverlayManager: React.FC<BoundedOverlayManagerOptions> = ({
     const timeoutDuration = overlaysShowTimeout;
 
     const timedEventManager = useTimedEventManager({ onStart, onStop, timeoutDuration, returnNull: persistentlyShowOverlays });
+    const effectiveShowOverlaysOnMouseMove = showOverlaysOnMouseMove && !skipAllPredefinedEvents;
+    const effectiveHideOverlaysOnMouseLeave = hideOverlaysOnMouseLeave && !skipAllPredefinedEvents;
 
     useInteractiveAreaEvents({
         boundingComponentRef,
         timedEventManager,
-        overlaysContainerRef
+        overlaysContainerRef,
+        showOverlaysOnMouseMove: effectiveShowOverlaysOnMouseMove,
+        hideOverlaysOnMouseLeave: effectiveHideOverlaysOnMouseLeave,
     });
     
     const updateOverlaysContainerBoundingBox = useCallback(() => {
