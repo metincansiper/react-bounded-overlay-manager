@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 
-type Props = {
+type Options = {
     handleResize: () => void;
 };
 
-const useWindowResize = ({ handleResize }: Props) => {
+const useWindowResize = ({ handleResize }: Options) => {
     useEffect(() => {
         window.addEventListener('resize', handleResize);
 

@@ -1,13 +1,13 @@
 import React, { ReactElement, ForwardedRef } from 'react';
 import Overlay from './Overlay';
 
-interface OverlaysContainerProps {
+type Props = {
     boundingComponentRef: React.RefObject<HTMLElement>,
     children: ReactElement<typeof Overlay>[] | ReactElement<typeof Overlay>,
     show: boolean,
 }
 
-const OverlaysContainer: React.ForwardRefRenderFunction<HTMLDivElement, OverlaysContainerProps> = 
+const OverlaysContainer: React.ForwardRefRenderFunction<HTMLDivElement, Props> = 
 ({ children, show }, ref) => {
     return (
         <div ref={ref as ForwardedRef<HTMLDivElement>} style={{ position: 'absolute', zIndex: 1, display: show ? 'block' : 'none' }}>

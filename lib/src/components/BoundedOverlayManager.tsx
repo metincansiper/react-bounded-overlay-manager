@@ -8,7 +8,8 @@ import { copyComponentBoundingBox } from '../util';
 import useTimedEventManager from '../hooks/useTimedEventManager';
 import useResizeObserver from '../hooks/useResizeObserver';
 
-type BoundedOverlayManagerOptions = {
+
+type Props = {
     boundingComponentRef: React.RefObject<HTMLElement>,
     children: ReactElement<typeof Overlay>[] | ReactElement<typeof Overlay>,
     overlaysShowTimeout?: number,
@@ -19,7 +20,7 @@ type BoundedOverlayManagerOptions = {
 };
 
 // TODO: Provide an api exposing the functions to trigger show and hide events etc.?
-const BoundedOverlayManager: React.FC<BoundedOverlayManagerOptions> = ({ 
+const BoundedOverlayManager: React.FC<Props> = ({ 
     boundingComponentRef, 
     children,
     overlaysShowTimeout = 2000,
@@ -27,7 +28,7 @@ const BoundedOverlayManager: React.FC<BoundedOverlayManagerOptions> = ({
     skipAllPredefinedEvents = false,
     hideOverlaysOnMouseLeave = true,
     showOverlaysOnMouseMove = true,
-}: BoundedOverlayManagerOptions) => {
+}: Props) => {
     const [showOverlays, setShowOverlays] = useState(persistentlyShowOverlays);
     const overlaysContainerRef = useRef<HTMLDivElement>(null);
 

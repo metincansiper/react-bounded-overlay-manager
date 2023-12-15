@@ -1,6 +1,6 @@
 import PredefinedPosition from "../enum/PredefinedPosition";
 
-type OverlayOptions = React.PropsWithChildren<{
+type Props = React.PropsWithChildren<{
     position: PredefinedPosition,
 }>;
 
@@ -14,7 +14,7 @@ const getOverlayContainerStyle = (position: PredefinedPosition): React.CSSProper
     return styles[position] || {};
 };
 
-const Overlay: React.FC<OverlayOptions> = ({ position, children }: OverlayOptions) => {
+const Overlay: React.FC<Props> = ({ position, children }: Props) => {
     return (
         <div style={getOverlayContainerStyle(position)}>
             { children }

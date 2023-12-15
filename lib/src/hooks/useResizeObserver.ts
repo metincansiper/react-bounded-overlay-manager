@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 
-interface UseResizeObserverOptions {
+type Options = {
     handleResize: (entry: ResizeObserverEntry) => void;
 }
 
 function useResizeObserver(
     targetElement: React.RefObject<HTMLElement>, 
-    { handleResize }: UseResizeObserverOptions
+    { handleResize }: Options
 ) {
     useEffect(() => {
         if (!targetElement) return;

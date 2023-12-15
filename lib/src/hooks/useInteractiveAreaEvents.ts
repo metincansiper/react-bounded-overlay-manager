@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import TimedEventManager from '../timer/TimedEventManager';
 
-type Props = {
+type Options = {
     boundingComponentRef: React.RefObject<HTMLElement>;
     overlaysContainerRef: React.RefObject<HTMLElement>;
     timedEventManager: TimedEventManager | null;
@@ -15,7 +15,7 @@ const useInteractiveAreaEvents = ({
     timedEventManager,
     showOverlaysOnMouseMove = true,
     hideOverlaysOnMouseLeave = true,
-}: Props) => {
+}: Options) => {
     if (timedEventManager === null) {
         return;
     }
