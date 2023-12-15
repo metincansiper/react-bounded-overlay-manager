@@ -8,7 +8,6 @@ import { copyComponentBoundingBox } from '../util';
 import useTimedEventManager from '../hooks/useTimedEventManager';
 import useResizeObserver from '../hooks/useResizeObserver';
 
-
 type Props = {
     boundingComponentRef: React.RefObject<HTMLElement>,
     children: ReactElement<typeof Overlay>[] | ReactElement<typeof Overlay>,
