@@ -9,21 +9,32 @@ import useTimedEventManager from '../hooks/useTimedEventManager';
 
 type BoundedOverlayManagerOptions = {
     boundingComponentRef: React.RefObject<HTMLElement>,
-    children: ReactElement<typeof Overlay>[] | ReactElement<typeof Overlay>
+    children: ReactElement<typeof Overlay>[] | ReactElement<typeof Overlay>,
+    overlaysShowTimeout?: number,
+    persistentlyShowOverlays?: boolean,
+    hideOverlaysOnMouseLeave?: boolean,
+    showOverlaysOnMouseMove?: boolean,
 };
 
 // TODO: Provide options for customizing the timeout duration, deciding whether to listen to some events (hideOnMouseLeave etc.)
 // and an option to show layovers persistently
 // Provide an api exposing the functions to trigger show and hide events etc.
-const BoundedOverlayManager: React.FC<BoundedOverlayManagerOptions> = ({ boundingComponentRef, children }: BoundedOverlayManagerOptions) => {
-    const [showOverlays, setShowOverlays] = useState(false);
+const BoundedOverlayManager: React.FC<BoundedOverlayManagerOptions> = ({ 
+    boundingComponentRef, 
+    children,
+    overlaysShowTimeout = 2000,
+    persistentlyShowOverlays = true, 
+    // hideOverlaysOnMouseLeave = true,
+    // showOverlaysOnMouseMove = true,
+}: BoundedOverlayManagerOptions) => {
+    const [showOverlays, setShowOverlays] = useState(persistentlyShowOverlays);
     const overlaysContainerRef = useRef<HTMLDivElement>(null);
 
     const onStart = useCallback(() => setShowOverlays(true), []);
     const onStop = useCallback(() => setShowOverlays(false), []);
-    const timeoutDuration = 2000;
+    const timeoutDuration = overlaysShowTimeout;
 
-    const timedEventManager = useTimedEventManager({ onStart, onStop, timeoutDuration });
+    const timedEventManager = useTimedEventManager({ onStart, onStop, timeoutDuration, returnNull: persistentlyShowOverlays });
 
     useInteractiveAreaEvents({
         boundingComponentRef,

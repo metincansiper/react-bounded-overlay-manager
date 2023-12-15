@@ -4,10 +4,14 @@ import TimedEventManager from '../timer/TimedEventManager';
 type Props = {
     boundingComponentRef: React.RefObject<HTMLElement>;
     overlaysContainerRef: React.RefObject<HTMLElement>;
-    timedEventManager: TimedEventManager;
+    timedEventManager: TimedEventManager | null;
 }
 
 const useInteractiveAreaEvents = ({ boundingComponentRef, overlaysContainerRef, timedEventManager }: Props) => {
+    if (timedEventManager === null) {
+        return;
+    }
+    
     const handleMouseMove = () => {
         timedEventManager.requestStart();
     };
