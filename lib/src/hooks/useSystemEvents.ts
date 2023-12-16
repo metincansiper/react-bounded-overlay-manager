@@ -9,7 +9,7 @@ type Options = {
     hideOverlaysOnMouseLeave?: boolean;
 }
 
-const useInteractiveAreaEvents = ({ 
+const useSystemEvents = ({ 
     boundingComponentRef, 
     overlaysContainerRef, 
     timedEventManager,
@@ -53,4 +53,4 @@ const useInteractiveAreaEvents = ({
     }, [boundingComponentRef, overlaysContainerRef, timedEventManager, showOverlaysOnMouseMove, hideOverlaysOnMouseLeave]);
 };
 
-export default useInteractiveAreaEvents;
+export default useSystemEvents;

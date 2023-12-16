@@ -2,7 +2,7 @@ import React, { useState, useRef, ReactElement, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import Overlay from './Overlay';
 import OverlaysContainer from './OverlaysContainer';
-import useInteractiveAreaEvents from '../hooks/useInteractiveAreaEvents';
+import useSystemEvents from '../hooks/useSystemEvents';
 import useWindowResize from '../hooks/useWindowResize';
 import { copyComponentBoundingBox } from '../util';
 import useTimedEventManager from '../hooks/useTimedEventManager';
@@ -15,7 +15,7 @@ type Props = {
     persistentlyShowOverlays?: boolean,
     hideOverlaysOnMouseLeave?: boolean,
     showOverlaysOnMouseMove?: boolean,
-    skipAllPredefinedEvents?: boolean,
+    skipAllSystemEvents?: boolean,
 };
 
 // TODO: Provide an api exposing the functions to trigger show and hide events etc.?
@@ -24,7 +24,7 @@ const BoundedOverlayManager: React.FC<Props> = ({
     children,
     overlaysShowTimeout = 2000,
     persistentlyShowOverlays = false, 
-    skipAllPredefinedEvents = false,
+    skipAllSystemEvents = false,
     hideOverlaysOnMouseLeave = true,
     showOverlaysOnMouseMove = true,
 }: Props) => {
@@ -36,10 +36,10 @@ const BoundedOverlayManager: React.FC<Props> = ({
     const timeoutDuration = overlaysShowTimeout;
 
     const timedEventManager = useTimedEventManager({ onStart, onStop, timeoutDuration, returnNull: persistentlyShowOverlays });
-    const effectiveShowOverlaysOnMouseMove = showOverlaysOnMouseMove && !skipAllPredefinedEvents;
-    const effectiveHideOverlaysOnMouseLeave = hideOverlaysOnMouseLeave && !skipAllPredefinedEvents;
+    const effectiveShowOverlaysOnMouseMove = showOverlaysOnMouseMove && !skipAllSystemEvents;
+    const effectiveHideOverlaysOnMouseLeave = hideOverlaysOnMouseLeave && !skipAllSystemEvents;
 
-    useInteractiveAreaEvents({
+    useSystemEvents({
         boundingComponentRef,
         timedEventManager,
         overlaysContainerRef,

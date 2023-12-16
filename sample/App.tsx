@@ -31,7 +31,7 @@ const App = () => {
           <div ref={mainComponentRef}>
               <YourMainComponent />
           </div>
-          <BoundedOverlayManager boundingComponentRef={mainComponentRef} overlaysShowTimeout={NO_TIMEOUT} >
+          <BoundedOverlayManager boundingComponentRef={mainComponentRef} overlaysShowTimeout={NO_TIMEOUT}>
             <Overlay position={PredefinedPosition.BOTTOM_CENTER} offset={{ bottom: '10%' }}>
               <ControlComponent text="component 1" />
             </Overlay>
