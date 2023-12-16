@@ -41,7 +41,7 @@ const App = () => {
             <Overlay position={PredefinedPosition.TOP_RIGHT}>
               <ControlComponent text="component 3" />
             </Overlay>
-            <Overlay position={PredefinedPosition.CENTER}>
+            <Overlay position={PredefinedPosition.CENTER} offset={{ leftPercent: 5, topPercent: 5 }}>
               <ControlComponent text="component 4" />
             </Overlay>
             <Overlay position={PredefinedPosition.MID_LEFT}>
@@ -49,6 +49,12 @@ const App = () => {
             </Overlay>
             <Overlay position={PredefinedPosition.MID_RIGHT}>
               <ControlComponent text="component 6" />
+            </Overlay>
+            <Overlay position={PredefinedPosition.CENTER}>
+              <ControlComponent text="component 7" />
+            </Overlay>
+            <Overlay position={PredefinedPosition.CENTER} offset={{ leftPercent: -5, topPercent: -5 }}>
+              <ControlComponent text="component 8" />
             </Overlay>
           </BoundedOverlayManager>
       </div>

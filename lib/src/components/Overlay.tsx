@@ -1,5 +1,5 @@
 import PredefinedPosition from "../enum/PredefinedPosition";
-import { BottomCenterOffsetProps, BottomLeftOffsetProps, MidLeftOffsetProps, MidRightOffsetProps, TopCenterOffsetProps, TopLeftOffsetProps, TopRightOffsetProps } from "../types/OffsetProps";
+import { BottomCenterOffsetProps, BottomLeftOffsetProps, CenterOffsetProps, MidLeftOffsetProps, MidRightOffsetProps, TopCenterOffsetProps, TopLeftOffsetProps, TopRightOffsetProps } from "../types/OffsetProps";
 
 type PositionOffsetMapping = {
     [PredefinedPosition.TOP_LEFT]: TopLeftOffsetProps,
@@ -10,7 +10,7 @@ type PositionOffsetMapping = {
     [PredefinedPosition.TOP_CENTER]: TopCenterOffsetProps,
     [PredefinedPosition.MID_LEFT]: MidLeftOffsetProps,
     [PredefinedPosition.MID_RIGHT]: MidRightOffsetProps,
-    [PredefinedPosition.CENTER]: null,
+    [PredefinedPosition.CENTER]: CenterOffsetProps,
 };
 
 type OverlayPositionProps = {
@@ -29,6 +29,8 @@ const defaultOffsets = {
     bottom: 0,
     left: 0,
     right: 0,
+    topPercent: 0,
+    leftPercent: 0,
 };
 
 const getOverlayContainerStyle = (positionProps: OverlayPositionProps): React.CSSProperties => {
@@ -37,21 +39,24 @@ const getOverlayContainerStyle = (positionProps: OverlayPositionProps): React.CS
         position: 'absolute'
     };
 
-    const { top, bottom, left, right } = {
+    const { top, bottom, left, right, topPercent, leftPercent } = {
         ...defaultOffsets,
         ...offset,
     };
 
+    const horizontalCenterLeft = `${50+leftPercent}%`;
+    const verticalCenterTop = `${50+topPercent}%`;
+
     const specificStyles: { [key: string]: React.CSSProperties } = {
-        [PredefinedPosition.BOTTOM_CENTER]: { bottom, left: '50%', transform: 'translateX(-50%)' },
+        [PredefinedPosition.BOTTOM_CENTER]: { bottom, left: horizontalCenterLeft, transform: 'translateX(-50%)' },
         [PredefinedPosition.TOP_LEFT]: { top, left },
         [PredefinedPosition.TOP_RIGHT]: { top, right },
-        [PredefinedPosition.CENTER]: { top: '50%', left: '50%', transform: 'translate(-50%, -50%)'},
+        [PredefinedPosition.CENTER]: { top: verticalCenterTop, left: horizontalCenterLeft, transform: 'translate(-50%, -50%)'},
         [PredefinedPosition.BOTTOM_LEFT]: { bottom, left },
         [PredefinedPosition.BOTTOM_RIGHT]: { bottom, right },
-        [PredefinedPosition.TOP_CENTER]: { top, left: '50%', transform: 'translateX(-50%)' },
-        [PredefinedPosition.MID_LEFT]: { top: '50%', left, transform: 'translateY(-50%)' },
-        [PredefinedPosition.MID_RIGHT]: { top: '50%', right, transform: 'translateY(-50%)' },
+        [PredefinedPosition.TOP_CENTER]: { top, left: horizontalCenterLeft, transform: 'translateX(-50%)' },
+        [PredefinedPosition.MID_LEFT]: { top: verticalCenterTop, left, transform: 'translateY(-50%)' },
+        [PredefinedPosition.MID_RIGHT]: { top: verticalCenterTop, right, transform: 'translateY(-50%)' },
     };
 
     const styles = {

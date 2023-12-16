@@ -22,16 +22,25 @@ export type BottomRightOffsetProps = {
 
 export type TopCenterOffsetProps = {
     top?: CSSProperties['top'],
+    leftPercent?: number,
 };
 
 export type BottomCenterOffsetProps = {
     bottom?: CSSProperties['bottom'],
+    leftPercent?: number,
 };
 
 export type MidLeftOffsetProps = {
     left?: CSSProperties['left'],
+    topPercent?: number,
 };
 
 export type MidRightOffsetProps = {
     right?: CSSProperties['right'],
+    topPercent?: number,
+};
+
+export type CenterOffsetProps = {
+    topPercent?: number,
+    leftPercent?: number,
 };
