@@ -5,6 +5,8 @@ import { NO_TIMEOUT } from '../lib/src/timer/TimedEventManager';
 
 // TODO: consider implemeting a slider where controls appear at the sides
 // on mouse move and there is a pin button at top left to pin the controls 
+// Consider using throttle or debounce for the system events or maybe even
+// expose the throttling/debouncing options to the user?
 
 const YourMainComponent = () => {
   return (
