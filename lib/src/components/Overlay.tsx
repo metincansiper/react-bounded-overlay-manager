@@ -33,7 +33,7 @@ const defaultOffsets = {
     leftPercent: 0,
 };
 
-const getOverlayContainerStyle = (positionProps: OverlayPositionProps): React.CSSProperties => {
+export const getOverlayContainerPositionStyle = (positionProps: OverlayPositionProps): React.CSSProperties => {
     const { position, offset } = positionProps;
     const commonStyles: React.CSSProperties = {
         position: 'absolute'
@@ -70,7 +70,7 @@ const getOverlayContainerStyle = (positionProps: OverlayPositionProps): React.CS
 const Overlay: React.FC<Props> = ({ offset, position, children }) => {
     const positionProps = { position, offset } as OverlayPositionProps;
     return (
-        <div style={getOverlayContainerStyle(positionProps)}>
+        <div style={getOverlayContainerPositionStyle(positionProps)}>
             { children }
         </div>
     );
