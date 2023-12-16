@@ -1,6 +1,7 @@
 import './App.css'
 import BoundedOverlayManager, { Overlay, PredefinedPosition } from '../dist/main';
 import { useRef } from 'react';
+import { NO_TIMEOUT } from '../lib/src/timer/TimedEventManager';
 
 // TODO: consider implemeting a slider where controls appear at the sides
 // on mouse move and there is a pin button at top left to pin the controls 
@@ -30,7 +31,7 @@ const App = () => {
           <div ref={mainComponentRef}>
               <YourMainComponent />
           </div>
-          <BoundedOverlayManager boundingComponentRef={mainComponentRef} persistentlyShowOverlays={true} >
+          <BoundedOverlayManager boundingComponentRef={mainComponentRef} overlaysShowTimeout={NO_TIMEOUT} >
             <Overlay position={PredefinedPosition.BOTTOM_CENTER} offset={{ bottom: '10%' }}>
               <ControlComponent text="component 1" />
             </Overlay>

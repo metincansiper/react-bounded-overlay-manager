@@ -4,6 +4,8 @@ export type TimeoutManagerOptions = {
     timeoutDuration: number;
 };
 
+export const NO_TIMEOUT = -1;
+
 class TimedEventManager {
     private onStart: () => void;
     private onStop: () => void;
@@ -25,9 +27,14 @@ class TimedEventManager {
             this.onStart();
         }
         
-        this.timeoutId = setTimeout(() => {
-            this.requestStop();
-        }, this.timeoutDuration);
+        if (this.timeoutDuration === NO_TIMEOUT) {
+            this.timeoutId = NO_TIMEOUT;
+        }
+        else {
+            this.timeoutId = setTimeout(() => {
+                this.requestStop();
+            }, this.timeoutDuration);
+        }
     }
 
     public requestStop() {
@@ -35,7 +42,10 @@ class TimedEventManager {
             return;
         }
         
-        clearTimeout(this.timeoutId);
+        if (this.timeoutId !== NO_TIMEOUT) {
+            clearTimeout(this.timeoutId);
+        }
+        
         this.timeoutId = null;
         this.onStop();
     }
