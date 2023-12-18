@@ -1,3 +1,4 @@
+import { CSSProperties } from "react";
 import PredefinedPosition from "../enum/PredefinedPosition";
 import { BottomCenterOffsetProps, BottomLeftOffsetProps, CenterOffsetProps, MidLeftOffsetProps, MidRightOffsetProps, TopCenterOffsetProps, TopLeftOffsetProps, TopRightOffsetProps } from "../types/OffsetProps";
 
@@ -69,8 +70,13 @@ export const getOverlayContainerPositionStyle = (positionProps: OverlayPositionP
 
 const Overlay: React.FC<Props> = ({ offset, position, children }) => {
     const positionProps = { position, offset } as OverlayPositionProps;
+    const style: CSSProperties = {
+        ...getOverlayContainerPositionStyle(positionProps),
+        pointerEvents: 'auto',
+    };
+
     return (
-        <div style={getOverlayContainerPositionStyle(positionProps)}>
+        <div className="overlay" style={style}>
             { children }
         </div>
     );

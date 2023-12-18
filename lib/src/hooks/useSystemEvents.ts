@@ -3,7 +3,6 @@ import TimedEventManager from '../timer/TimedEventManager';
 
 type Options = {
     boundingComponentRef: React.RefObject<HTMLElement>;
-    overlaysContainerRef: React.RefObject<HTMLElement>;
     timedEventManager: TimedEventManager | null;
     showOverlaysOnMouseMove?: boolean;
     hideOverlaysOnMouseLeave?: boolean;
@@ -11,7 +10,6 @@ type Options = {
 
 const useSystemEvents = ({ 
     boundingComponentRef, 
-    overlaysContainerRef, 
     timedEventManager,
     showOverlaysOnMouseMove = true,
     hideOverlaysOnMouseLeave = true,
@@ -24,33 +22,36 @@ const useSystemEvents = ({
         timedEventManager.requestStart();
     };
 
-    const handleMouseLeave = () => {
+    const handleMouseLeave = (event: any) => {
+        // TODO: think about if should handle mousemove in such overlay targets as well?
+        const relatedOverlayTarget = event.relatedTarget.closest('.overlay');
+        if (relatedOverlayTarget) {
+            return;
+        }
         timedEventManager.requestStop();
     };
 
     useEffect(() => {
         if (showOverlaysOnMouseMove) {
             boundingComponentRef.current?.addEventListener('mousemove', handleMouseMove);
-            overlaysContainerRef.current?.addEventListener('mousemove', handleMouseMove);
         }
 
         if (hideOverlaysOnMouseLeave) {
-            overlaysContainerRef.current?.addEventListener('mouseleave', handleMouseLeave);
+            boundingComponentRef.current?.addEventListener('mouseleave', handleMouseLeave);
         }
 
         return () => {
             if (showOverlaysOnMouseMove) {
                 boundingComponentRef.current?.removeEventListener('mousemove', handleMouseMove);
-                overlaysContainerRef.current?.removeEventListener('mousemove', handleMouseMove);
             }
 
             if (hideOverlaysOnMouseLeave) {
-                overlaysContainerRef.current?.removeEventListener('mouseleave', handleMouseLeave);
+                boundingComponentRef.current?.removeEventListener('mouseleave', handleMouseLeave);
             }
             // TODO: check if this is necessary or the cleanup function of useTimedEventManager is enough
             // timedEventManager.requestStop();
         };
-    }, [boundingComponentRef, overlaysContainerRef, timedEventManager, showOverlaysOnMouseMove, hideOverlaysOnMouseLeave]);
+    }, [boundingComponentRef, timedEventManager, showOverlaysOnMouseMove, hideOverlaysOnMouseLeave]);
 };
 
 export default useSystemEvents;

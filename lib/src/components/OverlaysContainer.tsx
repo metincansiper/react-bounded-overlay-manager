@@ -10,7 +10,7 @@ type Props = {
 const OverlaysContainer: React.ForwardRefRenderFunction<HTMLDivElement, Props> = 
 ({ children, show }, ref) => {
     return (
-        <div ref={ref as ForwardedRef<HTMLDivElement>} style={{ position: 'absolute', zIndex: 1, display: show ? 'block' : 'none' }}>
+        <div ref={ref as ForwardedRef<HTMLDivElement>} style={{ position: 'absolute', display: show ? 'block' : 'none', pointerEvents: 'none' }}>
             <div style={{ position: 'relative', width: '100%', height: '100%' }}>
                 { children }
             </div>
