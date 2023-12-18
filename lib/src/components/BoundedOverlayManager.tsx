@@ -59,6 +59,7 @@ const BoundedOverlayManager: React.FC<Props> = ({
     //     updateOverlaysContainerBoundingBox();
     // }, [updateOverlaysContainerBoundingBox]);
 
+    // TODO: move this into a custom hook like useFullscreenChange()?
     useEffect(() => {
         const handleFullscreenChange = () => {
             setPortalContainer(document.fullscreenElement || document.body);
