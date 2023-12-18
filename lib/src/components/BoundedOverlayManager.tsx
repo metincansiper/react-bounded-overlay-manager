@@ -1,4 +1,4 @@
-import React, { useState, useRef, ReactElement, useCallback, useEffect } from 'react';
+import React, { useState, useRef, ReactElement, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import Overlay from './Overlay';
 import OverlaysContainer from './OverlaysContainer';
@@ -7,6 +7,7 @@ import useWindowResize from '../hooks/useWindowResize';
 import { copyComponentBoundingBox } from '../util';
 import useTimedEventManager from '../hooks/useTimedEventManager';
 import useResizeObserver from '../hooks/useResizeObserver';
+import useFullscreenChange from '../hooks/useFullscreenChange';
 
 type Props = {
     boundingComponentRef: React.RefObject<HTMLElement>,
@@ -18,6 +19,8 @@ type Props = {
     skipAllSystemEvents?: boolean,
 };
 
+const getPortalContainer = () => document.fullscreenElement || document.body;
+
 // TODO: Provide an api exposing the functions to trigger show and hide events etc.?
 const BoundedOverlayManager: React.FC<Props> = ({ 
     boundingComponentRef, 
@@ -28,7 +31,7 @@ const BoundedOverlayManager: React.FC<Props> = ({
     hideOverlaysOnMouseLeave = true,
     showOverlaysOnMouseMove = true,
 }: Props) => {
-    const [portalContainer, setPortalContainer] = useState<Element>(document.fullscreenElement || document.body);
+    const [portalContainer, setPortalContainer] = useState<Element>(getPortalContainer);
     const [showOverlays, setShowOverlays] = useState(persistentlyShowOverlays);
     const overlaysContainerRef = useRef<HTMLDivElement>(null);
 
@@ -59,24 +62,11 @@ const BoundedOverlayManager: React.FC<Props> = ({
     //     updateOverlaysContainerBoundingBox();
     // }, [updateOverlaysContainerBoundingBox]);
 
-    // TODO: move this into a custom hook like useFullscreenChange()?
-    useEffect(() => {
-        const handleFullscreenChange = () => {
-            setPortalContainer(document.fullscreenElement || document.body);
-        }
+    const handleFullscreenChange = useCallback(() => {
+        setPortalContainer(getPortalContainer());
+    }, [setPortalContainer]);
 
-        document.addEventListener("fullscreenchange", handleFullscreenChange);
-        document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
-        document.addEventListener("mozfullscreenchange", handleFullscreenChange);
-        document.addEventListener("MSFullscreenChange", handleFullscreenChange);
-
-        return () => {
-            document.removeEventListener("fullscreenchange", handleFullscreenChange);
-            document.removeEventListener("webkitfullscreenchange", handleFullscreenChange);
-            document.removeEventListener("mozfullscreenchange", handleFullscreenChange);
-            document.removeEventListener("MSFullscreenChange", handleFullscreenChange);
-        };
-    }, []);
+    useFullscreenChange({ handleFullscreenChange });
     
     const controlWrapper = (
         <OverlaysContainer ref={overlaysContainerRef} boundingComponentRef={boundingComponentRef} show={showOverlays}>
