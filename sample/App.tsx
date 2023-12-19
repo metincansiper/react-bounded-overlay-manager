@@ -17,8 +17,8 @@ const FullScreenTextArea = () => {
         enabled={isFullScreen}
         onChange={handleFullScreenChange}
       >
-        <div ref={boundingComponentRef}  style={{ width: '100vw', height: '80vh' }}>
-          <div style={{ width: '100%', height: '300px', backgroundColor: 'red' }}></div>
+        <div style={{ width: '100vw', height: '80vh' }}>
+          <div ref={boundingComponentRef} style={{ width: '100%', height: '300px', backgroundColor: 'red' }}></div>
           <textarea style={{ width: '100%', height: '300px' }}></textarea>
           <button onClick={() => setIsFullScreen(!isFullScreen)}>
             {isFullScreen ? 'Exit Fullscreen' : 'Go Fullscreen'}

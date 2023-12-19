@@ -1,6 +1,7 @@
-import { CSSProperties } from "react";
+import { CSSProperties, useRef } from "react";
 import PredefinedPosition from "../enum/PredefinedPosition";
 import { BottomCenterOffsetProps, BottomLeftOffsetProps, CenterOffsetProps, MidLeftOffsetProps, MidRightOffsetProps, TopCenterOffsetProps, TopLeftOffsetProps, TopRightOffsetProps } from "../types/OffsetProps";
+import useForwardOverlayEvents from "../hooks/useForwardOverlayEvents";
 
 type PositionOffsetMapping = {
     [PredefinedPosition.TOP_LEFT]: TopLeftOffsetProps,
@@ -69,14 +70,18 @@ export const getOverlayContainerPositionStyle = (positionProps: OverlayPositionP
 };
 
 const Overlay: React.FC<Props> = ({ offset, position, children }) => {
+    const ref = useRef<HTMLDivElement>(null);
+
     const positionProps = { position, offset } as OverlayPositionProps;
     const style: CSSProperties = {
         ...getOverlayContainerPositionStyle(positionProps),
         pointerEvents: 'auto',
     };
 
+    useForwardOverlayEvents({ overlayRef: ref });
+
     return (
-        <div className="overlay" style={style}>
+        <div ref={ref} className="overlay" style={style}>
             { children }
         </div>
     );

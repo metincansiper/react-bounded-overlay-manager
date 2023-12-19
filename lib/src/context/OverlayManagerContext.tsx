@@ -4,7 +4,12 @@ import EventEmitter from 'eventemitter3';
 // Define the context type
 interface OverlayManagerContextType {
   overlayManagerEventEmitter: EventEmitter;
+  boundingComponentRef: React.RefObject<HTMLElement>;
 }
+
+type Props = {
+  boundingComponentRef: React.RefObject<HTMLElement>;
+};
 
 const OverlayManagerContext = createContext<OverlayManagerContextType | undefined>(undefined);
 
@@ -16,7 +21,7 @@ export const useOverlayManagerContext = () => {
   return context;
 };
 
-export const OverlayManagerContextProvider: React.FC<PropsWithChildren<{}>> = ({ children }) => {
+export const OverlayManagerContextProvider: React.FC<PropsWithChildren<Props>> = ({ children, boundingComponentRef }) => {
   const [eventEmitter] = useState(new EventEmitter());
 
   useEffect(() => {
@@ -25,9 +30,14 @@ export const OverlayManagerContextProvider: React.FC<PropsWithChildren<{}>> = ({
     };
   }, [eventEmitter]);
 
+  const contextValue = {
+    overlayManagerEventEmitter: eventEmitter,
+    boundingComponentRef,
+  };
+
   // Providing the EventEmitter in an object with the key `overlayManagerEventEmitter`
   return (
-    <OverlayManagerContext.Provider value={{ overlayManagerEventEmitter: eventEmitter }}>
+    <OverlayManagerContext.Provider value={contextValue}>
       {children}
     </OverlayManagerContext.Provider>
   );

@@ -7,9 +7,9 @@ import useOverlayManagerEvents from "../hooks/useOverlayManagerEvents";
 import useForwardBoundingComponentEvents from "../hooks/useForwardBoundingComponentEvents";
 import useTimedEventManager from "../hooks/useTimedEventManager";
 import Overlay from "./Overlay";
+import { useOverlayManagerContext } from "../context/OverlayManagerContext";
 
 type Props = {
-    boundingComponentRef: React.RefObject<HTMLElement>,
     children: ReactElement<typeof Overlay>[] | ReactElement<typeof Overlay>,
     overlaysShowTimeout?: number,
     persistentlyShowOverlays?: boolean,
@@ -19,8 +19,7 @@ type Props = {
 };
 
 // TODO: Provide an api exposing the functions to trigger show and hide events etc.?
-const BoundedOverlayManagerContent: React.FC<Props> = ({ 
-    boundingComponentRef, 
+const BoundedOverlayManagerContent: React.FC<Props> = ({
     children,
     overlaysShowTimeout = 2000,
     persistentlyShowOverlays = false, 
@@ -28,6 +27,7 @@ const BoundedOverlayManagerContent: React.FC<Props> = ({
     hideOverlaysOnMouseLeave = true,
     showOverlaysOnMouseMove = true,
 }: Props) => {
+    const { boundingComponentRef } = useOverlayManagerContext();
     const [showOverlays, setShowOverlays] = useState(persistentlyShowOverlays);
     const overlaysContainerRef = useRef<HTMLDivElement>(null);
 
@@ -39,9 +39,7 @@ const BoundedOverlayManagerContent: React.FC<Props> = ({
     const effectiveShowOverlaysOnMouseMove = showOverlaysOnMouseMove && !skipAllSystemEvents;
     const effectiveHideOverlaysOnMouseLeave = hideOverlaysOnMouseLeave && !skipAllSystemEvents;
 
-    useForwardBoundingComponentEvents({
-        boundingComponentRef,
-    });
+    useForwardBoundingComponentEvents();
     
     useOverlayManagerEvents({
         timedEventManager,
@@ -62,7 +60,7 @@ const BoundedOverlayManagerContent: React.FC<Props> = ({
     // }, [updateOverlaysContainerBoundingBox]);
     
     return (
-        <OverlaysContainer ref={overlaysContainerRef} boundingComponentRef={boundingComponentRef} show={showOverlays}>
+        <OverlaysContainer ref={overlaysContainerRef} show={showOverlays}>
             { children }
         </OverlaysContainer>
     );

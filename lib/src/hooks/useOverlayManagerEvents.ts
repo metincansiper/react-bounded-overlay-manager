@@ -21,20 +21,40 @@ const useOverlayManagerEvents = ({
         }
         
         const handleMouseMoveOnBoundingComponent = () => {
-            timedEventManager.requestStart();
+            if (showOverlaysOnMouseMove) {
+                timedEventManager.requestStart();
+            }
         };
     
         const handleMouseLeaveOnBoundingComponent = () => {
-            timedEventManager.requestStop();
+            if (hideOverlaysOnMouseLeave) {
+                timedEventManager.requestStop();
+            }
+        };
+
+        const handleMouseLeaveOnOverlay = () => {
+            if (hideOverlaysOnMouseLeave) {
+                timedEventManager.requestStop();
+            }
+        };
+
+        const handleMouseMoveOnOverlay = () => {
+            if (showOverlaysOnMouseMove) {
+                timedEventManager.requestStart();
+            }
         };
     
         overlayManagerEventEmitter.on('mousemoveOnBoundingComponent', handleMouseMoveOnBoundingComponent);
         overlayManagerEventEmitter.on('mouseleaveOnBoundingComponent', handleMouseLeaveOnBoundingComponent);
+        overlayManagerEventEmitter.on('mouseleaveOnOverlay', handleMouseLeaveOnOverlay);
+        overlayManagerEventEmitter.on('mousemoveOnOverlay', handleMouseMoveOnOverlay);
 
         return () => {
             overlayManagerEventEmitter.off('mousemoveOnBoundingComponent', handleMouseMoveOnBoundingComponent);
             overlayManagerEventEmitter.off('mouseleaveOnBoundingComponent', handleMouseLeaveOnBoundingComponent);
-        }
+            overlayManagerEventEmitter.off('mouseleaveOnOverlay', handleMouseLeaveOnOverlay);
+            overlayManagerEventEmitter.off('mousemoveOnOverlay', handleMouseMoveOnOverlay);
+        };
     }, [timedEventManager, showOverlaysOnMouseMove, hideOverlaysOnMouseLeave]);
 };
 

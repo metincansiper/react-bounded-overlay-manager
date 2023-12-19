@@ -2,7 +2,6 @@ import React, { ReactElement, ForwardedRef } from 'react';
 import Overlay from './Overlay';
 
 type Props = {
-    boundingComponentRef: React.RefObject<HTMLElement>,
     children: ReactElement<typeof Overlay>[] | ReactElement<typeof Overlay>,
     show: boolean,
 }

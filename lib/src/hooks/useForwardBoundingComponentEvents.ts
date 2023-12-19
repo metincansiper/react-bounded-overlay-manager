@@ -1,14 +1,8 @@
 import { useEffect } from 'react';
 import { useOverlayManagerContext } from '../context/OverlayManagerContext';
 
-type Options = {
-    boundingComponentRef: React.RefObject<HTMLElement>;
-}
-
-const useForwardBoundingComponentEvents = ({ 
-    boundingComponentRef, 
-}: Options) => {
-    const { overlayManagerEventEmitter } = useOverlayManagerContext();
+const useForwardBoundingComponentEvents = () => {
+    const { overlayManagerEventEmitter, boundingComponentRef } = useOverlayManagerContext();
     
     const handleMouseMove = () => {
         overlayManagerEventEmitter.emit('mousemoveOnBoundingComponent');
