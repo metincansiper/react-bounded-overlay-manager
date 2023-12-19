@@ -10,8 +10,8 @@ type Props = React.ComponentProps<typeof BoundedOverlayManagerContent> & {
 
 const getPortalContainer = () => document.fullscreenElement || document.body;
 
-const BoundedOverlayManager: React.FC<Props> = (props) => {
-    const { boundingComponentRef } = props;
+const BoundedOverlayManager: React.FC<Props> = ({boundingComponentRef, ...props}) => {
+    // const { boundingComponentRef } = props;
     const [portalContainer, setPortalContainer] = useState<Element>(getPortalContainer);
 
     const handleFullscreenChange = useCallback(() => {
