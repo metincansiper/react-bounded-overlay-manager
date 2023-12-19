@@ -6,7 +6,7 @@ type Options = {
 }
 
 const useForwardOverlayEvents = ({ overlayRef }: Options) => {
-    const { overlayManagerEventEmitter, boundingComponentRef } = useOverlayManagerContext();
+    const { overlayManagerEventEmitter } = useOverlayManagerContext();
     
     useEffect(() => {   
         const overlayElement = overlayRef.current;
@@ -16,14 +16,7 @@ const useForwardOverlayEvents = ({ overlayRef }: Options) => {
         }
 
         const handleMouseleave = (event: MouseEvent) => {
-            const relatedTarget = event.relatedTarget as Node | null;
-
-            // Check if the relatedTarget is the boundingComponent itself or one of its descendants
-            if (relatedTarget && (boundingComponentRef.current?.contains(relatedTarget) || boundingComponentRef.current === relatedTarget)) {
-                return;
-            }
-
-            overlayManagerEventEmitter.emit('mouseleaveOnOverlay');
+            overlayManagerEventEmitter.emit('mouseleaveOnOverlay', event);
         };
 
         const handleMousemove = () => {

@@ -13,7 +13,7 @@ const useOverlayManagerEvents = ({
     showOverlaysOnMouseMove = true,
     hideOverlaysOnMouseLeave = true,
 }: Options) => {
-    const { overlayManagerEventEmitter } = useOverlayManagerContext();
+    const { overlayManagerEventEmitter, boundingComponentRef } = useOverlayManagerContext();
     
     useEffect(() => {
         if (timedEventManager === null) {
@@ -32,7 +32,14 @@ const useOverlayManagerEvents = ({
             }
         };
 
-        const handleMouseLeaveOnOverlay = () => {
+        const handleMouseLeaveOnOverlay = (event: MouseEvent) => {
+            const relatedTarget = event.relatedTarget as Node | null;
+
+            // Check if the relatedTarget is the boundingComponent itself or one of its descendants
+            if (relatedTarget && (boundingComponentRef.current?.contains(relatedTarget) || boundingComponentRef.current === relatedTarget)) {
+                return;
+            }
+
             if (hideOverlaysOnMouseLeave) {
                 timedEventManager.requestStop();
             }
