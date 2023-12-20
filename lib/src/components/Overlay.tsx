@@ -52,6 +52,9 @@ export const getOverlayContainerPositionStyle = (boundingComponentRef: React.Ref
         ...offset,
     };
 
+    // TODO: create a class handling needed units facilities as a dependency
+    // inversion of units-css library and use it here.
+    // Do it before testing this component.
     const convertToPercent = (value: string | number) => {
         if (value === 0) {
             return 0;
@@ -97,7 +100,6 @@ const Overlay: React.FC<Props> = ({ offset, position, children }) => {
     };
 
     useForwardOverlayEvents({ overlayRef: ref });
-
 
     useEffect(() => {
         setPositionStyle(calculatePositionStyle());
