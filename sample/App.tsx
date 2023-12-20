@@ -25,7 +25,7 @@ const FullScreenTextArea = () => {
         </div>
       </FullScreen>
       <BoundedOverlayManager boundingComponentRef={boundingComponentRef} persistentlyShowOverlays={false}>
-          <Overlay position={PredefinedPosition.BOTTOM_CENTER}>
+          <Overlay position={PredefinedPosition.BOTTOM_CENTER} offset={{bottom: '10%', left: '400px'}}>
             <button>Overlay Button</button>
           </Overlay>
       </BoundedOverlayManager>
