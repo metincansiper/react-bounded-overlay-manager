@@ -1,31 +1,36 @@
 import TimedEventManager, { NO_TIMEOUT } from './TimedEventManager';
 
+// TODO: should test if clearTimeout and setTimeout are called with the correct arguments
+// or is it an implementation detail that should not be tested?
+
 describe('TimedEventManager', () => {
     let onStartMock: jest.Mock;
     let onStopMock: jest.Mock;
     let manager: TimedEventManager;
     const timeoutDuration = 1000;
 
-    afterEach(() => {
-        jest.useRealTimers();
-        jest.restoreAllMocks();
-    });
-
+    const createTimerEventManager = ({ onStart, onStop, timeoutDuration: timeoutDurationOption }: any = {}) => {
+        return new TimedEventManager({
+            onStart: onStart || onStartMock,
+            onStop: onStop || onStopMock,
+            timeoutDuration: timeoutDurationOption || timeoutDuration,
+        });
+    }
 
     beforeEach(() => {
         onStartMock = jest.fn();
         onStopMock = jest.fn();
-        manager = new TimedEventManager({
-            onStart: onStartMock,
-            onStop: onStopMock,
-            timeoutDuration,
-        });
+        manager = createTimerEventManager();
 
         jest.useFakeTimers();
         jest.spyOn(global, 'setTimeout');
         jest.spyOn(global, 'clearTimeout');
     });
 
+    afterEach(() => {
+        jest.useRealTimers();
+        jest.restoreAllMocks();
+    });
 
     it('should call onStart when requestStart is called', () => {
         manager.requestStart();
@@ -39,7 +44,6 @@ describe('TimedEventManager', () => {
         expect(onStartMock).toHaveBeenCalled();
 
         jest.advanceTimersByTime(timeoutDuration);
-        //    jest.runAllTimers(); // Fast-forward time
 
         expect(onStopMock).toHaveBeenCalled();
     });
@@ -57,12 +61,7 @@ describe('TimedEventManager', () => {
 
 
     it('should handle NO_TIMEOUT case correctly', () => {
-        manager = new TimedEventManager({
-            onStart: onStartMock,
-            onStop: onStopMock,
-            timeoutDuration: NO_TIMEOUT,
-        });
-
+        manager = createTimerEventManager({ timeoutDuration: NO_TIMEOUT });
         manager.requestStart();
 
         expect(setTimeout).not.toHaveBeenCalled();
@@ -73,6 +72,29 @@ describe('TimedEventManager', () => {
         expect(clearTimeout).not.toHaveBeenCalled();
         expect(onStopMock).toHaveBeenCalled();
     });
+
+    it('should handle multiple requestStart calls before timeout clears', () => {
+        manager.requestStart();
+        jest.advanceTimersByTime(timeoutDuration / 2);
+        manager.requestStart(); 
+    
+        expect(setTimeout).toHaveBeenCalledTimes(2);
+        expect(clearTimeout).toHaveBeenCalledTimes(1); 
+        expect(onStartMock).toHaveBeenCalledTimes(1);
+    
+        jest.advanceTimersByTime(timeoutDuration);
+        expect(onStopMock).toHaveBeenCalledTimes(1);
+    });
+    
+    it('should not do anything on requestStop call without an active timeout', () => {
+        manager.requestStop();
+        
+        // not sure if this should be tested
+        // expect(clearTimeout).not.toHaveBeenCalled(); 
+        
+        expect(onStopMock).not.toHaveBeenCalled(); 
+    });
+    
 });
 
 
