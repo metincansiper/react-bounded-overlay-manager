@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 
+// TODO: use debounce?
+
 type Options = {
     handleResize: (entry: ResizeObserverEntry) => void;
 }
