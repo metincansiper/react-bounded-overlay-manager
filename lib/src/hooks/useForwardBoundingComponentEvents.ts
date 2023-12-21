@@ -9,7 +9,6 @@ const useForwardBoundingComponentEvents = () => {
     };
 
     const handleMouseLeave = (event: any) => {
-        // TODO: think about if should handle mousemove in such overlay targets as well?
         const relatedOverlayTarget = event.relatedTarget?.closest('.overlay');
         if (relatedOverlayTarget) {
             return;
