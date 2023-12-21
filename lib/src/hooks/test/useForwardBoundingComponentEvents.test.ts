@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react';
 import { useOverlayManagerContext } from '../../context/OverlayManagerContext';
 import useForwardBoundingComponentEvents from '../useForwardBoundingComponentEvents';
-const EventEmitter = require('eventemitter3'); // TODO: import did not work for some reason, why?
+import { makeMockComponentRef } from './util';
 
 const createOverlayElement = () => {
     const overlayElement = document.createElement('div');
@@ -35,31 +35,10 @@ describe('useForwardBoundingComponentEvents', () => {
         emit: jest.fn(),
     };
 
-
-    const makeMockBoundingComponentRef = () => {
-        const eventEmitter = new EventEmitter();
-
-        const mockBoundingComponentRef = {
-            current: {
-                addEventListener: jest.fn().mockImplementation((event, callback) => {
-                    eventEmitter.on(event, callback);
-                }),
-                removeEventListener: jest.fn().mockImplementation((event, callback) => {
-                    eventEmitter.off(event, callback);
-                }),
-                dispatchEvent: jest.fn().mockImplementation((event: Event) => {
-                    eventEmitter.emit(event.type, event);
-                }),
-            },
-        };
-
-        return mockBoundingComponentRef;
-    };
-
     let mockBoundingComponentRef: any;
 
     beforeEach(() => {
-        mockBoundingComponentRef = makeMockBoundingComponentRef();
+        mockBoundingComponentRef = makeMockComponentRef();
         (useOverlayManagerContext as jest.Mock).mockReturnValue({
             overlayManagerEventEmitter: mockOverlayManagerEventEmitter,
             boundingComponentRef: mockBoundingComponentRef,
@@ -121,7 +100,7 @@ describe('useForwardBoundingComponentEvents', () => {
     it('handles updates to boundingComponentRef correctly', () => {
         const { rerender } = renderHook(() => useForwardBoundingComponentEvents());
 
-        const newMockBoundingComponentRef = makeMockBoundingComponentRef();
+        const newMockBoundingComponentRef = makeMockComponentRef();
 
         // Update the context with the new mockBoundingComponentRef
         // this must clean up the old event listeners and set up new ones
