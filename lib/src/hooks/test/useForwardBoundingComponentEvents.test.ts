@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react';
-import { useOverlayManagerContext } from '../context/OverlayManagerContext';
-import useForwardBoundingComponentEvents from './useForwardBoundingComponentEvents';
+import { useOverlayManagerContext } from '../../context/OverlayManagerContext';
+import useForwardBoundingComponentEvents from '../useForwardBoundingComponentEvents';
 const EventEmitter = require('eventemitter3'); // TODO: import did not work for some reason, why?
 
 const createOverlayElement = () => {
@@ -28,7 +28,7 @@ const assertUnmountExpects = (boundingComponentRef: any) => {
     expect(boundingComponentRef.current.removeEventListener).toHaveBeenCalledWith('mouseleave', expect.any(Function));
 }
 
-jest.mock('../context/OverlayManagerContext');
+jest.mock('../../context/OverlayManagerContext');
 
 describe('useForwardBoundingComponentEvents', () => {
     const mockOverlayManagerEventEmitter = {

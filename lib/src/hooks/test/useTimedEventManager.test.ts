@@ -1,9 +1,7 @@
 import { renderHook } from '@testing-library/react';
-import useTimedEventManager from './useTimedEventManager';
-// import TimedEventManager from '../timer/TimedEventManager';
-// import TimedEventManager, { NO_TIMEOUT } from '../timer/TimedEventManager';
+import useTimedEventManager from '../useTimedEventManager';
 
-import TimedEventManager, { NO_TIMEOUT } from '../timer/TimedEventManager';
+import TimedEventManager, { NO_TIMEOUT } from '../../timer/TimedEventManager';
 
 const requestStopMock = jest.fn();
 

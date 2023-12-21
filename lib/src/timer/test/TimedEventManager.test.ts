@@ -1,4 +1,4 @@
-import TimedEventManager, { NO_TIMEOUT } from './TimedEventManager';
+import TimedEventManager, { NO_TIMEOUT } from '../TimedEventManager';
 
 // TODO: should test if clearTimeout and setTimeout are called with the correct arguments
 // or is it an implementation detail that should not be tested?

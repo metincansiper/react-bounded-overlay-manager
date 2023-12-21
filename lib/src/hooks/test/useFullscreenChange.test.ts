@@ -1,5 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import useFullscreenChange from './useFullscreenChange';
+import useFullscreenChange from '../useFullscreenChange';
 
 describe('useFullscreenChange', () => {
     const handleFullscreenChange = jest.fn();
