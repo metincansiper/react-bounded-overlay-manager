@@ -18,11 +18,9 @@ const createElementWithOverlayAncestor = () => {
     return grandchildElement;
 }
 
-// Mock the context
 jest.mock('../context/OverlayManagerContext');
 
 describe('useForwardBoundingComponentEvents', () => {
-    // Mock dependencies
     const mockOverlayManagerEventEmitter = {
         emit: jest.fn(),
     };
@@ -50,7 +48,6 @@ describe('useForwardBoundingComponentEvents', () => {
 
     let mockBoundingComponentRef: any;
 
-    // Setup mock context before each test
     beforeEach(() => {
         mockBoundingComponentRef = makeMockBoundingComponentRef();
         (useOverlayManagerContext as jest.Mock).mockReturnValue({
@@ -59,7 +56,6 @@ describe('useForwardBoundingComponentEvents', () => {
         });
     });
 
-    // Clear all mocks after each test
     afterEach(() => {
         jest.clearAllMocks();
     });
