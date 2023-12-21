@@ -10,6 +10,9 @@ const useForwardBoundingComponentEvents = () => {
 
     const handleMouseLeave = (event: any) => {
         const relatedOverlayTarget = event.relatedTarget?.closest('.overlay');
+
+        // if the relatedTarget is an overlay, then we don't want to consider 
+        // this as a mouseleave event on the boundingComponent
         if (relatedOverlayTarget) {
             return;
         }
