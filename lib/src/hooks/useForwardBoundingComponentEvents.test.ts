@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react';
 import { useOverlayManagerContext } from '../context/OverlayManagerContext';
 import useForwardBoundingComponentEvents from './useForwardBoundingComponentEvents';
-const EventEmitter = require('eventemitter3'); // TODO: import did not work for some reason
+const EventEmitter = require('eventemitter3'); // TODO: import did not work for some reason, why?
 
 const createOverlayElement = () => {
     const overlayElement = document.createElement('div');
@@ -16,6 +16,16 @@ const createElementWithOverlayAncestor = () => {
     const grandchildElement = document.createElement('div');
     childElement.appendChild(grandchildElement);
     return grandchildElement;
+}
+
+const assertMountExpects = (boundingComponentRef: any) => {
+    expect(boundingComponentRef.current.addEventListener).toHaveBeenCalledWith('mousemove', expect.any(Function));
+    expect(boundingComponentRef.current.addEventListener).toHaveBeenCalledWith('mouseleave', expect.any(Function));
+};
+
+const assertUnmountExpects = (boundingComponentRef: any) => {
+    expect(boundingComponentRef.current.removeEventListener).toHaveBeenCalledWith('mousemove', expect.any(Function));
+    expect(boundingComponentRef.current.removeEventListener).toHaveBeenCalledWith('mouseleave', expect.any(Function));
 }
 
 jest.mock('../context/OverlayManagerContext');
@@ -63,13 +73,11 @@ describe('useForwardBoundingComponentEvents', () => {
     it('sets up and tears down event listeners', () => {
         const { unmount } = renderHook(() => useForwardBoundingComponentEvents());
 
-        expect(mockBoundingComponentRef.current.addEventListener).toHaveBeenCalledWith('mousemove', expect.any(Function));
-        expect(mockBoundingComponentRef.current.addEventListener).toHaveBeenCalledWith('mouseleave', expect.any(Function));
+        assertMountExpects(mockBoundingComponentRef);
 
         unmount();
 
-        expect(mockBoundingComponentRef.current.removeEventListener).toHaveBeenCalledWith('mousemove', expect.any(Function));
-        expect(mockBoundingComponentRef.current.removeEventListener).toHaveBeenCalledWith('mouseleave', expect.any(Function));
+        assertUnmountExpects(mockBoundingComponentRef);
     });
 
     it('emits mousemoveOnBoundingComponent when mousemove event occurs', () => {
@@ -106,7 +114,25 @@ describe('useForwardBoundingComponentEvents', () => {
 
         const event = new MouseEvent('mouseleave', { relatedTarget });
         mockBoundingComponentRef.current.dispatchEvent(event);
-    
+
         expect(mockOverlayManagerEventEmitter.emit).not.toHaveBeenCalledWith('mouseleaveOnBoundingComponent');
-      });
+    });
+
+    it('handles updates to boundingComponentRef correctly', () => {
+        const { rerender } = renderHook(() => useForwardBoundingComponentEvents());
+
+        const newMockBoundingComponentRef = makeMockBoundingComponentRef();
+
+        // Update the context with the new mockBoundingComponentRef
+        // this must clean up the old event listeners and set up new ones
+        (useOverlayManagerContext as jest.Mock).mockReturnValue({
+            overlayManagerEventEmitter: mockOverlayManagerEventEmitter,
+            boundingComponentRef: newMockBoundingComponentRef,
+        });
+
+        rerender();
+
+        assertUnmountExpects(mockBoundingComponentRef);
+        assertMountExpects(newMockBoundingComponentRef);
+    });
 });
