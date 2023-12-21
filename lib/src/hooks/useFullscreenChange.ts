@@ -5,22 +5,18 @@ type Options = {
 }
 
 const useFullscreenChange = ({ handleFullscreenChange }: Options) => {
-    const fullScreenChange = () => {
-        handleFullscreenChange();
-    };
-
     useEffect(() => {
         const events = ["fullscreenchange", "webkitfullscreenchange", "mozfullscreenchange", "MSFullscreenChange"];
         events.forEach(event => {
-            document.addEventListener(event, fullScreenChange);
+            document.addEventListener(event, handleFullscreenChange);
         });
 
         return () => {
             events.forEach(event => {
-                document.removeEventListener(event, fullScreenChange);
+                document.removeEventListener(event, handleFullscreenChange);
             });
         }
-    }, []);
+    }, [handleFullscreenChange]);
 };
 
 export default useFullscreenChange;
