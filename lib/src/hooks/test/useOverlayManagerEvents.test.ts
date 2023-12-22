@@ -3,7 +3,7 @@ import useOverlayManagerEvents from '../useOverlayManagerEvents';
 import TimedEventManager from '../../timer/TimedEventManager';
 // import { makeMockComponentRef } from './util';
 import { useOverlayManagerContext } from '../../context/OverlayManagerContext';
-const EventEmitter = require('eventemitter3');
+import { EventEmitter } from 'events';
 
 jest.mock('../../context/OverlayManagerContext');
 

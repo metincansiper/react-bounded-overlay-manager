@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState, PropsWithChildren } from 'react';
-import EventEmitter from 'eventemitter3';
+import { EventEmitter } from 'events';
 
 // Define the context type
 interface OverlayManagerContextType {

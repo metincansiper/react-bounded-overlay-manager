@@ -22,8 +22,9 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^14.1.2",
+    "@types/events": "^3.0.3",
     "@types/jest": "^29.5.11",
-    "@types/node": "^20.10.4",
+    "@types/node": "^20.10.5",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
@@ -48,7 +49,7 @@
   },
   "dependencies": {
     "@react-hook/debounce": "^4.0.0",
-    "eventemitter3": "^5.0.1",
+    "events": "^3.3.0",
     "units-css": "^0.4.0"
   }
 }
