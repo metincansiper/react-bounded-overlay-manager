@@ -73,4 +73,11 @@ describe('useForwardOverlayEvents', () => {
             assertMountExpects(newMockOverlayRef);
         });
     });
+
+    it('does not emit any mount events when overlay element is null', () => {
+        const overlayRef = { current: null };
+        renderHook(() => useForwardOverlayEvents({ overlayRef }));
+
+        expect(mockOverlayManagerEventEmitter.emit).not.toHaveBeenCalled();
+    });
 });
