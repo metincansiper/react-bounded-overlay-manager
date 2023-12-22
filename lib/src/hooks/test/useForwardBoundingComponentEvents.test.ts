@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react';
 import { useOverlayManagerContext } from '../../context/OverlayManagerContext';
 import useForwardBoundingComponentEvents from '../useForwardBoundingComponentEvents';
-import { makeMockComponentRef } from './util';
+import { makeEventOnlyMockComponentRef } from './util';
 
 const createOverlayElement = () => {
     const overlayElement = document.createElement('div');
@@ -38,7 +38,7 @@ describe('useForwardBoundingComponentEvents', () => {
     let mockBoundingComponentRef: any;
 
     beforeEach(() => {
-        mockBoundingComponentRef = makeMockComponentRef();
+        mockBoundingComponentRef = makeEventOnlyMockComponentRef();
         (useOverlayManagerContext as jest.Mock).mockReturnValue({
             overlayManagerEventEmitter: mockOverlayManagerEventEmitter,
             boundingComponentRef: mockBoundingComponentRef,
@@ -100,7 +100,7 @@ describe('useForwardBoundingComponentEvents', () => {
     it('handles updates to boundingComponentRef correctly', () => {
         const { rerender } = renderHook(() => useForwardBoundingComponentEvents());
 
-        const newMockBoundingComponentRef = makeMockComponentRef();
+        const newMockBoundingComponentRef = makeEventOnlyMockComponentRef();
 
         // Update the context with the new mockBoundingComponentRef
         // this must clean up the old event listeners and set up new ones

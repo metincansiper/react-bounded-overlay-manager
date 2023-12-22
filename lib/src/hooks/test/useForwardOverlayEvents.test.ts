@@ -1,7 +1,7 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { useOverlayManagerContext } from "../../context/OverlayManagerContext";
 import useForwardOverlayEvents from "../useForwardOverlayEvents";
-import { makeMockComponentRef } from "./util";
+import { makeEventOnlyMockComponentRef } from "./util";
 
 jest.mock('../../context/OverlayManagerContext');
 
@@ -20,7 +20,7 @@ describe('useForwardOverlayEvents', () => {
         emit: jest.fn(),
     };
 
-    const mockOverlayRef = makeMockComponentRef();
+    const mockOverlayRef = makeEventOnlyMockComponentRef();
 
     beforeEach(() => {
         (useOverlayManagerContext as jest.Mock).mockReturnValue({
@@ -65,7 +65,7 @@ describe('useForwardOverlayEvents', () => {
     it('handles updates to overlayRef correctly', () => {
         const { rerender } = renderHook(() => useForwardOverlayEvents({ overlayRef: mockOverlayRef as any }));
 
-        const newMockOverlayRef = makeMockComponentRef();
+        const newMockOverlayRef = makeEventOnlyMockComponentRef();
         rerender(() => useForwardOverlayEvents({ overlayRef: newMockOverlayRef as any }));
 
         waitFor(() => {

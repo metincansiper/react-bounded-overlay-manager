@@ -1,6 +1,6 @@
 const EventEmitter = require('eventemitter3');
 
-export const makeMockComponentRef = () => {
+export const makeEventOnlyMockComponentRef = () => {
     const eventEmitter = new EventEmitter();
 
     return {

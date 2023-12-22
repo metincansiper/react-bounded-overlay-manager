@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import useResizeObserver from "../useResizeObserver";
-import { makeMockComponentRef } from "./util";
+import { makeEventOnlyMockComponentRef } from "./util";
 
 jest.mock('@react-hook/debounce', () => ({
     useDebounceCallback: jest.fn((fn) => fn),
@@ -62,7 +62,7 @@ describe('useResizeObserver', () => {
     });
 
     it('calls handleResize when a resize event occurs', () => {
-        const targetElementRef = makeMockComponentRef() as any;
+        const targetElementRef = makeEventOnlyMockComponentRef() as any;
         const handleResize = jest.fn();
         renderHook(() => useResizeObserver(targetElementRef, { handleResize }));
 
