@@ -1,19 +1,19 @@
 import { useEffect } from 'react';
-
-// TODO: use debounce?
+import { useDebounceCallback } from '@react-hook/debounce';
 
 type Options = {
     handleResize: () => void;
 };
 
 const useWindowResize = ({ handleResize }: Options) => {
+    const debouncedHandleResize = useDebounceCallback(handleResize, 100);
     useEffect(() => {
-        window.addEventListener('resize', handleResize);
+        window.addEventListener('resize', debouncedHandleResize);
 
         return () => {
-            window.removeEventListener('resize', handleResize);
+            window.removeEventListener('resize', debouncedHandleResize);
         };
-    }, [handleResize]);
+    }, [debouncedHandleResize]);
 };
 
 export default useWindowResize;
