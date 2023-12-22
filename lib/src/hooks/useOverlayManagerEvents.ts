@@ -4,14 +4,14 @@ import TimedEventManager from "../timer/TimedEventManager";
 
 type Options = {
     timedEventManager: TimedEventManager | null;
-    showOverlaysOnMouseMove?: boolean;
-    hideOverlaysOnMouseLeave?: boolean;
+    requestStartOnMouseMove?: boolean;
+    requestStopOnMouseMove?: boolean;
 }
 
 const useOverlayManagerEvents = ({ 
     timedEventManager,
-    showOverlaysOnMouseMove = true,
-    hideOverlaysOnMouseLeave = true,
+    requestStartOnMouseMove = true,
+    requestStopOnMouseMove = true,
 }: Options) => {
     const { overlayManagerEventEmitter, boundingComponentRef } = useOverlayManagerContext();
     
@@ -21,19 +21,19 @@ const useOverlayManagerEvents = ({
         }
         
         const handleMouseMoveOnBoundingComponent = () => {
-            if (showOverlaysOnMouseMove) {
+            if (requestStartOnMouseMove) {
                 timedEventManager.requestStart();
             }
         };
     
         const handleMouseLeaveOnBoundingComponent = () => {
-            if (hideOverlaysOnMouseLeave) {
+            if (requestStopOnMouseMove) {
                 timedEventManager.requestStop();
             }
         };
 
         const handleMouseLeaveOnOverlay = (event: MouseEvent) => {
-            if (hideOverlaysOnMouseLeave) {
+            if (requestStopOnMouseMove) {
                 const relatedTarget = event.relatedTarget as Node | null;
 
                 // Check if the relatedTarget is the boundingComponent itself or one of its descendants
@@ -46,7 +46,7 @@ const useOverlayManagerEvents = ({
         };
 
         const handleMouseMoveOnOverlay = () => {
-            if (showOverlaysOnMouseMove) {
+            if (requestStartOnMouseMove) {
                 timedEventManager.requestStart();
             }
         };
@@ -62,7 +62,7 @@ const useOverlayManagerEvents = ({
             overlayManagerEventEmitter.off('mouseleaveOnOverlay', handleMouseLeaveOnOverlay);
             overlayManagerEventEmitter.off('mousemoveOnOverlay', handleMouseMoveOnOverlay);
         };
-    }, [timedEventManager, showOverlaysOnMouseMove, hideOverlaysOnMouseLeave]);
+    }, [timedEventManager, requestStartOnMouseMove, requestStopOnMouseMove]);
 };
 
 export default useOverlayManagerEvents;

@@ -43,8 +43,8 @@ const BoundedOverlayManagerContent: React.FC<Props> = ({
     
     useOverlayManagerEvents({
         timedEventManager,
-        showOverlaysOnMouseMove: effectiveShowOverlaysOnMouseMove,
-        hideOverlaysOnMouseLeave: effectiveHideOverlaysOnMouseLeave,
+        requestStartOnMouseMove: effectiveShowOverlaysOnMouseMove,
+        requestStopOnMouseMove: effectiveHideOverlaysOnMouseLeave,
     });
     
     const updateOverlaysContainerBoundingBox = useCallback(() => {
