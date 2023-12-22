@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-
-// TODO: use debounce?
+import { useDebounceCallback } from '@react-hook/debounce';
 
 type Options = {
     handleResize: (entry: ResizeObserverEntry) => void;
@@ -10,23 +9,23 @@ function useResizeObserver(
     targetElement: React.RefObject<HTMLElement>, 
     { handleResize }: Options
 ) {
+    const debouncedHandleResize = useDebounceCallback(handleResize, 100);
+
     useEffect(() => {
-        if (!targetElement) return;
+        if (!targetElement.current) return;
 
         const observer = new ResizeObserver(entries => {
             for (const entry of entries) {
-                handleResize(entry);
+                debouncedHandleResize(entry);
             }
         });
 
-        if (targetElement.current) {
-            observer.observe(targetElement.current);
-        }
+        observer.observe(targetElement.current);
 
         return () => {
             observer.disconnect();
         };
-    }, [targetElement, handleResize]);
+    }, [targetElement, debouncedHandleResize]);
 }
 
 export default useResizeObserver;
