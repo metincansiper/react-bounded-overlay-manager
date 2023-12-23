@@ -4,51 +4,56 @@ import { EventEmitter } from 'events';
 
 // Helper component for testing context
 const TestComponent = () => {
-  const { overlayManagerEventEmitter, boundingComponentRef } = useOverlayManagerContext();
+    const { overlayManagerEventEmitter, boundingComponentRef } = useOverlayManagerContext();
 
-  return (
-    <div>
-        {overlayManagerEventEmitter instanceof EventEmitter ? <div data-testid="eventEmitter"/> : null}
-        {boundingComponentRef.current ? <div data-testid="boundingComponentRef"/> : null}
-    </div>
-  );
+    return (
+        <div>
+            {overlayManagerEventEmitter instanceof EventEmitter ? <div data-testid="eventEmitter" /> : null}
+            {boundingComponentRef.current ? <div data-testid="boundingComponentRef" /> : null}
+        </div>
+    );
 };
 
 describe('OverlayManagerContext', () => {
-  afterEach(cleanup);
+    afterEach(cleanup);
 
-  it('provides overlayManagerEventEmitter and boundingComponentRef', () => {
-    render(
-      <OverlayManagerContextProvider boundingComponentRef={{ current: document.createElement('div') }}>
-        <TestComponent />
-      </OverlayManagerContextProvider>
-    );
+    it('provides overlayManagerEventEmitter and boundingComponentRef', () => {
+        render(
+            <OverlayManagerContextProvider boundingComponentRef={{ current: document.createElement('div') }}>
+                <TestComponent />
+            </OverlayManagerContextProvider>
+        );
 
-    expect(screen.getByTestId('eventEmitter')).not.toBeNull();
-    expect(screen.getByTestId('boundingComponentRef')).not.toBeNull();
-  });
+        expect(screen.getByTestId('eventEmitter')).not.toBeNull();
+        expect(screen.getByTestId('boundingComponentRef')).not.toBeNull();
+    });
 
-  it('throws error when used outside provider', () => {
-    const renderOutsideProvider = () => {
-      render(<TestComponent />);
-    };
+    it('throws error when used outside provider', () => {
+        const consoleSpy = jest.spyOn(console, 'error');
+        consoleSpy.mockImplementation(() => { });
 
-    expect(renderOutsideProvider).toThrow('useOverlayManagerContext must be used within a OverlayManagerContextProvider');
-  });
+        const renderOutsideProvider = () => {
+            render(<TestComponent />);
+        };
 
-  it('cleans up eventEmitter listeners on unmount', () => {
-    const removeAllListenersSpy = jest.spyOn(EventEmitter.prototype, 'removeAllListeners');
+        expect(renderOutsideProvider).toThrow('useOverlayManagerContext must be used within a OverlayManagerContextProvider');
 
-    const { unmount } = render(
-      <OverlayManagerContextProvider boundingComponentRef={{ current: document.createElement('div') }}>
-        <div>Test Component</div>
-      </OverlayManagerContextProvider>
-    );
+        consoleSpy.mockRestore();
+    });
 
-    unmount();
+    it('cleans up eventEmitter listeners on unmount', () => {
+        const removeAllListenersSpy = jest.spyOn(EventEmitter.prototype, 'removeAllListeners');
 
-    expect(removeAllListenersSpy).toHaveBeenCalled();
+        const { unmount } = render(
+            <OverlayManagerContextProvider boundingComponentRef={{ current: document.createElement('div') }}>
+                <div>Test Component</div>
+            </OverlayManagerContextProvider>
+        );
 
-    removeAllListenersSpy.mockRestore();
-  });
+        unmount();
+
+        expect(removeAllListenersSpy).toHaveBeenCalled();
+
+        removeAllListenersSpy.mockRestore();
+    });
 });
