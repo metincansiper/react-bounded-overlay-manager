@@ -202,12 +202,12 @@ jest.mock('../../hooks/useForwardBoundingComponentEvents');
 
 jest.mock('../../hooks/useForwardOverlayEvents', () => ({
     __esModule: true, // This property is needed for mocking default exports
-    default: jest.fn(), 
+    default: jest.fn(),
 }));
 
 jest.mock('../../hooks/useWindowResize', () => ({
     __esModule: true,
-    default: jest.fn(), 
+    default: jest.fn(),
 }));
 
 jest.mock('../../util/css', () => ({
@@ -263,7 +263,7 @@ describe('Overlay Component', () => {
         const childTestId = 'child-testid';
         const child = <div data-testid={childTestId}>Test Child</div>;
         const { getByTestId } = render(
-            <Overlay position={PredefinedPosition.TOP_LEFT}>{ child }</Overlay>
+            <Overlay position={PredefinedPosition.TOP_LEFT}>{child}</Overlay>
         );
 
         expect(getByTestId(childTestId)).toBeInTheDocument();
@@ -275,5 +275,45 @@ describe('Overlay Component', () => {
         );
 
         expect(getByRole('overlay')).toHaveClass(overlayClassName);
+    });
+
+    it('updates as expected when position prop is updated', () => {
+        const { rerender, getByRole } = render(
+            <Overlay position={PredefinedPosition.TOP_CENTER}>
+                Test Content
+            </Overlay>
+        );
+
+        let overlayElement = getByRole('overlay');
+        expect(overlayElement).toHaveStyle({ top: 0, left: '50%' });
+
+        rerender(
+            <Overlay position={PredefinedPosition.CENTER}>
+                Test Content
+            </Overlay>
+        );
+
+        expect(overlayElement).toHaveStyle({ top: '50%', left: '50%' });
+    });
+
+    it('updates as expected when offset prop is updated', () => {
+        const initialOffset = { top: '10%', left: '10%' };
+        const { rerender, getByRole } = render(
+            <Overlay position={PredefinedPosition.TOP_LEFT} offset={initialOffset}>
+                Test Content
+            </Overlay>
+        );
+
+        let overlayElement = getByRole('overlay');
+        expect(overlayElement).toHaveStyle(initialOffset);
+        
+        const updatedOffset = { top: '20%', left: '20%' };
+        rerender(
+            <Overlay position={PredefinedPosition.TOP_LEFT} offset={updatedOffset}>
+                Test Content
+            </Overlay>
+        );
+
+        expect(overlayElement).toHaveStyle(updatedOffset);
     });
 });
