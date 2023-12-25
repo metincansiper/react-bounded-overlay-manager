@@ -39,7 +39,7 @@ const defaultOffsets = {
     right: 0,
 };
 
-export const getOverlayPositionStyle = (boundingComponentRef: React.RefObject<HTMLElement>, positionProps: OverlayPositionProps): React.CSSProperties => {
+const getOverlayPositionStyle = (boundingComponentRef: React.RefObject<HTMLElement>, positionProps: OverlayPositionProps): React.CSSProperties => {
     if (!boundingComponentRef.current) {
         return {};
     }
