@@ -2,6 +2,9 @@ import React, { ReactElement, ForwardedRef } from 'react';
 import Overlay from './Overlay';
 import styles from './OverlaysContainer.module.css';
 
+export const overlaysContainerClassName = styles.overlaysContainer;
+export const overlaysContainerContentClassName = styles.overlaysContainerContent;
+
 type Props = {
     children: ReactElement<typeof Overlay>[] | ReactElement<typeof Overlay>,
     show: boolean,
@@ -14,13 +17,13 @@ const OverlaysContainer: React.ForwardRefRenderFunction<HTMLDivElement, Props> =
     const shouldUnmount = unmountContentWhenHidden && !show;
 
     const content = shouldUnmount ? null : (
-        <div className={styles.overlaysContainerContent}>
+        <div role='overlays-container-content' className={overlaysContainerContentClassName}>
             { children }
         </div>
     );
     
     return (
-        <div className={`overlays-container ${styles.overlaysContainer}`} ref={ref as ForwardedRef<HTMLDivElement>} style={{ display }}>
+        <div role='overlays-container' className={overlaysContainerClassName} ref={ref as ForwardedRef<HTMLDivElement>} style={{ display }}>
             {
                 content
             }
