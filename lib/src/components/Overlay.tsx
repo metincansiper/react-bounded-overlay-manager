@@ -1,11 +1,13 @@
 import { CSSProperties, useCallback, useEffect, useRef, useState } from "react";
-// @ts-ignore
-import units from 'units-css';
 import PredefinedPosition from "../enum/PredefinedPosition";
 import { BottomCenterOffsetProps, BottomLeftOffsetProps, CenterOffsetProps, MidLeftOffsetProps, MidRightOffsetProps, TopCenterOffsetProps, TopLeftOffsetProps, TopRightOffsetProps } from "../types/OffsetProps";
 import useForwardOverlayEvents from "../hooks/useForwardOverlayEvents";
 import useWindowResize from "../hooks/useWindowResize";
 import { useOverlayManagerContext } from "../context/OverlayManagerContext";
+import { convertCssUnitToPercent } from "../util/css";
+import styles from './Overlay.module.css';
+
+export const overlayClassName = styles.overlay;
 
 type PositionOffsetMapping = {
     [PredefinedPosition.TOP_LEFT]: TopLeftOffsetProps,
@@ -37,30 +39,24 @@ const defaultOffsets = {
     right: 0,
 };
 
-export const getOverlayContainerPositionStyle = (boundingComponentRef: React.RefObject<HTMLElement>, positionProps: OverlayPositionProps): React.CSSProperties => {
+export const getOverlayPositionStyle = (boundingComponentRef: React.RefObject<HTMLElement>, positionProps: OverlayPositionProps): React.CSSProperties => {
     if (!boundingComponentRef.current) {
         return {};
     }
     
     const { position, offset } = positionProps;
-    const commonStyles: React.CSSProperties = {
-        position: 'absolute'
-    };
 
     const { top, bottom, left, right } = {
         ...defaultOffsets,
         ...offset,
     };
 
-    // TODO: create a class handling needed units facilities as a dependency
-    // inversion of units-css library and use it here.
-    // Do it before testing this component.
-    const convertToPercent = (value: string | number) => {
-        if (value === 0) {
-            return 0;
+    const convertToPercent = (value: any) => {
+        if (!boundingComponentRef.current) {
+            throw new Error('Bounding component ref is not set');
         }
 
-        return units.convert('%', value, boundingComponentRef.current);
+        return convertCssUnitToPercent(value, boundingComponentRef.current);
     };
 
     const horizontalCenterLeft = `${50+convertToPercent(left)}%`;
@@ -78,26 +74,18 @@ export const getOverlayContainerPositionStyle = (boundingComponentRef: React.Ref
         [PredefinedPosition.MID_RIGHT]: { top: verticalCenterTop, right, transform: 'translateY(-50%)' },
     };
 
-    const styles = {
-        ...commonStyles,
-        ...specificStyles[position] || {},
-    };
-
-    return styles;
+    return specificStyles[position] || {};
 };
 
 const Overlay: React.FC<Props> = ({ offset, position, children }) => {
     const ref = useRef<HTMLDivElement>(null);
     const { boundingComponentRef } = useOverlayManagerContext();
-    const calculatePositionStyle = useCallback(() => {
-        return getOverlayContainerPositionStyle(boundingComponentRef, { position, offset } as OverlayPositionProps);
-    }, [boundingComponentRef, position, offset]);
-    const [positionStyle, setPositionStyle] = useState<CSSProperties>(calculatePositionStyle);
 
-    const style: CSSProperties = {
-        ...positionStyle,
-        pointerEvents: 'auto',
-    };
+    const calculatePositionStyle = useCallback(() => {
+        return getOverlayPositionStyle(boundingComponentRef, { position, offset } as OverlayPositionProps);
+    }, [boundingComponentRef, position, offset]);
+    
+    const [positionStyle, setPositionStyle] = useState<CSSProperties>(calculatePositionStyle);
 
     useForwardOverlayEvents({ overlayRef: ref });
 
@@ -109,7 +97,7 @@ const Overlay: React.FC<Props> = ({ offset, position, children }) => {
     useWindowResize({ handleResize: handleWindowResize });
 
     return (
-        <div ref={ref} className="overlay" style={style}>
+        <div ref={ref} className={overlayClassName} role="overlay" style={positionStyle}>
             { children }
         </div>
     );

@@ -1,7 +1,7 @@
 import { ReactElement, useCallback, useRef, useState } from "react";
 import useResizeObserver from "../hooks/useResizeObserver";
 import useWindowResize from "../hooks/useWindowResize";
-import { copyComponentBoundingBox } from "../util";
+import { copyComponentBoundingBox } from "../util/bbox";
 import OverlaysContainer from "./OverlaysContainer";
 import useOverlayManagerEvents from "../hooks/useOverlayManagerEvents";
 import useForwardBoundingComponentEvents from "../hooks/useForwardBoundingComponentEvents";

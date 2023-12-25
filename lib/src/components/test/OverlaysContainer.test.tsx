@@ -1,12 +1,10 @@
 
 import OverlaysContainer, { overlaysContainerClassName, overlaysContainerContentClassName } from '../OverlaysContainer';
-
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 
 const queryOverlaysContainer = (container: HTMLElement) => container.querySelector(`[role='overlays-container']`);
 const queryOverlaysContainerContent = (container: HTMLElement) => container.querySelector(`[role='overlays-container-content']`);
-
 
 describe('OverlaysContainer', () => {
   const mockChildText = 'Mock Child';
