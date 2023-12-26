@@ -1,4 +1,5 @@
 // BoundedOverlayManagerContent.test.js
+import React from 'react';
 import { render, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import BoundedOverlayManagerContent from '../../components/BoundedOverlayManagerContent';
@@ -10,6 +11,7 @@ import useOverlayManagerEvents from '../../hooks/useOverlayManagerEvents';
 import useWindowResize from '../../hooks/useWindowResize';
 import useResizeObserver from '../../hooks/useResizeObserver';
 import { makeEventOnlyMockComponentRef } from '../../hooks/test/util';
+
 // import OverlaysContainer from '../OverlaysContainer';
 // import useForwardBoundingComponentEvents from '../../hooks/useForwardBoundingComponentEvents';
 // import useOverlayManagerEvents from '../../hooks/useOverlayManagerEvents';
@@ -28,7 +30,9 @@ jest.mock('../../hooks/useResizeObserver');
 jest.mock('../../hooks/useWindowResize');
 jest.mock('../../util/bbox', () => ({ copyComponentBoundingBox: jest.fn() }));
 jest.mock('../OverlaysContainer', () => {
-  return jest.fn(({ children, show }) => <div data-testid="overlays-container" data-show={show}>{children}</div>);
+    return React.forwardRef(({ children, show }: any, ref: any) => (
+        <div ref={ref} data-testid="overlays-container" data-show={show}>{children}</div>
+    ));
 });
 jest.mock('../../context/OverlayManagerContext');
 
@@ -56,8 +60,8 @@ describe('BoundedOverlayManagerContent', () => {
         expect(useTimedEventManager).toHaveBeenCalledWith(expect.objectContaining({
             onStart: expect.any(Function),
             onStop: expect.any(Function),
-            timeoutDuration: 2000, 
-            returnNull: false 
+            timeoutDuration: 2000,
+            returnNull: false
         }));
     });
 
@@ -94,7 +98,7 @@ describe('BoundedOverlayManagerContent', () => {
     ])('calls useOverlayManagerEvents with the correct arguments when showOverlaysOnMouseMove is $showOverlaysOnMouseMove, hideOverlaysOnMouseLeave is $hideOverlaysOnMouseLeave and skipAllSystemEvents is $skipAllSystemEvents', ({ showOverlaysOnMouseMove, hideOverlaysOnMouseLeave, skipAllSystemEvents }) => {
         const effectiveShowOverlaysOnMouseMove = showOverlaysOnMouseMove && !skipAllSystemEvents;
         const effectiveHideOverlaysOnMouseLeave = hideOverlaysOnMouseLeave && !skipAllSystemEvents;
-        
+
         render(
             <BoundedOverlayManagerContent showOverlaysOnMouseMove={showOverlaysOnMouseMove} hideOverlaysOnMouseLeave={hideOverlaysOnMouseLeave} skipAllSystemEvents={skipAllSystemEvents}>
                 <div>Mock Children</div>
@@ -102,8 +106,8 @@ describe('BoundedOverlayManagerContent', () => {
         );
 
         expect(useOverlayManagerEvents).toHaveBeenCalledWith(expect.objectContaining({
-            requestStartOnMouseMove: effectiveShowOverlaysOnMouseMove, 
-            requestStopOnMouseMove: effectiveHideOverlaysOnMouseLeave 
+            requestStartOnMouseMove: effectiveShowOverlaysOnMouseMove,
+            requestStopOnMouseMove: effectiveHideOverlaysOnMouseLeave
         }));
     });
 
