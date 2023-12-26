@@ -1,5 +1,5 @@
 // BoundedOverlayManagerContent.test.js
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import BoundedOverlayManagerContent from '../../components/BoundedOverlayManagerContent';
 // import Overlay from '../../components/Overlay';
@@ -9,6 +9,7 @@ import useForwardBoundingComponentEvents from '../../hooks/useForwardBoundingCom
 import useOverlayManagerEvents from '../../hooks/useOverlayManagerEvents';
 import useWindowResize from '../../hooks/useWindowResize';
 import useResizeObserver from '../../hooks/useResizeObserver';
+import { makeEventOnlyMockComponentRef } from '../../hooks/test/util';
 // import OverlaysContainer from '../OverlaysContainer';
 // import useForwardBoundingComponentEvents from '../../hooks/useForwardBoundingComponentEvents';
 // import useOverlayManagerEvents from '../../hooks/useOverlayManagerEvents';
@@ -32,10 +33,10 @@ jest.mock('../OverlaysContainer', () => {
 jest.mock('../../context/OverlayManagerContext');
 
 describe('BoundedOverlayManagerContent', () => {
-    let mockBoundingComponentRef = { current: document.createElement('div') };
+    let mockBoundingComponentRef: any;
 
     beforeEach(() => {
-        mockBoundingComponentRef = { current: document.createElement('div') };
+        mockBoundingComponentRef = makeEventOnlyMockComponentRef();
         (useOverlayManagerContext as jest.Mock).mockReturnValue({
             boundingComponentRef: mockBoundingComponentRef
         });
@@ -134,7 +135,7 @@ describe('BoundedOverlayManagerContent', () => {
                 <div>Test Overlay</div>
             </BoundedOverlayManagerContent>
         );
-        
+
         const overlaysContainer = getByTestId('overlays-container');
         expect(overlaysContainer).toHaveAttribute('data-show', 'true');
         expect(overlaysContainer).toHaveTextContent('Test Overlay');
@@ -148,7 +149,27 @@ describe('BoundedOverlayManagerContent', () => {
         expect(overlaysContainer).toHaveAttribute('data-show', 'false');
     });
 
-    // Additional test to simulate triggering onStart and onStop
-    // Assume there is a way to trigger these functions in your component
+    it('overlays container has the show prop set to true when mouse move event is triggered on the bounding component and false when mouse leave event is triggered on it', () => {
+        const { getByTestId } = render(
+            <BoundedOverlayManagerContent showOverlaysOnMouseMove={true} hideOverlaysOnMouseLeave={true} persistentlyShowOverlays={false}>
+                <div>Test Overlay</div>
+            </BoundedOverlayManagerContent>
+        );
+
+        const overlaysContainer = getByTestId('overlays-container');
+        expect(overlaysContainer).toHaveAttribute('data-show', 'false');
+
+        mockBoundingComponentRef.current.dispatchEvent(new MouseEvent('mousemove'));
+
+        waitFor(() => {
+            expect(overlaysContainer).toHaveAttribute('data-show', 'true');
+        });
+
+        mockBoundingComponentRef.current.dispatchEvent(new MouseEvent('mouseleave'));
+
+        waitFor(() => {
+            expect(overlaysContainer).toHaveAttribute('data-show', 'false');
+        });
+    });
 });
 
