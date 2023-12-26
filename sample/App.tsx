@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import FullScreen from 'react-fullscreen-crossbrowser';
-import BoundedOverlayManager, { Overlay, PredefinedPosition } from '../lib/main';
+import BoundedOverlayManager, { BoundedOverlayManagerApiProps, Overlay, PredefinedPosition } from '../lib/main';
 import { NO_TIMEOUT } from '../lib/src/timer/TimedEventManager';
 
 const FullScreenTextArea = () => {
@@ -11,7 +11,7 @@ const FullScreenTextArea = () => {
   };
 
   const boundingComponentRef = useRef(null);
-  const apiRef = useRef() as any;
+  const apiRef = useRef() as React.MutableRefObject<BoundedOverlayManagerApiProps>;
 
   return (
     <>

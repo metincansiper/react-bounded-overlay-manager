@@ -1,12 +1,13 @@
 import { useImperativeHandle } from "react";
 import TimedEventManager from "../timer/TimedEventManager";
+import { BoundedOverlayManagerApiProps } from "../types/ApiProps";
 
 type Options = {
     timedEventManager: TimedEventManager | null;
-    apiRef?: React.MutableRefObject<any>;
+    apiRef?: React.MutableRefObject<BoundedOverlayManagerApiProps>;
 };
 
-const useApi = ({ timedEventManager, apiRef }: Options) => {
+const useApiRefHandler = ({ timedEventManager, apiRef }: Options) => {
     if (!apiRef) {
         return
     }
@@ -23,4 +24,4 @@ const useApi = ({ timedEventManager, apiRef }: Options) => {
     }, [timedEventManager]);
 };
 
-export default useApi;
+export default useApiRefHandler;
