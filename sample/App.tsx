@@ -11,7 +11,7 @@ const FullScreenTextArea = () => {
   };
 
   const boundingComponentRef = useRef(null);
-  const apiRef = useRef() as React.MutableRefObject<BoundedOverlayManagerApiProps>;
+  const apiRef = useRef<BoundedOverlayManagerApiProps>();
 
   return (
     <>
