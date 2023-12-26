@@ -1,9 +1,8 @@
 import PredefinedPosition from './src/enum/PredefinedPosition';
 import BoundedOverlayManager from './src/components/BoundedOverlayManager';
 import Overlay from './src/components/Overlay';
-import { BoundedOverlayManagerApiProps } from './src/types/ApiProps';
+import BoundedOverlayManagerApi from './src/api/BoundedOverlayManagerApi';
 
-export { PredefinedPosition, Overlay };
-export type { BoundedOverlayManagerApiProps };
+export { PredefinedPosition, Overlay, BoundedOverlayManagerApi };
 
 export default BoundedOverlayManager;
