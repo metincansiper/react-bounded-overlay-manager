@@ -13,6 +13,10 @@ const FullScreenTextArea = () => {
   const boundingComponentRef = useRef(null);
   const apiRef = useRef<BoundedOverlayManagerApi>();
 
+  const onApiUpdated = (api: BoundedOverlayManagerApi) => {
+    apiRef.current = api;
+  };
+
   return (
     <>
       <FullScreen
@@ -32,7 +36,7 @@ const FullScreenTextArea = () => {
       <button onClick={() => apiRef.current?.clearOverlays()}>
         Clear Overlays
       </button>
-      <BoundedOverlayManager apiRef={apiRef} boundingComponentRef={boundingComponentRef} persistentlyShowOverlays={false} overlaysShowTimeout={NO_TIMEOUT}>
+      <BoundedOverlayManager onApiUpdated={onApiUpdated} boundingComponentRef={boundingComponentRef} persistentlyShowOverlays={false} overlaysShowTimeout={NO_TIMEOUT}>
           <Overlay position={PredefinedPosition.BOTTOM_CENTER} offset={{bottom: '10%', left: '25%'}}>
             <button>Overlay Button</button>
           </Overlay>
