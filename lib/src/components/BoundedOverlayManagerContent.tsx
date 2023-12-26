@@ -1,4 +1,4 @@
-import { ReactElement, useCallback, useRef, useState } from "react";
+import { ReactElement, useCallback, useEffect, useRef, useState } from "react";
 import useResizeObserver from "../hooks/useResizeObserver";
 import useWindowResize from "../hooks/useWindowResize";
 import { copyComponentBoundingBox } from "../util/bbox";
@@ -30,6 +30,10 @@ const BoundedOverlayManagerContent: React.FC<Props> = ({
     const { boundingComponentRef } = useOverlayManagerContext();
     const [showOverlays, setShowOverlays] = useState(persistentlyShowOverlays);
     const overlaysContainerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        setShowOverlays(persistentlyShowOverlays);
+    }, [persistentlyShowOverlays]);
 
     const onStart = useCallback(() => setShowOverlays(true), []);
     const onStop = useCallback(() => setShowOverlays(false), []);

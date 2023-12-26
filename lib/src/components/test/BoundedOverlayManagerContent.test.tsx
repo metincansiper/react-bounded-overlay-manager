@@ -128,24 +128,25 @@ describe('BoundedOverlayManagerContent', () => {
         }));
     });
 
-    // it('renders OverlaysContainer with the correct props and children', () => {
-    //     const { getByTestId, rerender } = render(
-    //         <BoundedOverlayManagerContent persistentlyShowOverlays={true}>
-    //             <div>Test Overlay</div>
-    //         </BoundedOverlayManagerContent>
-    //     );
-    //     const overlaysContainer = getByTestId('overlays-container');
-    //     expect(overlaysContainer).toHaveAttribute('data-show', 'true');
-    //     expect(overlaysContainer).toHaveTextContent('Test Overlay');
+    it('renders OverlaysContainer with the correct props and children', () => {
+        const { getByTestId, rerender } = render(
+            <BoundedOverlayManagerContent persistentlyShowOverlays={true}>
+                <div>Test Overlay</div>
+            </BoundedOverlayManagerContent>
+        );
+        
+        const overlaysContainer = getByTestId('overlays-container');
+        expect(overlaysContainer).toHaveAttribute('data-show', 'true');
+        expect(overlaysContainer).toHaveTextContent('Test Overlay');
 
-    //     rerender(
-    //         <BoundedOverlayManagerContent persistentlyShowOverlays={false}>
-    //             <div>Test Overlay</div>
-    //         </BoundedOverlayManagerContent>
-    //     );
+        rerender(
+            <BoundedOverlayManagerContent persistentlyShowOverlays={false}>
+                <div>Test Overlay</div>
+            </BoundedOverlayManagerContent>
+        );
 
-    //     expect(overlaysContainer).toHaveAttribute('data-show', 'false');
-    // });
+        expect(overlaysContainer).toHaveAttribute('data-show', 'false');
+    });
 
     // Additional test to simulate triggering onStart and onStop
     // Assume there is a way to trigger these functions in your component
