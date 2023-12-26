@@ -8,6 +8,7 @@ import useForwardBoundingComponentEvents from "../hooks/useForwardBoundingCompon
 import useTimedEventManager from "../hooks/useTimedEventManager";
 import Overlay from "./Overlay";
 import { useOverlayManagerContext } from "../context/OverlayManagerContext";
+import useApi from "../hooks/useApi";
 
 type Props = {
     children: ReactElement<typeof Overlay>[] | ReactElement<typeof Overlay>,
@@ -16,6 +17,7 @@ type Props = {
     hideOverlaysOnMouseLeave?: boolean,
     showOverlaysOnMouseMove?: boolean,
     skipAllSystemEvents?: boolean,
+    apiRef?: React.RefObject<any>,
 };
 
 // TODO: Provide an api exposing the functions to trigger show and hide events etc.?
@@ -26,6 +28,7 @@ const BoundedOverlayManagerContent: React.FC<Props> = ({
     skipAllSystemEvents = false,
     hideOverlaysOnMouseLeave = true,
     showOverlaysOnMouseMove = true,
+    apiRef = undefined
 }: Props) => {
     const { boundingComponentRef } = useOverlayManagerContext();
     const [showOverlays, setShowOverlays] = useState(persistentlyShowOverlays);
@@ -44,6 +47,10 @@ const BoundedOverlayManagerContent: React.FC<Props> = ({
     const effectiveHideOverlaysOnMouseLeave = hideOverlaysOnMouseLeave && !skipAllSystemEvents;
 
     useForwardBoundingComponentEvents();
+    useApi({
+        timedEventManager,
+        apiRef
+    });
     
     useOverlayManagerEvents({
         timedEventManager,

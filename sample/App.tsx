@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import FullScreen from 'react-fullscreen-crossbrowser';
 import BoundedOverlayManager, { Overlay, PredefinedPosition } from '../lib/main';
+import { NO_TIMEOUT } from '../lib/src/timer/TimedEventManager';
 
 const FullScreenTextArea = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -10,6 +11,7 @@ const FullScreenTextArea = () => {
   };
 
   const boundingComponentRef = useRef(null);
+  const apiRef = useRef() as any;
 
   return (
     <>
@@ -24,7 +26,13 @@ const FullScreenTextArea = () => {
           </button>
         </div>
       </FullScreen>
-      <BoundedOverlayManager boundingComponentRef={boundingComponentRef} persistentlyShowOverlays={false}>
+      <button onClick={() => apiRef.current?.renderOverlays()}>
+        Render Overlays
+      </button>
+      <button onClick={() => apiRef.current?.clearOverlays()}>
+        Clear Overlays
+      </button>
+      <BoundedOverlayManager apiRef={apiRef} boundingComponentRef={boundingComponentRef} persistentlyShowOverlays={false} overlaysShowTimeout={NO_TIMEOUT}>
           <Overlay position={PredefinedPosition.BOTTOM_CENTER} offset={{bottom: '10%', left: '25%'}}>
             <button>Overlay Button</button>
           </Overlay>
