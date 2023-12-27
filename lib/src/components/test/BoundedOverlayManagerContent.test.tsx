@@ -11,8 +11,6 @@ import useResizeObserver from '../../hooks/useResizeObserver';
 import { makeEventOnlyMockComponentRef } from '../../hooks/test/util';
 import useApiUpdateHandler from '../../hooks/useApiUpdateHandler';
 
-jest.mock('@react-hook/debounce', () => ({ useDebouncedCallback: jest.fn() }));
-
 // Mocking necessary hooks and components
 jest.mock('../../hooks/useTimedEventManager');
 jest.mock('../../hooks/useForwardBoundingComponentEvents');

@@ -192,10 +192,6 @@ const expectedStyles = [
     },
 ];
 
-jest.mock('@react-hook/debounce', () => ({
-    useDebounceCallback: jest.fn(),
-}));
-
 jest.mock('../../context/OverlayManagerContext');
 
 jest.mock('../../hooks/useForwardBoundingComponentEvents');

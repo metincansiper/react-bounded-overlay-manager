@@ -1,8 +1,8 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import useWindowResize from "../useWindowResize";
 
-jest.mock('@react-hook/debounce', () => ({
-    useDebounceCallback: jest.fn((fn) => fn),
+jest.mock('use-debounce', () => ({
+    useDebouncedCallback: jest.fn((fn) => fn),
 }));
 
 describe('useWindowResize', () => {
