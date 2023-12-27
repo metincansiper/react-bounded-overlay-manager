@@ -7,40 +7,45 @@ jest.mock('../../api/BoundedOverlayManagerApi', () => ({
 }));
 
 describe('useApiUpdateHandler', () => {
-  it('should recall onApiUpdated when timedEventManager changes', () => {
+  it('should recall onApiUpdated when timedEventManager changes', async () => {
     const initialTimedEventManager = { id: 'initial' } as any;
     const onApiUpdated = jest.fn();
-    const { rerender } = renderHook(() => useApiUpdateHandler({ timedEventManager: initialTimedEventManager, onApiUpdated }));
 
-    waitFor(() => {
+    const { rerender } = renderHook(({timedEventManager}) => useApiUpdateHandler({ timedEventManager, onApiUpdated }), {
+        initialProps: { timedEventManager: initialTimedEventManager },
+    });
+
+    await waitFor(() => {
         expect(onApiUpdated).toHaveBeenCalledWith(initialTimedEventManager);
     });
 
     onApiUpdated.mockClear();
 
     const newTimedEventManager = { id: 'new' } as any;
-    rerender(() => useApiUpdateHandler({ timedEventManager: newTimedEventManager, onApiUpdated }));
 
-    waitFor(() => {
+    rerender({ timedEventManager: newTimedEventManager });
+
+    await waitFor(() => {
         expect(onApiUpdated).toHaveBeenCalledWith(newTimedEventManager);
     });
   });
 
-//   it('should create a new apiRef instance when timedEventManager changes', () => {
-//     const timedEventManager = { id: 'initial' } as any;
-//     const onApiUpdated = jest.fn();
-//     const { rerender } = renderHook(() => useApiRefHandler({ timedEventManager, onApiUpdated }));
+  it('should not recall onApiUpdated when timedEventManager does not change', async () => {
+    const timedEventManager = { id: 'initial' } as any;
+    const onApiUpdated = jest.fn();
 
-//     waitFor(() => {
-//         expect(onApiUpdated).toHaveBeenCalledWith(timedEventManager);
-//     });
+    const { rerender } = renderHook(() => useApiUpdateHandler({ timedEventManager, onApiUpdated }));
 
-//     onApiUpdated.mockClear();
+    await waitFor(() => {
+        expect(onApiUpdated).toHaveBeenCalledWith(timedEventManager);
+    });
 
-//     rerender(() => useApiRefHandler({ timedEventManager, onApiUpdated }));
+    onApiUpdated.mockClear();
 
-//     waitFor(() => {
-//         expect(onApiUpdated).not.toHaveBeenCalled();
-//     });
-//   });
+    rerender();
+
+    await waitFor(() => {
+        expect(onApiUpdated).not.toHaveBeenCalled();
+    });
+  });
 });

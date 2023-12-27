@@ -8,11 +8,10 @@ type Options = {
 };
 
 const useApiUpdateHandler = ({ timedEventManager, onApiUpdated }: Options) => {
-    if (!onApiUpdated) {
-        return
-    }
-
     useEffect(() => {
+        if (!onApiUpdated) {
+            return
+        }
         onApiUpdated(new BoundedOverlayManagerApi({ timedEventManager }));
     }, [timedEventManager, onApiUpdated]);
 };

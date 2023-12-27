@@ -51,15 +51,17 @@ describe('useTimedEventManager', () => {
 
     it('should create a new instance when a dependency changes', () => {
         let timeoutDuration = 1000;
-        const { result, rerender } = renderHook(() =>
-            useTimedEventManager({ onStart: onStartMock, onStop: onStopMock, timeoutDuration })
+        const { result, rerender } = renderHook(({ timeoutDuration }) =>
+            useTimedEventManager({ onStart: onStartMock, onStop: onStopMock, timeoutDuration }), {
+                initialProps: { timeoutDuration },
+            }
         );
     
         const firstInstance = result.current;
     
         // Modify one of the dependencies
         timeoutDuration = 2000;
-        rerender(() => useTimedEventManager({ onStart: onStartMock, onStop: onStopMock, timeoutDuration }));
+        rerender({ timeoutDuration });
     
         const secondInstance = result.current;
     

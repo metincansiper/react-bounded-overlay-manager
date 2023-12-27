@@ -62,13 +62,15 @@ describe('useForwardOverlayEvents', () => {
         expect(mockOverlayManagerEventEmitter.emit).toHaveBeenCalledWith('mouseleaveOnOverlay', mouseLeaveEvent);
     });
 
-    it('handles updates to overlayRef correctly', () => {
-        const { rerender } = renderHook(() => useForwardOverlayEvents({ overlayRef: mockOverlayRef as any }));
+    it('handles updates to overlayRef correctly', async () => {
+        const { rerender } = renderHook(({ overlayRef }) => useForwardOverlayEvents({ overlayRef }), {
+            initialProps: { overlayRef: mockOverlayRef as any },
+        });
 
         const newMockOverlayRef = makeEventOnlyMockComponentRef();
-        rerender(() => useForwardOverlayEvents({ overlayRef: newMockOverlayRef as any }));
+        rerender({ overlayRef: newMockOverlayRef as any });
 
-        waitFor(() => {
+        await waitFor(() => {
             assertUnmountExpects(mockOverlayRef);
             assertMountExpects(newMockOverlayRef);
         });

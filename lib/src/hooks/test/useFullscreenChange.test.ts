@@ -54,7 +54,9 @@ describe('useFullscreenChange', () => {
         const addEventListenerSpy = jest.spyOn(document, 'addEventListener');
         const removeEventListenerSpy = jest.spyOn(document, 'removeEventListener');
     
-        const { rerender } = renderHook(() => useFullscreenChange({ handleFullscreenChange }));
+        const { rerender } = renderHook(({ handleFullscreenChange }) => useFullscreenChange({ handleFullscreenChange }), {
+            initialProps: { handleFullscreenChange },
+        });
         
         // Clear all mock calls after initial render
         addEventListenerSpy.mockClear();
@@ -62,9 +64,9 @@ describe('useFullscreenChange', () => {
         handleFullscreenChange.mockClear();
     
         // Rerender the hook with the new handleFullscreenChange function
-        rerender(() => useFullscreenChange({ handleFullscreenChange: newHandleFullscreenChange }));
+        rerender({ handleFullscreenChange: newHandleFullscreenChange });
         
-        waitFor(() => {
+        await waitFor(() => {
             assertMountExpects(addEventListenerSpy, newHandleFullscreenChange);
             assertUnmountExpects(removeEventListenerSpy, handleFullscreenChange);
         });
