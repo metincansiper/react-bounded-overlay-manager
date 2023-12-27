@@ -1,16 +1,16 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import useApiRefHandler from '../useApiRefHandler';
+import useApiUpdateHandler from '../useApiUpdateHandler';
 
 jest.mock('../../api/BoundedOverlayManagerApi', () => ({
     __esModule: true, // This property is needed for mocking default exports
     default: jest.fn(({ timedEventManager }) => timedEventManager),
 }));
 
-describe('useApiRefHandler', () => {
-  it('should create a new apiRef instance when timedEventManager changes', () => {
+describe('useApiUpdateHandler', () => {
+  it('should recall onApiUpdated when timedEventManager changes', () => {
     const initialTimedEventManager = { id: 'initial' } as any;
     const onApiUpdated = jest.fn();
-    const { rerender } = renderHook(() => useApiRefHandler({ timedEventManager: initialTimedEventManager, onApiUpdated }));
+    const { rerender } = renderHook(() => useApiUpdateHandler({ timedEventManager: initialTimedEventManager, onApiUpdated }));
 
     waitFor(() => {
         expect(onApiUpdated).toHaveBeenCalledWith(initialTimedEventManager);
@@ -19,7 +19,7 @@ describe('useApiRefHandler', () => {
     onApiUpdated.mockClear();
 
     const newTimedEventManager = { id: 'new' } as any;
-    rerender(() => useApiRefHandler({ timedEventManager: newTimedEventManager, onApiUpdated }));
+    rerender(() => useApiUpdateHandler({ timedEventManager: newTimedEventManager, onApiUpdated }));
 
     waitFor(() => {
         expect(onApiUpdated).toHaveBeenCalledWith(newTimedEventManager);

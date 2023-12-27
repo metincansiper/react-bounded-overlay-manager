@@ -8,7 +8,7 @@ import useForwardBoundingComponentEvents from "../hooks/useForwardBoundingCompon
 import useTimedEventManager from "../hooks/useTimedEventManager";
 import Overlay from "./Overlay";
 import { useOverlayManagerContext } from "../context/OverlayManagerContext";
-import useApiRefHandler from "../hooks/useApiRefHandler";
+import useApiUpdateHandler from "../hooks/useApiUpdateHandler";
 import BoundedOverlayManagerApi from "../api/BoundedOverlayManagerApi";
 
 type Props = {
@@ -48,7 +48,8 @@ const BoundedOverlayManagerContent: React.FC<Props> = ({
     const effectiveHideOverlaysOnMouseLeave = hideOverlaysOnMouseLeave && !skipAllSystemEvents;
 
     useForwardBoundingComponentEvents();
-    useApiRefHandler({
+    
+    useApiUpdateHandler({
         timedEventManager,
         onApiUpdated
     });

@@ -11,6 +11,7 @@ import useOverlayManagerEvents from '../../hooks/useOverlayManagerEvents';
 import useWindowResize from '../../hooks/useWindowResize';
 import useResizeObserver from '../../hooks/useResizeObserver';
 import { makeEventOnlyMockComponentRef } from '../../hooks/test/util';
+import useApiUpdateHandler from '../../hooks/useApiUpdateHandler';
 
 // import OverlaysContainer from '../OverlaysContainer';
 // import useForwardBoundingComponentEvents from '../../hooks/useForwardBoundingComponentEvents';
@@ -28,6 +29,7 @@ jest.mock('../../hooks/useForwardBoundingComponentEvents');
 jest.mock('../../hooks/useOverlayManagerEvents');
 jest.mock('../../hooks/useResizeObserver');
 jest.mock('../../hooks/useWindowResize');
+jest.mock('../../hooks/useApiUpdateHandler');
 jest.mock('../../util/bbox', () => ({ copyComponentBoundingBox: jest.fn() }));
 jest.mock('../OverlaysContainer', () => {
     return React.forwardRef(({ children, show }: any, ref: any) => (
@@ -174,6 +176,20 @@ describe('BoundedOverlayManagerContent', () => {
         waitFor(() => {
             expect(overlaysContainer).toHaveAttribute('data-show', 'false');
         });
+    });
+
+    it('calls useApiUpdateHandler with the correct arguments', () => {
+        const onApiUpdated = jest.fn();
+        
+        render(
+            <BoundedOverlayManagerContent onApiUpdated={onApiUpdated}>
+                <div>Test Overlay</div>
+            </BoundedOverlayManagerContent>
+        );
+
+        expect(useApiUpdateHandler).toHaveBeenCalledWith(expect.objectContaining({
+            onApiUpdated
+        }));
     });
 });
 

@@ -7,7 +7,7 @@ type Options = {
     onApiUpdated?: (api: BoundedOverlayManagerApi) => void;
 };
 
-const useApiRefHandler = ({ timedEventManager, onApiUpdated }: Options) => {
+const useApiUpdateHandler = ({ timedEventManager, onApiUpdated }: Options) => {
     if (!onApiUpdated) {
         return
     }
@@ -17,4 +17,4 @@ const useApiRefHandler = ({ timedEventManager, onApiUpdated }: Options) => {
     }, [timedEventManager, onApiUpdated]);
 };
 
-export default useApiRefHandler;
+export default useApiUpdateHandler;
