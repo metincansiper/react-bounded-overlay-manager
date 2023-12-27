@@ -3,7 +3,7 @@ import FullScreen from 'react-fullscreen-crossbrowser';
 import BoundedOverlayManager, { BoundedOverlayManagerApi, Overlay, PredefinedPosition } from '../lib/main';
 import { NO_TIMEOUT } from '../lib/src/timer/TimedEventManager';
 
-const FullScreenTextArea = () => {
+const App = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);
 
   const handleFullScreenChange = (state: boolean) => {
@@ -46,4 +46,4 @@ const FullScreenTextArea = () => {
   );
 };
 
-export default FullScreenTextArea;
+export default App;
