@@ -68,13 +68,12 @@ describe('useWindowResize', () => {
         });
     });
 
-    // TODO: revise the tests requiring event dispatching
-    // it('calls handleResize on window resize', () => {
-    //     renderHook(() => useWindowResize({ handleResize: handleResizeMock }));
+    it('calls handleResize on window resize', () => {
+        renderHook(() => useWindowResize({ handleResize: handleResizeMock }));
+
+        window.dispatchEvent(new Event('resize'));
     
-    //     window.dispatchEvent(new Event('resize'));
-    
-    //     expect(handleResizeMock).toHaveBeenCalled();
-    // });
+        expect(handleResizeMock).toHaveBeenCalled();
+    });
     
 });

@@ -1,9 +1,7 @@
-// BoundedOverlayManagerContent.test.js
 import React from 'react';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import BoundedOverlayManagerContent from '../../components/BoundedOverlayManagerContent';
-// import Overlay from '../../components/Overlay';
 import { useOverlayManagerContext } from '../../context/OverlayManagerContext';
 import useTimedEventManager from '../../hooks/useTimedEventManager';
 import useForwardBoundingComponentEvents from '../../hooks/useForwardBoundingComponentEvents';
@@ -12,14 +10,6 @@ import useWindowResize from '../../hooks/useWindowResize';
 import useResizeObserver from '../../hooks/useResizeObserver';
 import { makeEventOnlyMockComponentRef } from '../../hooks/test/util';
 import useApiUpdateHandler from '../../hooks/useApiUpdateHandler';
-
-// import OverlaysContainer from '../OverlaysContainer';
-// import useForwardBoundingComponentEvents from '../../hooks/useForwardBoundingComponentEvents';
-// import useOverlayManagerEvents from '../../hooks/useOverlayManagerEvents';
-// import useResizeObserver from '../../hooks/useResizeObserver';
-// import useWindowResize from '../../hooks/useWindowResize';
-// import { copyComponentBoundingBox } from '../../util/bbox';
-// import OverlaysContainer from '../OverlaysContainer';
 
 jest.mock('@react-hook/debounce', () => ({ useDebouncedCallback: jest.fn() }));
 
@@ -155,7 +145,9 @@ describe('BoundedOverlayManagerContent', () => {
         expect(overlaysContainer).toHaveAttribute('data-show', 'false');
     });
 
-    // TODO: revise the tests requring event dispatching
+    // TODO: this test will not work with dispatching events and may not be so necessary
+    // but it is here for now, maybe it will be useful to test onStart and onStop functions
+    // with modifications in test code in the future 
     // it('overlays container has the show prop set to true when mouse move event is triggered on the bounding component and false when mouse leave event is triggered on it', async () => {
     //     const { getByTestId } = render(
     //         <BoundedOverlayManagerContent showOverlaysOnMouseMove={true} hideOverlaysOnMouseLeave={true} persistentlyShowOverlays={false}>
