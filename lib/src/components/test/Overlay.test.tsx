@@ -196,6 +196,8 @@ jest.mock('../../context/OverlayManagerContext');
 
 jest.mock('../../hooks/useForwardBoundingComponentEvents');
 
+jest.mock('../../hooks/useResizeObserver');
+
 jest.mock('../../hooks/useForwardOverlayEvents', () => ({
     __esModule: true, // This property is needed for mocking default exports
     default: jest.fn(),
