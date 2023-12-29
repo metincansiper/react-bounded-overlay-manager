@@ -11,11 +11,17 @@ const meta: Meta = {
   tags: ['autodocs'],
   argTypes: {
     position: {
-      description: `Indicates how the overlay will be positioned in the bounding component excluding the offset.`,
+      description: ` Defines the anchor point for both the overlay and the bounding component. 
+      This prop establishes a fixed point on the overlay that is directly anchored to a 
+      corresponding point on the bounding component. For example, when the position is set to 
+      BOTTOM_CENTER, it means that the bottom center point of the overlay will be anchored to the 
+      bottom center of the bounding component.`,
     },
     offset: {
-      control: false,
-      description: `The offset of the overlay relative to the position. Accepted offset properties are dependent on the position as below:
+      description: `Modifies the overlay's anchored position by adjusting its coordinates relative 
+      to the anchor point set by the 'position' prop. This prop enables precise positional 
+      fine-tuning of the overlay from its initial anchored location. The applicable offset properties 
+      vary based on the selected position, allowing for specific directional adjustments:
         
         TOP_LEFT: top, left
         TOP_CENTER: top, left
