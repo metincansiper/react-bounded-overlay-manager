@@ -9,6 +9,26 @@ const meta: Meta = {
     layout: 'centered',
   },
   tags: ['autodocs'],
+  argTypes: {
+    position: {
+      description: `Indicates how the overlay will be positioned in the bounding component excluding the offset.`,
+    },
+    offset: {
+      control: false,
+      description: `The offset of the overlay relative to the position. Accepted offset properties are dependent on the position as below:
+        
+        TOP_LEFT: top, left
+        TOP_CENTER: top, left
+        TOP_RIGHT: top, right
+        MID_LEFT: top, left
+        CENTER: top, left
+        MID_RIGHT: top, right
+        BOTTOM_LEFT: bottom, left
+        BOTTOM_CENTER: bottom, left
+        BOTTOM_RIGHT: bottom, right
+      `,
+    },
+  }
 };
 
 export default meta;
