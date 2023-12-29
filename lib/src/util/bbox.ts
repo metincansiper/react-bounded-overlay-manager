@@ -1,4 +1,4 @@
-export const getComponentBoundingBoxRelativeToViewport = (ref: React.RefObject<HTMLElement>) => {
+export const getComponentBoundingBoxRelativeToBody = (ref: React.RefObject<HTMLElement>) => {
     if (!ref.current) {
         throw new Error('The ref is not attached to any element');
     }
@@ -17,7 +17,7 @@ export const getComponentBoundingBoxRelativeToViewport = (ref: React.RefObject<H
 
 export const copyComponentBoundingBox = (sourceRef: React.RefObject<HTMLElement>, targetRef: React.RefObject<HTMLElement>) => {
     if (sourceRef.current && targetRef.current) {
-        const { top, left, width, height } = getComponentBoundingBoxRelativeToViewport(sourceRef);
+        const { top, left, width, height } = getComponentBoundingBoxRelativeToBody(sourceRef);
         targetRef.current.style.top = `${top}px`;
         targetRef.current.style.left = `${left}px`;
         targetRef.current.style.width = `${width}px`;
