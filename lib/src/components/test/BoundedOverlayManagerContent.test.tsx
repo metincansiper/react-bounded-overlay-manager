@@ -10,7 +10,6 @@ import useWindowResize from '../../hooks/useWindowResize';
 import useResizeObserver from '../../hooks/useResizeObserver';
 import { makeEventOnlyMockComponentRef } from '../../hooks/test/util';
 import useApiUpdateHandler from '../../hooks/useApiUpdateHandler';
-import useScrollOnDocument from '../../hooks/useScrollOnDocument';
 
 // Mocking necessary hooks and components
 jest.mock('../../hooks/useTimedEventManager');
@@ -18,7 +17,6 @@ jest.mock('../../hooks/useForwardBoundingComponentEvents');
 jest.mock('../../hooks/useOverlayManagerEvents');
 jest.mock('../../hooks/useResizeObserver');
 jest.mock('../../hooks/useWindowResize');
-jest.mock('../../hooks/useScrollOnDocument');
 jest.mock('../../hooks/useApiUpdateHandler');
 jest.mock('../../util/bbox', () => ({ copyComponentBoundingBox: jest.fn() }));
 jest.mock('../OverlaysContainer', () => {
@@ -111,17 +109,6 @@ describe('BoundedOverlayManagerContent', () => {
         );
         expect(useWindowResize).toHaveBeenCalledWith(expect.objectContaining({
             handleResize: expect.any(Function)
-        }));
-    });
-
-    it('calls useScrollOnDocument with the correct arguments', () => {
-        render(
-            <BoundedOverlayManagerContent>
-                <div>Mock Children</div>
-            </BoundedOverlayManagerContent>
-        );
-        expect(useScrollOnDocument).toHaveBeenCalledWith(expect.objectContaining({
-            handleScroll: expect.any(Function)
         }));
     });
 
