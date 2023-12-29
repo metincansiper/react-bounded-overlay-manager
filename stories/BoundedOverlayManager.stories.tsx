@@ -14,6 +14,9 @@ const meta: Meta = {
       control: 'boolean',
       description: 'If true, overlays will be shown persistently',
     },
+    boundingComponentRef: {
+      control: false
+    }
   },
 };
 
@@ -26,7 +29,7 @@ const BoundedOverlayManagerStory: Story = (args) => {
     <div ref={boundingComponentRef} style={{ width: '300px', height: '200px', border: '1px solid black' }}>
       <BoundedOverlayManager boundingComponentRef={boundingComponentRef} {...args}>
         <Overlay position={PredefinedPosition.CENTER}>
-          <div>Hello World</div>
+          <div>Overlay Content</div>
         </Overlay>
       </BoundedOverlayManager>
     </div>
