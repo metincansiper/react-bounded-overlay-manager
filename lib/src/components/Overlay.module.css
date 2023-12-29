@@ -1,4 +1,4 @@
 .overlay {
     position: absolute;
-    pointer-events: none;
+    pointer-events: auto;
 }
