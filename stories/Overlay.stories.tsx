@@ -18,10 +18,13 @@ const meta: Meta = {
       bottom center of the bounding component.`,
     },
     offset: {
-      description: `Modifies the overlay's anchored position by adjusting its coordinates relative 
-      to the anchor point set by the 'position' prop. This prop enables precise positional 
-      fine-tuning of the overlay from its initial anchored location. The applicable offset properties 
-      vary based on the selected position, allowing for specific directional adjustments:
+      description: `Modifies the overlay's anchored position by adjusting its coordinates 
+      relative to the anchor point set by the 'position' prop. The accepted values for 'offset' 
+      mirror those of corresponding CSS properties. For instance, the 'top' property of 'offset' 
+      can be assigned any value that is valid for CSSProperties['top'], such as '50px', '20%', etc. 
+      This enables precise positional fine-tuning of the overlay from its initial anchored location. 
+      The specific 'offset' properties that are applicable vary based on the selected 'position', 
+      allowing for targeted adjustments in different directions:
         
         TOP_LEFT: top, left
         TOP_CENTER: top, left
