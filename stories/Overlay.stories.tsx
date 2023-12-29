@@ -6,7 +6,7 @@ const meta: Meta = {
   title: 'Components/Overlay',
   component: Overlay,
   parameters: {
-    layout: 'centered',
+    layout: 'left',
   },
   tags: ['autodocs'],
   argTypes: {
