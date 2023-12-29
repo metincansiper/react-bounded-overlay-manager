@@ -10,6 +10,7 @@ import Overlay from "./Overlay";
 import { useOverlayManagerContext } from "../context/OverlayManagerContext";
 import useApiUpdateHandler from "../hooks/useApiUpdateHandler";
 import BoundedOverlayManagerApi from "../api/BoundedOverlayManagerApi";
+import useScrollOnDocument from "../hooks/useScrollOnDocument";
 
 type Props = {
     children: ReactElement<typeof Overlay>[] | ReactElement<typeof Overlay>,
@@ -65,6 +66,7 @@ const BoundedOverlayManagerContent: React.FC<Props> = ({
     }, [boundingComponentRef, overlaysContainerRef]);
 
     useWindowResize({ handleResize: updateOverlaysContainerBoundingBox });
+    useScrollOnDocument({ handleScroll: updateOverlaysContainerBoundingBox });
     useResizeObserver(boundingComponentRef, { handleResize: updateOverlaysContainerBoundingBox });
 
     // TODO: this is probably not needed since using useResizeObserver() would be enough?

@@ -10,6 +10,7 @@ import useWindowResize from '../../hooks/useWindowResize';
 import useResizeObserver from '../../hooks/useResizeObserver';
 import { makeEventOnlyMockComponentRef } from '../../hooks/test/util';
 import useApiUpdateHandler from '../../hooks/useApiUpdateHandler';
+import useScrollOnDocument from '../../hooks/useScrollOnDocument';
 
 // Mocking necessary hooks and components
 jest.mock('../../hooks/useTimedEventManager');
@@ -17,6 +18,7 @@ jest.mock('../../hooks/useForwardBoundingComponentEvents');
 jest.mock('../../hooks/useOverlayManagerEvents');
 jest.mock('../../hooks/useResizeObserver');
 jest.mock('../../hooks/useWindowResize');
+jest.mock('../../hooks/useScrollOnDocument');
 jest.mock('../../hooks/useApiUpdateHandler');
 jest.mock('../../util/bbox', () => ({ copyComponentBoundingBox: jest.fn() }));
 jest.mock('../OverlaysContainer', () => {
@@ -112,6 +114,17 @@ describe('BoundedOverlayManagerContent', () => {
         }));
     });
 
+    it('calls useScrollOnDocument with the correct arguments', () => {
+        render(
+            <BoundedOverlayManagerContent>
+                <div>Mock Children</div>
+            </BoundedOverlayManagerContent>
+        );
+        expect(useScrollOnDocument).toHaveBeenCalledWith(expect.objectContaining({
+            handleScroll: expect.any(Function)
+        }));
+    });
+
     it('calls useResizeObserver with the correct arguments', () => {
         render(
             <BoundedOverlayManagerContent>
@@ -142,32 +155,6 @@ describe('BoundedOverlayManagerContent', () => {
 
         expect(overlaysContainer).toHaveAttribute('data-show', 'false');
     });
-
-    // TODO: this test will not work with dispatching events and may not be so necessary
-    // but it is here for now, maybe it will be useful to test onStart and onStop functions
-    // with modifications in test code in the future 
-    // it('overlays container has the show prop set to true when mouse move event is triggered on the bounding component and false when mouse leave event is triggered on it', async () => {
-    //     const { getByTestId } = render(
-    //         <BoundedOverlayManagerContent showOverlaysOnMouseMove={true} hideOverlaysOnMouseLeave={true} persistentlyShowOverlays={false}>
-    //             <div>Test Overlay</div>
-    //         </BoundedOverlayManagerContent>
-    //     );
-
-    //     const overlaysContainer = getByTestId('overlays-container');
-    //     expect(overlaysContainer).toHaveAttribute('data-show', 'false');
-
-    //     mockBoundingComponentRef.current.dispatchEvent(new MouseEvent('mousemove'));
-
-    //     await waitFor(() => {
-    //         expect(overlaysContainer).toHaveAttribute('data-show', 'true');
-    //     });
-
-    //     mockBoundingComponentRef.current.dispatchEvent(new MouseEvent('mouseleave'));
-
-    //     await waitFor(() => {
-    //         expect(overlaysContainer).toHaveAttribute('data-show', 'false');
-    //     });
-    // });
 
     it('calls useApiUpdateHandler with the correct arguments', () => {
         const onApiUpdated = jest.fn();
