@@ -15,7 +15,24 @@ const meta: Meta = {
       description: 'If true, overlays will be shown persistently',
     },
     boundingComponentRef: {
-      control: false
+      control: false,
+      description: 'The component relative to which the overlays will be positioned',
+    },
+    overlaysShowTimeout: {
+      description: 'The timeout after which the overlays will be hidden, if not persistently shown. Use NO_TIMEOUT or -1 to disable the timeout',
+    },
+    hideOverlaysOnMouseLeave: {
+      description: 'If true, overlays will be hidden when the mouse leaves the bounding component',
+    },
+    showOverlaysOnMouseMove: {
+      description: 'If true, overlays will be shown when the mouse moves over the bounding component',
+    },
+    skipAllSystemEvents: {
+      description: 'If true, all system events will be ignored',
+    },
+    onApiUpdated: {
+      control: false,
+      description: 'A callback that will be called when the api is updated, the callback will accept the api as a parameter',
     }
   },
 };
