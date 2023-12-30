@@ -6,7 +6,7 @@ type Options = {
 };
 
 const useWindowResize = ({ handleResize }: Options) => {
-    const debouncedHandleResize = useDebouncedCallback(handleResize, 100);
+    const debouncedHandleResize = useDebouncedCallback(handleResize, 1);
     useEffect(() => {
         window.addEventListener('resize', debouncedHandleResize);
 

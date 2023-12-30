@@ -6,7 +6,7 @@ type Options = {
 };
 
 const useScrollOnDocument = ({ handleScroll }: Options) => {
-    const debouncedHandleScroll = useDebouncedCallback(handleScroll, 100);
+    const debouncedHandleScroll = useDebouncedCallback(handleScroll, 1);
     useEffect(() => {
         document.addEventListener('scroll', debouncedHandleScroll);
 

@@ -4,7 +4,6 @@ import Overlay, { overlayClassName } from '../Overlay';
 import PredefinedPosition from '../../enum/PredefinedPosition';
 import { useOverlayManagerContext } from '../../context/OverlayManagerContext';
 import useForwardOverlayEvents from '../../hooks/useForwardOverlayEvents';
-import useWindowResize from '../../hooks/useWindowResize';
 
 const mockConvertToPercentReturnValue = 20;
 
@@ -203,11 +202,6 @@ jest.mock('../../hooks/useForwardOverlayEvents', () => ({
     default: jest.fn(),
 }));
 
-jest.mock('../../hooks/useWindowResize', () => ({
-    __esModule: true,
-    default: jest.fn(),
-}));
-
 jest.mock('../../util/css', () => ({
     ...jest.requireActual('../../util/css'),
     convertCssUnitToPercent: jest.fn((value: any) => {
@@ -244,16 +238,6 @@ describe('Overlay Component', () => {
 
         expect(useForwardOverlayEvents).toHaveBeenCalledWith(expect.objectContaining({
             overlayRef: expect.anything(),
-        }));
-    });
-
-    it('useWindowResize is called with correct arguments', () => {
-        render(
-            <Overlay position={PredefinedPosition.TOP_LEFT}>Test Content</Overlay>
-        );
-
-        expect(useWindowResize).toHaveBeenCalledWith(expect.objectContaining({
-            handleResize: expect.any(Function),
         }));
     });
 

@@ -2,7 +2,6 @@ import { CSSProperties, useCallback, useEffect, useMemo, useRef, useState } from
 import PredefinedPosition from "../enum/PredefinedPosition";
 import { BottomCenterOffsetProps, BottomLeftOffsetProps, CenterOffsetProps, MidLeftOffsetProps, MidRightOffsetProps, TopCenterOffsetProps, TopLeftOffsetProps, TopRightOffsetProps } from "../types/OffsetProps";
 import useForwardOverlayEvents from "../hooks/useForwardOverlayEvents";
-import useWindowResize from "../hooks/useWindowResize";
 import { useOverlayManagerContext } from "../context/OverlayManagerContext";
 import { convertCssUnitToPercent } from "../util/css";
 import styles from './Overlay.module.css';
@@ -116,7 +115,6 @@ const Overlay: React.FC<Props> = ({ offset, position, children }) => {
         setPositionStyle(calculatePositionStyle);
     }, [calculatePositionStyle, mayPositionStyleChange]);
     
-    useWindowResize({ handleResize: refreshPositionStyle });
     useResizeObserver(boundingComponentRef, { handleResize: refreshPositionStyle });
 
     return (

@@ -23,8 +23,8 @@ const App = () => {
         enabled={isFullScreen}
         onChange={handleFullScreenChange}
       >
-        <div  ref={boundingComponentRef} style={{ width: '100vw', height: '120vh', backgroundColor:'blue' }}>
-          <div style={{ width: '100%', height: '300px', backgroundColor: 'red' }}></div>
+        <div  ref={boundingComponentRef} style={{ width: '100vw', height: '80vh', backgroundColor:'blue' }}>
+          {/* <div style={{ width: '100%', height: '300px', backgroundColor: 'red' }}></div> */}
           <button onClick={() => setIsFullScreen(!isFullScreen)}>
             {isFullScreen ? 'Exit Fullscreen' : 'Go Fullscreen'}
           </button>
@@ -37,7 +37,7 @@ const App = () => {
         Clear Overlays
       </button>
       <BoundedOverlayManager onApiUpdated={onApiUpdated} boundingComponentRef={boundingComponentRef} persistentlyShowOverlays={false} overlaysShowTimeout={NO_TIMEOUT} hideOverlaysOnMouseLeave={false}>
-          <Overlay position={PredefinedPosition.BOTTOM_CENTER} offset={{bottom: '10%', left: '25%'}}>
+          <Overlay position={PredefinedPosition.BOTTOM_CENTER} offset={{bottom: '10%', left: '100px'}}>
             <button>Overlay Button</button>
           </Overlay>
       </BoundedOverlayManager>

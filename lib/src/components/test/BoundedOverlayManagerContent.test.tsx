@@ -6,7 +6,6 @@ import { useOverlayManagerContext } from '../../context/OverlayManagerContext';
 import useTimedEventManager from '../../hooks/useTimedEventManager';
 import useForwardBoundingComponentEvents from '../../hooks/useForwardBoundingComponentEvents';
 import useOverlayManagerEvents from '../../hooks/useOverlayManagerEvents';
-import useWindowResize from '../../hooks/useWindowResize';
 import useResizeObserver from '../../hooks/useResizeObserver';
 import { makeEventOnlyMockComponentRef } from '../../hooks/test/util';
 import useApiUpdateHandler from '../../hooks/useApiUpdateHandler';
@@ -16,7 +15,6 @@ jest.mock('../../hooks/useTimedEventManager');
 jest.mock('../../hooks/useForwardBoundingComponentEvents');
 jest.mock('../../hooks/useOverlayManagerEvents');
 jest.mock('../../hooks/useResizeObserver');
-jest.mock('../../hooks/useWindowResize');
 jest.mock('../../hooks/useApiUpdateHandler');
 jest.mock('../../util/bbox', () => ({ copyComponentBoundingBox: jest.fn() }));
 jest.mock('../OverlaysContainer', () => {
@@ -101,16 +99,16 @@ describe('BoundedOverlayManagerContent', () => {
         }));
     });
 
-    it('calls useWindowResize with the correct arguments', () => {
-        render(
-            <BoundedOverlayManagerContent>
-                <div>Mock Children</div>
-            </BoundedOverlayManagerContent>
-        );
-        expect(useWindowResize).toHaveBeenCalledWith(expect.objectContaining({
-            handleResize: expect.any(Function)
-        }));
-    });
+    // it('calls useWindowResize with the correct arguments', () => {
+    //     render(
+    //         <BoundedOverlayManagerContent>
+    //             <div>Mock Children</div>
+    //         </BoundedOverlayManagerContent>
+    //     );
+    //     expect(useWindowResize).toHaveBeenCalledWith(expect.objectContaining({
+    //         handleResize: expect.any(Function)
+    //     }));
+    // });
 
     it('calls useResizeObserver with the correct arguments', () => {
         render(

@@ -1,6 +1,5 @@
-import { ReactElement, useCallback, useEffect, useRef, useState } from "react";
+import { ReactElement, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import useResizeObserver from "../hooks/useResizeObserver";
-import useWindowResize from "../hooks/useWindowResize";
 import { copyComponentBoundingBox } from "../util/bbox";
 import OverlaysContainer from "./OverlaysContainer";
 import useOverlayManagerEvents from "../hooks/useOverlayManagerEvents";
@@ -64,13 +63,11 @@ const BoundedOverlayManagerContent: React.FC<Props> = ({
         copyComponentBoundingBox(boundingComponentRef, overlaysContainerRef);
     }, [boundingComponentRef, overlaysContainerRef]);
 
-    useWindowResize({ handleResize: updateOverlaysContainerBoundingBox });
     useResizeObserver(boundingComponentRef, { handleResize: updateOverlaysContainerBoundingBox });
 
-    // TODO: this is probably not needed since using useResizeObserver() would be enough?
-    // useLayoutEffect(() => {
-    //     updateOverlaysContainerBoundingBox();
-    // }, [updateOverlaysContainerBoundingBox]);
+    useLayoutEffect(() => {
+        updateOverlaysContainerBoundingBox();
+    }, [updateOverlaysContainerBoundingBox]);
     
     return (
         <OverlaysContainer ref={overlaysContainerRef} show={showOverlays}>

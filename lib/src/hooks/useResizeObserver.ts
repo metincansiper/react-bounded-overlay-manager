@@ -9,7 +9,7 @@ function useResizeObserver(
     targetElement: React.RefObject<HTMLElement>, 
     { handleResize }: Options
 ) {
-    const debouncedHandleResize = useDebouncedCallback(handleResize, 100);
+    const debouncedHandleResize = useDebouncedCallback(handleResize, 1);
 
     useEffect(() => {
         if (!targetElement.current) return;
