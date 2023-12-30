@@ -23,11 +23,13 @@ const App = () => {
         enabled={isFullScreen}
         onChange={handleFullScreenChange}
       >
-        <div  ref={boundingComponentRef} style={{ width: '100vw', height: '80vh', backgroundColor:'blue' }}>
-          {/* <div style={{ width: '100%', height: '300px', backgroundColor: 'red' }}></div> */}
-          <button onClick={() => setIsFullScreen(!isFullScreen)}>
-            {isFullScreen ? 'Exit Fullscreen' : 'Go Fullscreen'}
-          </button>
+        <div style={{width: '100vw', height: '100vh', position: 'relative'}}>
+          <div  ref={boundingComponentRef} style={{ position: 'absolute', left: '20%', top: '20%', width: '500px', height: '500px', backgroundColor:'blue' }}>
+            {/* <div style={{ width: '100%', height: '300px', backgroundColor: 'red' }}></div> */}
+            <button onClick={() => setIsFullScreen(!isFullScreen)}>
+              {isFullScreen ? 'Exit Fullscreen' : 'Go Fullscreen'}
+            </button>
+          </div>
         </div>
       </FullScreen>
       <button onClick={() => apiRef.current?.renderOverlays()}>

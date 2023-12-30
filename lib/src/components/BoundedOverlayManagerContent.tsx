@@ -9,6 +9,7 @@ import Overlay from "./Overlay";
 import { useOverlayManagerContext } from "../context/OverlayManagerContext";
 import useApiUpdateHandler from "../hooks/useApiUpdateHandler";
 import BoundedOverlayManagerApi from "../api/BoundedOverlayManagerApi";
+import useWindowResize from "../hooks/useWindowResize";
 
 type Props = {
     children: ReactElement<typeof Overlay>[] | ReactElement<typeof Overlay>,
@@ -60,9 +61,12 @@ const BoundedOverlayManagerContent: React.FC<Props> = ({
     });
     
     const updateOverlaysContainerBoundingBox = useCallback(() => {
-        copyComponentBoundingBox(boundingComponentRef, overlaysContainerRef);
+        window.requestAnimationFrame(() => {
+            copyComponentBoundingBox(boundingComponentRef, overlaysContainerRef);
+        });
     }, [boundingComponentRef, overlaysContainerRef]);
 
+    useWindowResize({ handleResize: updateOverlaysContainerBoundingBox  });
     useResizeObserver(boundingComponentRef, { handleResize: updateOverlaysContainerBoundingBox });
 
     useLayoutEffect(() => {
