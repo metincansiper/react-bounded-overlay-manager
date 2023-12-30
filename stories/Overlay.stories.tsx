@@ -79,7 +79,7 @@ TopCenter.args = {
 export const TopCenterWithOffset = OverlayStory.bind({});
 TopCenterWithOffset.args = {
   position: PredefinedPosition.TOP_CENTER,
-  offset: { top: '10px', left: '10%' },
+  offset: { top: '10px', leftInPercent: 10 },
 };
 
 export const TopRight = OverlayStory.bind({});
@@ -101,7 +101,7 @@ MidLeft.args = {
 export const MidLeftWithOffset = OverlayStory.bind({});
 MidLeftWithOffset.args = {
   position: PredefinedPosition.MID_LEFT,
-  offset: { top: '10%', left: '10px' },
+  offset: { topInPercent: 10, left: '10px' },
 };
 
 export const Center = OverlayStory.bind({});
@@ -112,7 +112,7 @@ Center.args = {
 export const CenterWithOffset = OverlayStory.bind({});
 CenterWithOffset.args = {
   position: PredefinedPosition.CENTER,
-  offset: { top: '10%', left: '10%' },
+  offset: { topInPercent: 10, leftInPercent: 10 },
 };
 
 export const MidRight = OverlayStory.bind({});
@@ -123,7 +123,7 @@ MidRight.args = {
 export const MidRightWithOffset = OverlayStory.bind({});
 MidRightWithOffset.args = {
   position: PredefinedPosition.MID_RIGHT,
-  offset: { top: '10%', right: '10px' },
+  offset: { topInPercent: 10, right: '10px' },
 };
 
 export const BottomLeft = OverlayStory.bind({});
@@ -145,7 +145,7 @@ BottomCenter.args = {
 export const BottomCenterWithOffset = OverlayStory.bind({});
 BottomCenterWithOffset.args = {
   position: PredefinedPosition.BOTTOM_CENTER,
-  offset: { bottom: '10px', left: '10%' },
+  offset: { bottom: '10px', leftInPercent: 10 },
 };
 
 export const BottomRight = OverlayStory.bind({});

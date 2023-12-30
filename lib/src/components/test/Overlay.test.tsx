@@ -5,7 +5,6 @@ import PredefinedPosition from '../../enum/PredefinedPosition';
 import { useOverlayManagerContext } from '../../context/OverlayManagerContext';
 import useForwardOverlayEvents from '../../hooks/useForwardOverlayEvents';
 
-const mockConvertToPercentReturnValue = 20;
 
 const expectedStyles = [
     {
@@ -107,22 +106,22 @@ const expectedStyles = [
     {
         positionProps: {
             position: PredefinedPosition.TOP_CENTER,
-            offset: { left: '10%' },
+            offset: { leftInPercent: 10 },
         },
         expectedStyle: {
             top: 0,
-            left: `${50 + mockConvertToPercentReturnValue}%`,
+            left: `60%`,
             transform: 'translateX(-50%)',
         },
     },
     {
         positionProps: {
             position: PredefinedPosition.BOTTOM_CENTER,
-            offset: { left: '10%' },
+            offset: { leftInPercent: 10 },
         },
         expectedStyle: {
             bottom: 0,
-            left: `${50 + mockConvertToPercentReturnValue}%`,
+            left: `60%`,
             transform: 'translateX(-50%)',
         },
     },
@@ -139,11 +138,11 @@ const expectedStyles = [
     {
         positionProps: {
             position: PredefinedPosition.CENTER,
-            offset: { top: '10%', left: '10%' },
+            offset: { topInPercent: 10, leftInPercent: 10 },
         },
         expectedStyle: {
-            top: `${50 + mockConvertToPercentReturnValue}%`,
-            left: `${50 + mockConvertToPercentReturnValue}%`,
+            top: `60%`,
+            left: `60%`,
             transform: 'translate(-50%, -50%)',
         },
     },
@@ -160,10 +159,10 @@ const expectedStyles = [
     {
         positionProps: {
             position: PredefinedPosition.MID_LEFT,
-            offset: { top: '10%', left: '10%' },
+            offset: { topInPercent: 10, left: '10%' },
         },
         expectedStyle: {
-            top: `${50 + mockConvertToPercentReturnValue}%`,
+            top: `60%`,
             left: '10%',
             transform: 'translateY(-50%)',
         },
@@ -181,10 +180,10 @@ const expectedStyles = [
     {
         positionProps: {
             position: PredefinedPosition.MID_RIGHT,
-            offset: { top: '10%', right: '10%' },
+            offset: { topInPercent: 10, right: '10%' },
         },
         expectedStyle: {
-            top: `${50 + mockConvertToPercentReturnValue}%`,
+            top: `60%`,
             right: '10%',
             transform: 'translateY(-50%)',
         },
@@ -202,16 +201,6 @@ jest.mock('../../hooks/useForwardOverlayEvents', () => ({
     default: jest.fn(),
 }));
 
-jest.mock('../../util/css', () => ({
-    ...jest.requireActual('../../util/css'),
-    convertCssUnitToPercent: jest.fn((value: any) => {
-        if (!value) {
-            return 0;
-        }
-
-        return mockConvertToPercentReturnValue;
-    }),
-}));
 
 describe('Overlay Component', () => {
     const mockBoundingComponentRef = { current: document.createElement('div') };

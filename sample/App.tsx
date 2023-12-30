@@ -39,7 +39,7 @@ const App = () => {
         Clear Overlays
       </button>
       <BoundedOverlayManager onApiUpdated={onApiUpdated} boundingComponentRef={boundingComponentRef} persistentlyShowOverlays={false} overlaysShowTimeout={NO_TIMEOUT} hideOverlaysOnMouseLeave={false}>
-          <Overlay position={PredefinedPosition.BOTTOM_CENTER} offset={{bottom: '10%', left: '100px'}}>
+          <Overlay position={PredefinedPosition.BOTTOM_CENTER} offset={{bottom: '10%', leftInPercent: 10}}>
             <button>Overlay Button</button>
           </Overlay>
       </BoundedOverlayManager>
