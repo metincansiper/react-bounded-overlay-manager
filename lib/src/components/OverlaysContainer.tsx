@@ -13,17 +13,17 @@ type Props = {
 
 const OverlaysContainer: React.ForwardRefRenderFunction<HTMLDivElement, Props> = 
 ({ children, show, unmountContentWhenHidden = false }, ref) => {
-    const display = show ? 'block' : 'none';
-    const shouldUnmount = unmountContentWhenHidden && !show;
+    const displayContent = show ? 'block' : 'none';
+    const shouldUnmountContent = unmountContentWhenHidden && !show;
 
-    const content = shouldUnmount ? null : (
-        <div role='overlays-container-content' className={overlaysContainerContentClassName}>
+    const content = shouldUnmountContent ? null : (
+        <div role='overlays-container-content' className={overlaysContainerContentClassName} style={{ display: displayContent }}>
             { children }
         </div>
     );
     
     return (
-        <div role='overlays-container' className={overlaysContainerClassName} ref={ref as ForwardedRef<HTMLDivElement>} style={{ display }}>
+        <div role='overlays-container' className={overlaysContainerClassName} ref={ref as ForwardedRef<HTMLDivElement>}>
             {
                 content
             }

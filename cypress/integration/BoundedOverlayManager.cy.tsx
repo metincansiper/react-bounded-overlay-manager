@@ -15,7 +15,7 @@ describe('BoundedOverlayManager Component', () => {
                     <div id={boundingComponentId} style={boundingComponentStyle} ref={boundingComponentRef}></div>
                 </div>
     
-                <BoundedOverlayManager boundingComponentRef={boundingComponentRef} persistentlyShowOverlays={true} { ...overlayManagerProps }>
+                <BoundedOverlayManager boundingComponentRef={boundingComponentRef} { ...overlayManagerProps }>
                     <Overlay position={PredefinedPosition.TOP_LEFT} {...overlayProps}>
                         Hello World
                     </Overlay>

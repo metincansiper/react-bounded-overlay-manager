@@ -21,7 +21,7 @@ describe('OverlaysContainer', () => {
     expect(getByTestId(mockChildTestId)).toBeInTheDocument();
   });
 
-  it('toggles visibility based on show prop', () => {
+  it('toggles visibility of content based on show prop', () => {
     const { rerender, container } = render(
       <OverlaysContainer show={false}>
         {mockChild}
@@ -29,8 +29,8 @@ describe('OverlaysContainer', () => {
 
     );
 
-    let overlaysContainer = queryOverlaysContainer(container);
-    expect(overlaysContainer).toHaveStyle('display: none');
+    let overlaysContainerContent = queryOverlaysContainerContent(container);
+    expect(overlaysContainerContent).toHaveStyle('display: none');
 
     rerender(
       <OverlaysContainer show={true}>
@@ -38,7 +38,7 @@ describe('OverlaysContainer', () => {
       </OverlaysContainer>
     );
 
-    expect(overlaysContainer).toHaveStyle('display: block');
+    expect(overlaysContainerContent).toHaveStyle('display: block');
   });
 
   it('unmounts content when hidden and unmountContentWhenHidden prop is true', () => {
