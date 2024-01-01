@@ -8,7 +8,7 @@ describe('BoundedOverlayManager Component', () => {
     const getOverlaysContainer = () => cy.get('[role="overlays-container"]');
 
     const OverlayManagerTest = ({ boundingComponentStyle = {}, boundingComponentParentStyle = {}, overlayManagerProps = {}, overlayProps = {} }) => {
-        const boundingComponentRef = useRef();
+        const boundingComponentRef = useRef(null);
         return (
             <>
                 <div style={boundingComponentParentStyle}>
@@ -142,7 +142,7 @@ describe('BoundedOverlayManager Component', () => {
                 expectRightOverlaysContainerBBox();
     
                 getBoundingComponent().then(($boundingComponent) => {
-                    const boundingComponentParent = $boundingComponent[0].parentNode;
+                    const boundingComponentParent = $boundingComponent[0].parentNode as any;
                     boundingComponentParent.style.width = finalDimentions.width;
                     boundingComponentParent.style.height = finalDimentions.height;
     
