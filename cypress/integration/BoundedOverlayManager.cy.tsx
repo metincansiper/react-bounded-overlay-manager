@@ -152,4 +152,59 @@ describe('BoundedOverlayManager Component', () => {
         });
         
     });
+
+    describe('overlays container has the right bbox when the window is resized', () => {
+        [
+            {
+                parentStyle: { width: '1000px', height: '500px', position: 'relative' },
+                boundingComponentStyle: { position: 'absolute', left: '20%', top: '30%', width: '400px', height: '200px' },
+            },
+            {
+                parentStyle: { width: '1000px', height: '500px', position: 'absolute', left: '20%', top: '30%' },
+                boundingComponentStyle: { width: '400px', height: '200px' },
+            },
+            {
+                parentStyle: { width: '1000px', height: '500px', position: 'absolute', right: '20%', bottom: '30%' },
+                boundingComponentStyle: { width: '400px', height: '200px' },
+            },
+            {
+                parentStyle: { width: '1000px', height: '500px', position: 'absolute', left: '20%', top: '30%' },
+                boundingComponentStyle: { width: '400px', height: '200px', position: 'absolute', left: '20%', top: '30%' },
+            },
+            {
+                parentStyle: { width: '80vw', height: '80%', position: 'absolute', left: '20%', top: '30%' },
+                boundingComponentStyle: { width: '400px', height: '200px', position: 'absolute', left: '20%', top: '30%' },
+            },
+            {
+                parentStyle: { width: '80vw', height: '80%' },
+                boundingComponentStyle: { width: '400px', height: '200px', position: 'absolute', left: '20%', top: '30%' },
+            },
+            {
+                parentStyle: { width: '80vw', height: '80%' },
+                boundingComponentStyle: { width: '50%', height: '50%' },
+            },
+            {
+                parentStyle: { width: '200px', height: '500px' },
+                boundingComponentStyle: { width: '50%', height: '50%' },
+            }
+        ].forEach(({ parentStyle, boundingComponentStyle }) => {
+            it(`works correctly when the window is resized when bounding component has the style of ${JSON.stringify(boundingComponentStyle)} and its parent has the style of ${JSON.stringify(parentStyle)} `, () => {
+                const CustomOverlayManagerTest = () => {
+                    return (
+                        <OverlayManagerTest boundingComponentStyle={ { ...boundingComponentStyle } } boundingComponentParentStyle={ { ...parentStyle } } />
+                    );
+                };
+
+                cy.viewport(500, 400);
+
+                mount(<CustomOverlayManagerTest />);
+
+                expectRightOverlaysContainerBBox();
+
+                cy.viewport(800, 600);
+
+                expectRightOverlaysContainerBBox();
+            });
+        });
+    });
 });
