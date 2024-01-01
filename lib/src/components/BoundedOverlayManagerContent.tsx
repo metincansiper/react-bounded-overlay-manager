@@ -47,11 +47,18 @@ const BoundedOverlayManagerContent: React.FC<Props> = ({
     const effectiveShowOverlaysOnMouseMove = showOverlaysOnMouseMove && !skipAllSystemEvents;
     const effectiveHideOverlaysOnMouseLeave = hideOverlaysOnMouseLeave && !skipAllSystemEvents;
 
+    const updateOverlaysContainerBoundingBox = useCallback(() => {
+        window.requestAnimationFrame(() => {
+            copyComponentBoundingBox(boundingComponentRef, overlaysContainerRef);
+        });
+    }, [boundingComponentRef, overlaysContainerRef]);
+
     useForwardBoundingComponentEvents();
     
     useApiUpdateHandler({
         timedEventManager,
-        onApiUpdated
+        onApiUpdated,
+        updateOverlaysContainerBoundingBox
     });
     
     useOverlayManagerEvents({
@@ -59,12 +66,6 @@ const BoundedOverlayManagerContent: React.FC<Props> = ({
         requestStartOnMouseMove: effectiveShowOverlaysOnMouseMove,
         requestStopOnMouseMove: effectiveHideOverlaysOnMouseLeave,
     });
-    
-    const updateOverlaysContainerBoundingBox = useCallback(() => {
-        window.requestAnimationFrame(() => {
-            copyComponentBoundingBox(boundingComponentRef, overlaysContainerRef);
-        });
-    }, [boundingComponentRef, overlaysContainerRef]);
 
     useWindowResize({ handleResize: updateOverlaysContainerBoundingBox  });
     useResizeObserver(boundingComponentRef, { handleResize: updateOverlaysContainerBoundingBox });

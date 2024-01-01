@@ -1,19 +1,17 @@
 import { useEffect } from "react";
-import TimedEventManager from "../timer/TimedEventManager";
-import BoundedOverlayManagerApi from "../api/BoundedOverlayManagerApi";
+import BoundedOverlayManagerApi, { BoundedOverlayManagerApiOptions } from "../api/BoundedOverlayManagerApi";
 
-type Options = {
-    timedEventManager: TimedEventManager | null;
+type Options = BoundedOverlayManagerApiOptions & {
     onApiUpdated?: (api: BoundedOverlayManagerApi) => void;
 };
 
-const useApiUpdateHandler = ({ timedEventManager, onApiUpdated }: Options) => {
+const useApiUpdateHandler = ({ timedEventManager, onApiUpdated, updateOverlaysContainerBoundingBox }: Options) => {
     useEffect(() => {
         if (!onApiUpdated) {
             return
         }
-        onApiUpdated(new BoundedOverlayManagerApi({ timedEventManager }));
-    }, [timedEventManager, onApiUpdated]);
+        onApiUpdated(new BoundedOverlayManagerApi({ timedEventManager, updateOverlaysContainerBoundingBox }));
+    }, [timedEventManager, onApiUpdated, updateOverlaysContainerBoundingBox]);
 };
 
 export default useApiUpdateHandler;

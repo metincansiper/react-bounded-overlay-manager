@@ -2,43 +2,44 @@ import React, { useRef } from 'react';
 import { mount } from '@cypress/react18';
 import BoundedOverlayManager, { Overlay, PredefinedPosition } from '../../lib/main';
 
-describe('BoundedOverlayManager Component', () => {
-    const boundingComponentId = 'bounding-component';
-    const getBoundingComponent = () => cy.get(`#${boundingComponentId}`);
-    const getOverlaysContainer = () => cy.get('[role="overlays-container"]');
+const boundingComponentId = 'bounding-component';
+const getBoundingComponent = () => cy.get(`#${boundingComponentId}`);
+const getOverlaysContainer = () => cy.get('[role="overlays-container"]');
 
-    const OverlayManagerTest = ({ boundingComponentStyle = {}, boundingComponentParentStyle = {}, overlayManagerProps = {}, overlayProps = {} }) => {
-        const boundingComponentRef = useRef(null);
-        return (
-            <>
-                <div style={boundingComponentParentStyle}>
-                    <div id={boundingComponentId} style={boundingComponentStyle} ref={boundingComponentRef}></div>
-                </div>
-    
-                <BoundedOverlayManager boundingComponentRef={boundingComponentRef} { ...overlayManagerProps }>
-                    <Overlay position={PredefinedPosition.TOP_LEFT} {...overlayProps}>
-                        Hello World
-                    </Overlay>
-                </BoundedOverlayManager>
-            </>
-        );
-    };
+const OverlayManagerTest = ({ boundingComponentStyle = {}, boundingComponentParentStyle = {}, overlayManagerProps = {}, overlayProps = {} }) => {
+    const boundingComponentRef = useRef(null);
+    return (
+        <>
+            <div style={boundingComponentParentStyle}>
+                <div id={boundingComponentId} style={boundingComponentStyle} ref={boundingComponentRef}></div>
+            </div>
 
-    const expectRightOverlaysContainerBBox = () => {
-        getBoundingComponent().then(($boundingComponent) => {
-            const boundingComponent = $boundingComponent[0];
-            getOverlaysContainer().should(($overlaysContainer) => {
-                const overlaysContainer = $overlaysContainer[0];
-                const overlaysContainerBbox = overlaysContainer.getBoundingClientRect();
-                const boundingComponentBbox = boundingComponent.getBoundingClientRect();
+            <BoundedOverlayManager boundingComponentRef={boundingComponentRef} {...overlayManagerProps}>
+                <Overlay position={PredefinedPosition.TOP_LEFT} {...overlayProps}>
+                    Hello World
+                </Overlay>
+            </BoundedOverlayManager>
+        </>
+    );
+};
 
-                expect(overlaysContainerBbox.left).to.be.equal(boundingComponentBbox.left);
-                expect(overlaysContainerBbox.top).to.be.equal(boundingComponentBbox.top);
-                expect(overlaysContainerBbox.width).to.be.equal(boundingComponentBbox.width);
-                expect(overlaysContainerBbox.height).to.be.equal(boundingComponentBbox.height);
-            });
+const expectRightOverlaysContainerBBox = () => {
+    getBoundingComponent().then(($boundingComponent) => {
+        const boundingComponent = $boundingComponent[0];
+        getOverlaysContainer().should(($overlaysContainer) => {
+            const overlaysContainer = $overlaysContainer[0];
+            const overlaysContainerBbox = overlaysContainer.getBoundingClientRect();
+            const boundingComponentBbox = boundingComponent.getBoundingClientRect();
+
+            expect(overlaysContainerBbox.left).to.be.equal(boundingComponentBbox.left);
+            expect(overlaysContainerBbox.top).to.be.equal(boundingComponentBbox.top);
+            expect(overlaysContainerBbox.width).to.be.equal(boundingComponentBbox.width);
+            expect(overlaysContainerBbox.height).to.be.equal(boundingComponentBbox.height);
         });
-    };
+    });
+};
+
+describe('BoundedOverlayManager Component', () => {
     describe('overlays container has the right bbox on mount', () => {
         const parentStyles = [
             { position: 'relative', top: '10px', left: '10px' },
@@ -98,24 +99,24 @@ describe('BoundedOverlayManager Component', () => {
             it(`works correctly when bounding component itself is resized directly from ${JSON.stringify(initialDimentions)} to ${JSON.stringify(finalDimentions)}`, () => {
                 const CustomOverlayManagerTest = () => {
                     return (
-                        <OverlayManagerTest boundingComponentStyle={ { ...initialDimentions } } />
+                        <OverlayManagerTest boundingComponentStyle={{ ...initialDimentions }} />
                     );
                 }
-    
+
                 mount(<CustomOverlayManagerTest />);
-    
+
                 expectRightOverlaysContainerBBox();
-    
+
                 getBoundingComponent().then(($boundingComponent) => {
                     const boundingComponent = $boundingComponent[0];
                     boundingComponent.style.width = finalDimentions.width;
                     boundingComponent.style.height = finalDimentions.height;
-    
+
                     expectRightOverlaysContainerBBox();
                 });
             });
         });
-        
+
         [
             {
                 initialDimentions: { width: '400px', height: '200px' },
@@ -133,24 +134,24 @@ describe('BoundedOverlayManager Component', () => {
             it(`works correctly when bounding component is resized indirectly through resize of its parent from ${JSON.stringify(initialDimentions)} to ${JSON.stringify(finalDimentions)}`, () => {
                 const CustomOverlayManagerTest = () => {
                     return (
-                        <OverlayManagerTest boundingComponentParentStyle={ { ...initialDimentions } } />
+                        <OverlayManagerTest boundingComponentParentStyle={{ ...initialDimentions }} />
                     );
                 };
 
                 mount(<CustomOverlayManagerTest />);
-    
+
                 expectRightOverlaysContainerBBox();
-    
+
                 getBoundingComponent().then(($boundingComponent) => {
                     const boundingComponentParent = $boundingComponent[0].parentNode as any;
                     boundingComponentParent.style.width = finalDimentions.width;
                     boundingComponentParent.style.height = finalDimentions.height;
-    
+
                     expectRightOverlaysContainerBBox();
                 });
             });
         });
-        
+
     });
 
     describe('overlays container has the right bbox when the window is resized', () => {
@@ -191,7 +192,7 @@ describe('BoundedOverlayManager Component', () => {
             it(`works correctly when the window is resized when bounding component has the style of ${JSON.stringify(boundingComponentStyle)} and its parent has the style of ${JSON.stringify(parentStyle)} `, () => {
                 const CustomOverlayManagerTest = () => {
                     return (
-                        <OverlayManagerTest boundingComponentStyle={ { ...boundingComponentStyle } } boundingComponentParentStyle={ { ...parentStyle } } />
+                        <OverlayManagerTest boundingComponentStyle={{ ...boundingComponentStyle }} boundingComponentParentStyle={{ ...parentStyle }} />
                     );
                 };
 
@@ -205,6 +206,46 @@ describe('BoundedOverlayManager Component', () => {
 
                 expectRightOverlaysContainerBBox();
             });
+        });
+    });
+
+    describe('overlays container has the right bbox after api.updateOverlaysContainerBoundingBox is called ', () => {
+        it('works correctly when the bounding component itself is repositioned and then api.updateOverlaysContainerBoundingBox is called', () => {
+            let api;
+    
+            const onApiUpdated = (_api) => {
+                console.log('api up')
+                api = _api;
+            };
+    
+            const boundingComponentStyle = { position: 'absolute', left: 0, top: 0, width: '400px', height: '200px' };
+            const boundingComponentParentStyle = { width: '1000px', height: '500px', position: 'relative' };
+    
+            const CustomOverlayManagerTest = () => {
+                return (
+                    <OverlayManagerTest overlayManagerProps={{ onApiUpdated }} boundingComponentStyle={boundingComponentStyle} boundingComponentParentStyle={boundingComponentParentStyle} />
+                );
+            }
+    
+            mount(<CustomOverlayManagerTest />);
+    
+            getBoundingComponent()
+                .then(($boundingComponent) => {
+                    const boundingComponent = $boundingComponent[0];
+                    boundingComponent.style.left = '100px';
+                    boundingComponent.style.top = '100px';
+                })
+                .should(($boundingComponent) => {
+                    const boundingComponent = $boundingComponent[0];
+                    const boundingComponentBbox = boundingComponent.getBoundingClientRect();
+                    expect(boundingComponentBbox.left).to.be.greaterThan(0);
+                    expect(boundingComponentBbox.top).to.be.greaterThan(0);
+                    expect(api).to.not.be.undefined;
+                })
+                .then(() => {
+                    api.updateOverlaysContainerBoundingBox();
+                    expectRightOverlaysContainerBBox();
+                });
         });
     });
 });

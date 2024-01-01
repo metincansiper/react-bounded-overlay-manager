@@ -7,11 +7,12 @@ jest.mock('../../api/BoundedOverlayManagerApi', () => ({
 }));
 
 describe('useApiUpdateHandler', () => {
-  it('should recall onApiUpdated when timedEventManager changes', async () => {
+  it('should recall onApiUpdated when an api parameter changes', async () => {
     const initialTimedEventManager = { id: 'initial' } as any;
     const onApiUpdated = jest.fn();
+    const updateOverlaysContainerBoundingBox = jest.fn();
 
-    const { rerender } = renderHook(({timedEventManager}) => useApiUpdateHandler({ timedEventManager, onApiUpdated }), {
+    const { rerender } = renderHook(({timedEventManager}) => useApiUpdateHandler({ timedEventManager, onApiUpdated, updateOverlaysContainerBoundingBox }), {
         initialProps: { timedEventManager: initialTimedEventManager },
     });
 
@@ -30,11 +31,12 @@ describe('useApiUpdateHandler', () => {
     });
   });
 
-  it('should not recall onApiUpdated when timedEventManager does not change', async () => {
+  it('should not recall onApiUpdated when no api parameter change', async () => {
     const timedEventManager = { id: 'initial' } as any;
     const onApiUpdated = jest.fn();
+    const updateOverlaysContainerBoundingBox = jest.fn();
 
-    const { rerender } = renderHook(() => useApiUpdateHandler({ timedEventManager, onApiUpdated }));
+    const { rerender } = renderHook(() => useApiUpdateHandler({ timedEventManager, onApiUpdated, updateOverlaysContainerBoundingBox }));
 
     await waitFor(() => {
         expect(onApiUpdated).toHaveBeenCalledWith(timedEventManager);
