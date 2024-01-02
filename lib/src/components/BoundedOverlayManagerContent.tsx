@@ -10,6 +10,7 @@ import { useOverlayManagerContext } from "../context/OverlayManagerContext";
 import useApiUpdateHandler from "../hooks/useApiUpdateHandler";
 import BoundedOverlayManagerApi from "../api/BoundedOverlayManagerApi";
 import useWindowResize from "../hooks/useWindowResize";
+import { DEFAULT_HIDE_OVERLAYS_ON_MOUSE_LEAVE, DEFAULT_OVERLAYS_SHOW_TIMEOUT, DEFAULT_PERSISTANTLY_SHOW_OVERLAYS, DEFAULT_SHOW_OVERLAYS_ON_MOUSE_MOVE, DEFAULT_SKIP_ALL_SYSTEM_EVENTS } from "../config";
 
 type Props = {
     children: ReactElement<typeof Overlay>[] | ReactElement<typeof Overlay>,
@@ -24,11 +25,11 @@ type Props = {
 // TODO: Provide an api exposing the functions to trigger show and hide events etc.?
 const BoundedOverlayManagerContent: React.FC<Props> = ({
     children,
-    overlaysShowTimeout = 2000,
-    persistentlyShowOverlays = false, 
-    skipAllSystemEvents = false,
-    hideOverlaysOnMouseLeave = true,
-    showOverlaysOnMouseMove = true,
+    overlaysShowTimeout = DEFAULT_OVERLAYS_SHOW_TIMEOUT,
+    persistentlyShowOverlays = DEFAULT_PERSISTANTLY_SHOW_OVERLAYS, 
+    skipAllSystemEvents = DEFAULT_SKIP_ALL_SYSTEM_EVENTS,
+    hideOverlaysOnMouseLeave = DEFAULT_HIDE_OVERLAYS_ON_MOUSE_LEAVE,
+    showOverlaysOnMouseMove = DEFAULT_SHOW_OVERLAYS_ON_MOUSE_MOVE,
     onApiUpdated
 }: Props) => {
     const { boundingComponentRef } = useOverlayManagerContext();

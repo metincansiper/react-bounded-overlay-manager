@@ -1,6 +1,11 @@
 import React, { CSSProperties, useRef } from 'react';
-import type { Meta, Story } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import BoundedOverlayManager, { Overlay, PredefinedPosition } from '../lib/main';
+import { DEFAULT_HIDE_OVERLAYS_ON_MOUSE_LEAVE, DEFAULT_OVERLAYS_SHOW_TIMEOUT, DEFAULT_PERSISTANTLY_SHOW_OVERLAYS, DEFAULT_SHOW_OVERLAYS_ON_MOUSE_MOVE, DEFAULT_SKIP_ALL_SYSTEM_EVENTS } from '../lib/src/config';
+
+// Note that the config values are the only ones that are imported from source code of the library,
+// this exception is made to ensure that the default values are always in sync with the ones 
+// actually used in the library.
 
 const meta: Meta = {
   title: 'Components/BoundedOverlayManager',
@@ -11,35 +16,39 @@ const meta: Meta = {
   tags: ['autodocs'],
   argTypes: {
     persistentlyShowOverlays: {
-      control: 'boolean',
-      description: 'If true, overlays will be shown persistently',
+      description: 'When set to true, overlays are always shown independent of the other factors.',
+      // defaultValue: DEFAULT_PERSISTANTLY_SHOW_OVERLAYS,
     },
     boundingComponentRef: {
       control: false,
-      description: 'The component relative to which the overlays will be positioned',
+      description: 'Reference to the component relative to which overlays will be positioned.',
     },
     overlaysShowTimeout: {
-      description: 'The timeout after which the overlays will be hidden, if not persistently shown. Use NO_TIMEOUT or -1 to disable the timeout',
+      description: 'Time (in milliseconds) after which overlays will automatically hide, unless persistently shown. Set to NO_TIMEOUT or -1 to disable.',
+      // defaultValue: DEFAULT_OVERLAYS_SHOW_TIMEOUT,
     },
     hideOverlaysOnMouseLeave: {
-      description: 'If true, overlays will be hidden when the mouse leaves the bounding component',
+      description: 'When enabled (true), overlays will hide as soon as the mouse leaves the bounding component.',
+      // defaultValue: DEFAULT_HIDE_OVERLAYS_ON_MOUSE_LEAVE,
     },
     showOverlaysOnMouseMove: {
-      description: 'If true, overlays will be shown when the mouse moves over the bounding component',
+      description: 'When enabled (true), overlays will appear when the mouse moves on the bounding component.',
+      // defaultValue: DEFAULT_SHOW_OVERLAYS_ON_MOUSE_MOVE,
     },
     skipAllSystemEvents: {
-      description: 'If true, all system events will be ignored',
+      description: 'When set to true, all system events (like mouse movement) will be ignored in overlay behavior.',
+      // defaultValue: DEFAULT_SKIP_ALL_SYSTEM_EVENTS,
     },
     onApiUpdated: {
       control: false,
-      description: 'A callback that will be called when the api is updated, the callback will accept the api as a parameter',
+      description: 'Callback function that is called when the API updates. The updated API is passed as an argument to this function.',
     }
   },
 };
 
 export default meta;
 
-const BoundedOverlayManagerStory: Story = (args) => {
+const BoundedOverlayManagerStory: StoryFn = (args) => {
   const boundingComponentRef = useRef(null);
 
   const boundingComponentStyle: CSSProperties = {
@@ -67,8 +76,16 @@ const BoundedOverlayManagerStory: Story = (args) => {
   );
 };
 
+const defaultArgs = {
+  persistentlyShowOverlays: DEFAULT_PERSISTANTLY_SHOW_OVERLAYS,
+  overlaysShowTimeout: DEFAULT_OVERLAYS_SHOW_TIMEOUT,
+  hideOverlaysOnMouseLeave: DEFAULT_HIDE_OVERLAYS_ON_MOUSE_LEAVE,
+  showOverlaysOnMouseMove: DEFAULT_SHOW_OVERLAYS_ON_MOUSE_MOVE,
+  skipAllSystemEvents: DEFAULT_SKIP_ALL_SYSTEM_EVENTS,
+};
+
 export const Default = BoundedOverlayManagerStory.bind({});
 
-// CustomBoundedOverlayManager.args = {
-//   persistentlyShowOverlays: true,
-// };
+Default.args = {
+  ...defaultArgs,
+}; 
