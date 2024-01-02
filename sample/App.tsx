@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import FullScreen from 'react-fullscreen-crossbrowser';
 import BoundedOverlayManager, { BoundedOverlayManagerApi, Overlay, PredefinedPosition } from '../lib/main';
-import { NO_TIMEOUT } from '../lib/src/timer/TimedEventManager';
+// import { NO_TIMEOUT } from '../lib/src/timer/TimedEventManager';
 
 const App = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -23,9 +23,8 @@ const App = () => {
         enabled={isFullScreen}
         onChange={handleFullScreenChange}
       >
-        <div style={{width: '100vw', height: '100vh', position: 'relative'}}>
-          <div  ref={boundingComponentRef} style={{ position: 'absolute', left: '20%', top: '20%', width: '500px', height: '500px', backgroundColor:'blue' }}>
-            {/* <div style={{ width: '100%', height: '300px', backgroundColor: 'red' }}></div> */}
+        <div style={{width: '90vw', height: '60vh'}}>
+          <div ref={boundingComponentRef} style={{ width: '100%', height: '100%', backgroundColor:'blue' }}>
             <button onClick={() => setIsFullScreen(!isFullScreen)}>
               {isFullScreen ? 'Exit Fullscreen' : 'Go Fullscreen'}
             </button>
