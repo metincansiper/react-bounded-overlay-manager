@@ -20,21 +20,22 @@ const meta: Meta = {
     offset: {
       description: `Modifies the overlay's anchored position by adjusting its coordinates 
       relative to the anchor point set by the 'position' prop. The accepted values for 'offset' 
-      mirror those of corresponding CSS properties. For instance, the 'top' property of 'offset' 
-      can be assigned any value that is valid for CSSProperties['top'], such as '50px', '20%', etc. 
-      This enables precise positional fine-tuning of the overlay from its initial anchored location. 
-      The specific 'offset' properties that are applicable vary based on the selected 'position', 
-      allowing for targeted adjustments in different directions:
-        
-        TOP_LEFT: top, left
-        TOP_CENTER: top, left
-        TOP_RIGHT: top, right
-        MID_LEFT: top, left
-        CENTER: top, left
-        MID_RIGHT: top, right
-        BOTTOM_LEFT: bottom, left
-        BOTTOM_CENTER: bottom, left
-        BOTTOM_RIGHT: bottom, right
+      mirror those of corresponding CSS properties when it corresponds to edge-alligned positions 
+      ('top', 'bottom', 'left', 'right'). For instance, the 'top' property of 'offset' can be assigned any value that is valid for CSSProperties['top'],
+      such as '50px', '20%', etc. For center-aligned positions, use properties ending in 'InPercent' (e.g., 'topInPercent'), 
+      accepting numeric values for precise adjustment. The specific 'offset' properties that are applicable vary based 
+      on the selected 'position', allowing for targeted adjustments in different directions:
+
+
+      - TOP_LEFT: Adjust using 'top' and 'left'
+      - TOP_CENTER: Adjust using 'top' and 'leftInPercent'
+      - TOP_RIGHT: Adjust using 'top' and 'right'
+      - MID_LEFT: Adjust using 'topInPercent' and 'left'
+      - CENTER: Adjust using 'topInPercent' and 'leftInPercent'
+      - MID_RIGHT: Adjust using 'topInPercent' and 'right'
+      - BOTTOM_LEFT: Adjust using 'bottom' and 'left'
+      - BOTTOM_CENTER: Adjust using 'bottom' and 'leftInPercent'
+      - BOTTOM_RIGHT: Adjust using 'bottom' and 'right'
       `,
     },
   }
