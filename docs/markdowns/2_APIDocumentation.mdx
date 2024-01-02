@@ -6,11 +6,13 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 ## Introduction
 
-This section details the API methods offered by the `BoundedOverlayManager` library. These methods enable programmatic control and customization of overlay behaviors, providing flexibility and dynamic interaction within your application.
+This section provides detailed information about the API methods available in the `BoundedOverlayManager` library.
 
 ## Using the API
 
-`onApiUpdated` propery of `BoundedOverlayManager` component maybe used as below to get the API object.
+To access the API, use the `onApiUpdated` property of the `BoundedOverlayManager` component. This callback returns an API object.
+
+Here's an example demonstrating how to use the API:
 
 ```jsx
 const boundingComponentRef = useRef(null);
@@ -41,13 +43,12 @@ return (
 
 ### renderOverlays()
 
-- Triggers the rendering of overlays.
+- Initiates the rendering of overlays. Useful for displaying overlays programmatically.
 
 ### clearOverlays()
 
-- Triggers the clearing of overlays. This method will not be effective if the `persistentlyShowOverlays` prop is set to `true`.
+-  Clears all currently displayed overlays. Note: This method has no effect if `persistentlyShowOverlays` is set to true.
 
 ### updateOverlaysContainerBoundingBox()
 
-- Updates the bounding box of the overlays container. When the bounding component itself or the window is resized the library will automatically update the bounding box. 
-However, in other cases including the repositioning of the bounding component, the bounding box will not be updated automatically. In such cases, this method can be used to update the bounding box manually.
+- Updates the bounding box of the overlays container. While the library automatically updates the bounding box during window resizing or direct resizing of the bounding component, there are other situations where a manual update is necessary to ensure accurate overlay positioning such as when the bounding component is repositioned.
