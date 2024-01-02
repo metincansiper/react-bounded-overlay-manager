@@ -10,7 +10,7 @@ import { useOverlayManagerContext } from "../context/OverlayManagerContext";
 import useApiUpdateHandler from "../hooks/useApiUpdateHandler";
 import BoundedOverlayManagerApi from "../api/BoundedOverlayManagerApi";
 import useWindowResize from "../hooks/useWindowResize";
-import { DEFAULT_HIDE_OVERLAYS_ON_MOUSE_LEAVE, DEFAULT_OVERLAYS_SHOW_TIMEOUT, DEFAULT_PERSISTANTLY_SHOW_OVERLAYS, DEFAULT_SHOW_OVERLAYS_ON_MOUSE_MOVE, DEFAULT_SKIP_ALL_SYSTEM_EVENTS } from "../config";
+import { DEFAULT_HIDE_OVERLAYS_ON_MOUSE_LEAVE, DEFAULT_OVERLAYS_SHOW_TIMEOUT, DEFAULT_PERSISTANTLY_SHOW_OVERLAYS, DEFAULT_SHOW_OVERLAYS_ON_MOUSE_MOVE, DEFAULT_SKIP_ALL_SYSTEM_EVENTS, DEFAULT_UNMOUNT_CONTENT_WHEN_HIDDEN } from "../config";
 
 type Props = {
     children: ReactElement<typeof Overlay>[] | ReactElement<typeof Overlay>,
@@ -19,6 +19,7 @@ type Props = {
     hideOverlaysOnMouseLeave?: boolean,
     showOverlaysOnMouseMove?: boolean,
     skipAllSystemEvents?: boolean,
+    unmountContentWhenHidden?: boolean,
     onApiUpdated?: (api: BoundedOverlayManagerApi) => void,
 };
 
@@ -30,6 +31,7 @@ const BoundedOverlayManagerContent: React.FC<Props> = ({
     skipAllSystemEvents = DEFAULT_SKIP_ALL_SYSTEM_EVENTS,
     hideOverlaysOnMouseLeave = DEFAULT_HIDE_OVERLAYS_ON_MOUSE_LEAVE,
     showOverlaysOnMouseMove = DEFAULT_SHOW_OVERLAYS_ON_MOUSE_MOVE,
+    unmountContentWhenHidden = DEFAULT_UNMOUNT_CONTENT_WHEN_HIDDEN,
     onApiUpdated
 }: Props) => {
     const { boundingComponentRef } = useOverlayManagerContext();
@@ -76,7 +78,7 @@ const BoundedOverlayManagerContent: React.FC<Props> = ({
     }, [updateOverlaysContainerBoundingBox]);
     
     return (
-        <OverlaysContainer ref={overlaysContainerRef} show={showOverlays}>
+        <OverlaysContainer ref={overlaysContainerRef} show={showOverlays} unmountContentWhenHidden={unmountContentWhenHidden}>
             { children }
         </OverlaysContainer>
     );

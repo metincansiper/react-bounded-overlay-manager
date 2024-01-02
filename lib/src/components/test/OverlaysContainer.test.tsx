@@ -13,7 +13,7 @@ describe('OverlaysContainer', () => {
 
   it('renders children', () => {
     const { getByTestId } = render(
-      <OverlaysContainer show={true}>
+      <OverlaysContainer show={true} unmountContentWhenHidden={false}>
         {mockChild}
       </OverlaysContainer>
     );
@@ -23,7 +23,7 @@ describe('OverlaysContainer', () => {
 
   it('toggles visibility of content based on show prop', () => {
     const { rerender, container } = render(
-      <OverlaysContainer show={false}>
+      <OverlaysContainer show={false} unmountContentWhenHidden={false}>
         {mockChild}
       </OverlaysContainer>
 
@@ -33,7 +33,7 @@ describe('OverlaysContainer', () => {
     expect(overlaysContainerContent).toHaveStyle('display: none');
 
     rerender(
-      <OverlaysContainer show={true}>
+      <OverlaysContainer show={true} unmountContentWhenHidden={false}>
         {mockChild}
       </OverlaysContainer>
     );
@@ -62,7 +62,7 @@ describe('OverlaysContainer', () => {
 
   it('overlays container and the content divs has correct class name', () => {
     const { container } = render(
-      <OverlaysContainer show={true}>
+      <OverlaysContainer show={true} unmountContentWhenHidden={false}>
         {mockChild}
       </OverlaysContainer>
     );

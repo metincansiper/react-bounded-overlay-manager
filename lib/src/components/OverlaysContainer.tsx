@@ -8,11 +8,11 @@ export const overlaysContainerContentClassName = styles.overlaysContainerContent
 type Props = {
     children: ReactElement<typeof Overlay>[] | ReactElement<typeof Overlay>,
     show: boolean,
-    unmountContentWhenHidden?: boolean,
+    unmountContentWhenHidden: boolean,
 }
 
 const OverlaysContainer: React.ForwardRefRenderFunction<HTMLDivElement, Props> = 
-({ children, show, unmountContentWhenHidden = false }, ref) => {
+({ children, show, unmountContentWhenHidden }, ref) => {
     const displayContent = show ? 'block' : 'none';
     const shouldUnmountContent = unmountContentWhenHidden && !show;
 

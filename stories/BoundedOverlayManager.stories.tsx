@@ -1,7 +1,7 @@
 import React, { CSSProperties, useRef } from 'react';
 import type { Meta, StoryFn } from '@storybook/react';
 import BoundedOverlayManager, { Overlay, PredefinedPosition } from '../lib/main';
-import { DEFAULT_HIDE_OVERLAYS_ON_MOUSE_LEAVE, DEFAULT_OVERLAYS_SHOW_TIMEOUT, DEFAULT_PERSISTANTLY_SHOW_OVERLAYS, DEFAULT_SHOW_OVERLAYS_ON_MOUSE_MOVE, DEFAULT_SKIP_ALL_SYSTEM_EVENTS } from '../lib/src/config';
+import { DEFAULT_HIDE_OVERLAYS_ON_MOUSE_LEAVE, DEFAULT_OVERLAYS_SHOW_TIMEOUT, DEFAULT_PERSISTANTLY_SHOW_OVERLAYS, DEFAULT_SHOW_OVERLAYS_ON_MOUSE_MOVE, DEFAULT_SKIP_ALL_SYSTEM_EVENTS, DEFAULT_UNMOUNT_CONTENT_WHEN_HIDDEN } from '../lib/src/config';
 
 // Note that the config values are the only ones that are imported from source code of the library,
 // this exception is made to ensure that the default values are always in sync with the ones 
@@ -42,7 +42,11 @@ const meta: Meta = {
     onApiUpdated: {
       control: false,
       description: 'Callback function that is called when the API updates. The updated API is passed as an argument to this function.',
-    }
+    },
+    unmountContentWhenHidden: {
+      description: 'When set to true, the content of the overlay will be unmounted when the overlay is hidden.',
+      // defaultValue: DEFAULT_UNMOUNT_CONTENT_WHEN_HIDDEN,
+    },
   },
 };
 
@@ -82,6 +86,7 @@ const defaultArgs = {
   hideOverlaysOnMouseLeave: DEFAULT_HIDE_OVERLAYS_ON_MOUSE_LEAVE,
   showOverlaysOnMouseMove: DEFAULT_SHOW_OVERLAYS_ON_MOUSE_MOVE,
   skipAllSystemEvents: DEFAULT_SKIP_ALL_SYSTEM_EVENTS,
+  unmountContentWhenHidden: DEFAULT_UNMOUNT_CONTENT_WHEN_HIDDEN,
 };
 
 export const Default = BoundedOverlayManagerStory.bind({});
