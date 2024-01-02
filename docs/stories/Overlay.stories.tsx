@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import type { Meta, Story } from '@storybook/react';
-import BoundedOverlayManager, { Overlay, PredefinedPosition } from '../lib/main';
+import BoundedOverlayManager, { Overlay, PredefinedPosition } from '../../lib/main';
 
 const meta: Meta = {
   title: 'Components/Overlay',
