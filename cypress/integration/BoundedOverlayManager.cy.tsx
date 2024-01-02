@@ -6,7 +6,7 @@ const boundingComponentId = 'bounding-component';
 const getBoundingComponent = () => cy.get(`#${boundingComponentId}`);
 const getOverlaysContainer = () => cy.get('[role="overlays-container"]');
 
-const OverlayManagerTest = ({ boundingComponentChildren = null, boundingComponentStyle = {}, boundingComponentParentStyle = {}, overlayManagerProps = {}, overlayProps = {} }: any) => {
+const OverlayManagerTestBundle = ({ boundingComponentChildren = null, boundingComponentStyle = {}, boundingComponentParentStyle = {}, overlayManagerProps = {}, overlayProps = {} }: any) => {
     const boundingComponentRef = useRef(null);
     return (
         <>
@@ -69,13 +69,13 @@ describe('BoundedOverlayManager Component', () => {
                 it(`works correctly with parent style ${JSON.stringify(parentStyle)} and bounding style ${JSON.stringify(boundingStyle)}`, () => {
                     const boundingComponentStyle = { ...boundingStyle };
                     const boundingComponentParentStyle = { width: '1000px', height: '500px', ...parentStyle };
-                    const CustomOverlayManagerTest = () => {
+                    const CustomizedOverlayManagerTestBundle = () => {
                         return (
-                            <OverlayManagerTest boundingComponentStyle={boundingComponentStyle} boundingComponentParentStyle={boundingComponentParentStyle} />
+                            <OverlayManagerTestBundle boundingComponentStyle={boundingComponentStyle} boundingComponentParentStyle={boundingComponentParentStyle} />
                         );
                     };
 
-                    mount(<CustomOverlayManagerTest />);
+                    mount(<CustomizedOverlayManagerTestBundle />);
 
                     expectRightOverlaysContainerBBox();
                 });
@@ -99,13 +99,13 @@ describe('BoundedOverlayManager Component', () => {
             }
         ].forEach(({ initialDimentions, finalDimentions }) => {
             it(`works correctly when bounding component itself is resized directly from ${JSON.stringify(initialDimentions)} to ${JSON.stringify(finalDimentions)}`, () => {
-                const CustomOverlayManagerTest = () => {
+                const CustomizedOverlayManagerTestBundle = () => {
                     return (
-                        <OverlayManagerTest boundingComponentStyle={{ ...initialDimentions }} />
+                        <OverlayManagerTestBundle boundingComponentStyle={{ ...initialDimentions }} />
                     );
                 }
 
-                mount(<CustomOverlayManagerTest />);
+                mount(<CustomizedOverlayManagerTestBundle />);
 
                 expectRightOverlaysContainerBBox();
 
@@ -134,13 +134,13 @@ describe('BoundedOverlayManager Component', () => {
             },
         ].forEach(({ initialDimentions, finalDimentions }) => {
             it(`works correctly when bounding component is resized indirectly through resize of its parent from ${JSON.stringify(initialDimentions)} to ${JSON.stringify(finalDimentions)}`, () => {
-                const CustomOverlayManagerTest = () => {
+                const CustomizedOverlayManagerTestBundle = () => {
                     return (
-                        <OverlayManagerTest boundingComponentParentStyle={{ ...initialDimentions }} />
+                        <OverlayManagerTestBundle boundingComponentParentStyle={{ ...initialDimentions }} />
                     );
                 };
 
-                mount(<CustomOverlayManagerTest />);
+                mount(<CustomizedOverlayManagerTestBundle />);
 
                 expectRightOverlaysContainerBBox();
 
@@ -192,15 +192,15 @@ describe('BoundedOverlayManager Component', () => {
             }
         ].forEach(({ parentStyle, boundingComponentStyle }) => {
             it(`works correctly when the window is resized when bounding component has the style of ${JSON.stringify(boundingComponentStyle)} and its parent has the style of ${JSON.stringify(parentStyle)} `, () => {
-                const CustomOverlayManagerTest = () => {
+                const CustomizedOverlayManagerTestBundle = () => {
                     return (
-                        <OverlayManagerTest boundingComponentStyle={{ ...boundingComponentStyle }} boundingComponentParentStyle={{ ...parentStyle }} />
+                        <OverlayManagerTestBundle boundingComponentStyle={{ ...boundingComponentStyle }} boundingComponentParentStyle={{ ...parentStyle }} />
                     );
                 };
 
                 cy.viewport(500, 400);
 
-                mount(<CustomOverlayManagerTest />);
+                mount(<CustomizedOverlayManagerTestBundle />);
 
                 expectRightOverlaysContainerBBox();
 
@@ -248,9 +248,9 @@ describe('BoundedOverlayManager Component', () => {
                 const overlayProps = {
                     position: overlayPosition,
                 };
-                const CustomOverlayManagerTest = () => {
+                const CustomizedOverlayManagerTestBundle = () => {
                     return (
-                        <OverlayManagerTest
+                        <OverlayManagerTestBundle
                             overlayManagerProps={overlayManagerProps}
                             boundingComponentChildren={boundingComponentChildren}
                             boundingComponentStyle={boundingComponentStyle}
@@ -259,7 +259,7 @@ describe('BoundedOverlayManager Component', () => {
                     );
                 };
 
-                mount(<CustomOverlayManagerTest />);
+                mount(<CustomizedOverlayManagerTestBundle />);
 
                 cy.get(`#${boundingComponentChildId}`).then($boundingComponentChild => {
                     const boundingRect = $boundingComponentChild[0].getBoundingClientRect();
@@ -291,13 +291,13 @@ describe('BoundedOverlayManager Component', () => {
             const boundingComponentStyle = { position: 'absolute', left: 0, top: 0, width: '400px', height: '200px' };
             const boundingComponentParentStyle = { width: '1000px', height: '500px', position: 'relative' };
 
-            const CustomOverlayManagerTest = () => {
+            const CustomizedOverlayManagerTestBundle = () => {
                 return (
-                    <OverlayManagerTest overlayManagerProps={{ onApiUpdated }} boundingComponentStyle={boundingComponentStyle} boundingComponentParentStyle={boundingComponentParentStyle} />
+                    <OverlayManagerTestBundle overlayManagerProps={{ onApiUpdated }} boundingComponentStyle={boundingComponentStyle} boundingComponentParentStyle={boundingComponentParentStyle} />
                 );
             }
 
-            mount(<CustomOverlayManagerTest />);
+            mount(<CustomizedOverlayManagerTestBundle />);
 
             getBoundingComponent()
                 .then(($boundingComponent) => {
