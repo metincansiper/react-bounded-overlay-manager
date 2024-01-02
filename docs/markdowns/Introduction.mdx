@@ -1,1 +1,66 @@
-Helo World
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Documentation/Introduction" />
+
+# BoundedOverlayManager
+
+## Overview
+
+`BoundedOverlayManager` is a React library designed to create and manage overlay components within a specified bounding container. It offers flexible positioning, dynamic show/hide behavior, customizable event handling, and an API for extended control.
+
+## Key Features
+
+- **Flexible Positioning**: Leverage `position` and `offset` parameters of Overlay component for precise placement of overlays.
+- **Dynamic Visibility**: Configure overlays to appear and disappear in response to user interactions.
+- **Customizable Event Handling**: Tailor the behavior of the overlays to match specific application requirements.
+- **Extended Control via API**: Utilize the provided API for more complex and dynamic interactions.
+
+## Installation
+
+```bash
+npm install react-bounded-overlay-manager
+```
+
+## Basic Example
+
+```jsx
+import React, { useRef } from 'react';
+import BoundedOverlayManager, { Overlay, PredefinedPosition } from 'react-bounded-overlay-manager';
+
+const BasicExample = () => {
+  const boundingComponentRef = useRef(null);
+
+  return (
+    <div>
+      <div ref={boundingComponentRef} style={{ width: '70vw', height: '50vh', border: '1px solid black' }}>
+        Hover over this div to display overlays.
+      </div>
+      <BoundedOverlayManager boundingComponentRef={boundingComponentRef}>
+        <Overlay position={PredefinedPosition.BOTTOM_CENTER}>
+          <button>Overlay Button</button>
+        </Overlay>
+        <!-- more overlays here -->
+      </BoundedOverlayManager>
+    </div>
+  );
+};
+```
+
+## Learn More
+
+For more detailed information on how to utilize `BoundedOverlayManager` to its fullest, explore the following sections:
+
+### Components Section
+
+Discover comprehensive details about each component for advanced usage and customization.
+{/* TODO: Link here? */}
+
+
+### API Documentation
+
+Gain a deeper understanding of the library's API for sophisticated customization and control. This section will guide you through advanced techniques to ensure the overlays align perfectly with your application's unique needs. The API documentation covers all the functionalities, methods, and properties available, giving you the tools to tailor the overlays to your specific requirements.
+
+{/* TODO: Create this mdx file */}
+[API Documentation](./APIDocumentation.mdx)
+
+Visit these sections for further insights and advanced examples.

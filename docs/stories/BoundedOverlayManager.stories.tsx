@@ -66,8 +66,10 @@ const BoundedOverlayManagerStory: StoryFn = (args) => {
   };
 
   return (
-    <div ref={boundingComponentRef} style={boundingComponentStyle}>
-      Move the mouse over this div to show the overlays
+    <>
+      <div ref={boundingComponentRef} style={boundingComponentStyle}>
+        Move the mouse over this div to show the overlays
+      </div>
       <BoundedOverlayManager boundingComponentRef={boundingComponentRef} {...args}>
         <Overlay position={PredefinedPosition.BOTTOM_CENTER} offset={{bottom: '2vh'}}>
           <button>Overlay Button</button>
@@ -76,7 +78,7 @@ const BoundedOverlayManagerStory: StoryFn = (args) => {
           <div style={{border: '2px solid black', padding: '2px'}}>Overlay Div</div>
         </Overlay>
       </BoundedOverlayManager>
-    </div>
+    </>
   );
 };
 

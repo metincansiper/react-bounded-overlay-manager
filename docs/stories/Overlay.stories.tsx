@@ -47,13 +47,14 @@ const OverlayStory: Story = (args: any) => {
   const boundingComponentRef = useRef(null);
 
   return (
-    <div ref={boundingComponentRef} style={{ width: '70vw', height: '50vh', border: '1px solid black' }}>
+    <>
+      <div ref={boundingComponentRef} style={{ width: '70vw', height: '50vh', border: '1px solid black' }}/>
       <BoundedOverlayManager boundingComponentRef={boundingComponentRef} persistentlyShowOverlays={true}>
         <Overlay {...args}>
           <div>Overlay Content</div>
         </Overlay>
       </BoundedOverlayManager>
-    </div>
+    </>
   );
 };
 
