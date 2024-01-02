@@ -1,6 +1,6 @@
 import { CSSProperties, useCallback, useEffect, useRef, useState } from "react";
 import PredefinedPosition from "../enum/PredefinedPosition";
-import { BottomCenterOffsetProps, BottomLeftOffsetProps, CenterOffsetProps, MidLeftOffsetProps, MidRightOffsetProps, TopCenterOffsetProps, TopLeftOffsetProps, TopRightOffsetProps } from "../types/OffsetProps";
+import { BottomCenterOffsetProps, BottomLeftOffsetProps, BottomRightOffsetProps, CenterOffsetProps, MidLeftOffsetProps, MidRightOffsetProps, TopCenterOffsetProps, TopLeftOffsetProps, TopRightOffsetProps } from "../types/OffsetProps";
 import useForwardOverlayEvents from "../hooks/useForwardOverlayEvents";
 import { useOverlayManagerContext } from "../context/OverlayManagerContext";
 import styles from './Overlay.module.css';
@@ -13,7 +13,7 @@ type PositionOffsetMapping = {
     [PredefinedPosition.BOTTOM_CENTER]: BottomCenterOffsetProps,
     [PredefinedPosition.TOP_RIGHT]: TopRightOffsetProps,
     [PredefinedPosition.BOTTOM_LEFT]: BottomLeftOffsetProps,
-    [PredefinedPosition.BOTTOM_RIGHT]: BottomLeftOffsetProps,
+    [PredefinedPosition.BOTTOM_RIGHT]: BottomRightOffsetProps,
     [PredefinedPosition.TOP_CENTER]: TopCenterOffsetProps,
     [PredefinedPosition.MID_LEFT]: MidLeftOffsetProps,
     [PredefinedPosition.MID_RIGHT]: MidRightOffsetProps,
