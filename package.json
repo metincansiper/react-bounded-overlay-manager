@@ -1,5 +1,5 @@
 {
-  "name": "react-bounded-overlays",
+  "name": "react-bounded-overlay-manager",
   "private": true,
   "version": "0.0.0",
   "type": "module",

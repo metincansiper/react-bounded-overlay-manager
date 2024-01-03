@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import FullScreen from 'react-fullscreen-crossbrowser';
-import BoundedOverlayManager, { BoundedOverlayManagerApi, Overlay, PredefinedPosition } from '../lib/main';
+import BoundedOverlayManager, { BoundedOverlayManagerApi, Overlay, PredefinedPosition } from '../dist/main';
 // import { NO_TIMEOUT } from '../lib/src/timer/TimedEventManager';
 
 const App = () => {

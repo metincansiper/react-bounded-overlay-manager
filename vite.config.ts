@@ -19,7 +19,7 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      external: ['react', 'react/jsx-runtime'],
+      external: ['react', 'react/jsx-runtime', 'react-dom'],
       input: Object.fromEntries(
         glob.sync('lib/**/*.{ts,tsx}').map(file => [
           relative(
