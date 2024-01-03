@@ -1,30 +1,49 @@
-# React + TypeScript + Vite
+# React Bounded Overlay Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+`React Bounded Overlay Manager` is a React library designed to create and manage overlay components within a specified bounding container. It offers flexible positioning, dynamic show/hide behavior, customizable event handling, and an API for extended control.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Key Features
 
-## Expanding the ESLint configuration
+- **Flexible Positioning**: Utilize `position` and `offset` parameters within the Overlay component to achieve precise and strategic placement of overlays.
+- **Dynamic Visibility**: Effortlessly configure the appearance and disappearance of overlays in response to user interactions, enhancing user experience and interface responsiveness.
+- **Customizable Event Handling**: Tailor overlay visibility to align with specific application requirements. This includes the ability to control when overlays appear or disappear based on user interactions, system events, or custom triggers. Configure these settings to suit your application's behavior and user experience needs.
+- **Extended Control via API**: Access the API for comprehensive control over overlay behavior, extending beyond the capabilities offered by component properties.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Installation
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```bash
+npm install react-bounded-overlay-manager
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Basic Example
+
+```jsx
+import React, { useRef } from 'react';
+import BoundedOverlayManager, { Overlay, PredefinedPosition } from 'react-bounded-overlay-manager';
+
+const BasicExample = () => {
+  const boundingComponentRef = useRef(null);
+
+  return (
+    <div>
+      <div ref={boundingComponentRef} style={{ width: '70vw', height: '50vh', border: '1px solid black' }}>
+        Hover over this div to display overlays.
+      </div>
+      <BoundedOverlayManager boundingComponentRef={boundingComponentRef}>
+        <Overlay position={PredefinedPosition.BOTTOM_CENTER}>
+          <button>Overlay Button</button>
+        </Overlay>
+        <!-- more overlays here -->
+      </BoundedOverlayManager>
+    </div>
+  );
+};
+```
+
+## Learn More
+For more detailed information on how to utilize `React Bounded Overlay Manager` to its fullest, explore the [documentation](./link/to/docs/here)
+
+## For Developers
+If you are interested in contributing to the project or want to build and test the library, please refer to our [Developer Guide](./readme_suplements/DEVELOPER_GUIDE.md) for detailed instructions on setup, development, testing, and deployment.
