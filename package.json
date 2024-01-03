@@ -16,7 +16,9 @@
     "test": "jest",
     "storybook": "storybook dev -p 6007",
     "build-storybook": "storybook build",
-    "test:browser": "cypress run --component"
+    "test:browser": "cypress run --component",
+    "build-and-deploy-storybook": "npm run build-storybook && npm run deploy-storybook",
+    "deploy-storybook": "node deploy-storybook.mjs"
   },
   "peerDependencies": {
     "react": "^18.2.0",
@@ -48,6 +50,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "eslint-plugin-storybook": "^0.6.15",
+    "gh-pages": "^6.1.1",
     "glob": "^10.3.10",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^29.7.0",
