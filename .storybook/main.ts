@@ -1,4 +1,5 @@
 import type { StorybookConfig } from "@storybook/react-vite";
+import { withoutVitePlugins } from '@storybook/builder-vite';
 
 const config: StorybookConfig = {
   stories: [
@@ -18,5 +19,13 @@ const config: StorybookConfig = {
   docs: {
     autodocs: "tag",
   },
+  async viteFinal(config, { configType }) {
+    // Return the altered config
+    return {
+      ...config,
+      plugins: await withoutVitePlugins(config.plugins, ['vite:lib-inject-css']),
+    };
+  },
 };
+
 export default config;

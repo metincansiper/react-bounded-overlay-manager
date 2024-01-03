@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import type { Meta, Story } from '@storybook/react';
+import type { Meta, StoryFn } from '@storybook/react';
 import BoundedOverlayManager, { Overlay, PredefinedPosition } from '../../lib/main';
 
 const meta: Meta = {
@@ -43,7 +43,7 @@ const meta: Meta = {
 
 export default meta;
 
-const OverlayStory: Story = (args: any) => {
+const OverlayStory: StoryFn = (args: any) => {
   const boundingComponentRef = useRef(null);
 
   return (
