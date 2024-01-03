@@ -15,7 +15,8 @@
     "preview": "vite preview",
     "test": "jest",
     "storybook": "storybook dev -p 6007",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "test:browser": "cypress run --component"
   },
   "peerDependencies": {
     "react": "^18.2.0",
