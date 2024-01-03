@@ -22,8 +22,4 @@ This guide provides essential information for developers interested in contribut
 - Update the version number in `package.json`.
 - Run `npm publish` to publish the package to NPM.
 
-## Additional Resources
-- [Storybook Documentation](./link/to/storybook/documentation)
-- [API Documentation](./link/to/api/documentation)
-
 For any issues or questions, please open an issue in the GitHub repository.
