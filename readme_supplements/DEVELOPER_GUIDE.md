@@ -11,7 +11,8 @@ This guide provides essential information for developers interested in contribut
 - Run `npm run build` to build the project. The output will be in the `dist` directory.
 
 ## Running Tests
-- Execute `npm run test` to run unit tests.
+- Execute `npm run test` for unit or simpler integration tests. These tests typically focus on internal logic and functionality, not requiring a full browser environment.
+- Execute `npm run test:browser` for comprehensive tests that simulate a browser environment, including headless mode. This option is suitable for in-depth UI and interaction testing with Cypress, providing a closer approximation to user experiences.
 
 ## Contributing
 - Fork the repository and create a new branch for your feature or fix.
