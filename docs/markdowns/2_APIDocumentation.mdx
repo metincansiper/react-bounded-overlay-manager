@@ -41,11 +41,11 @@ return (
 
 ### renderOverlays()
 
-- Initiates the rendering of overlays. Useful for displaying overlays programmatically.
+- Triggers the rendering of overlays. This method is effective for scenarios where system events do not automatically trigger overlay rendering.
 
 ### clearOverlays()
 
--  Clears all currently displayed overlays. Note: This method has no effect if `persistentlyShowOverlays` is set to true.
+-  Triggers clearing of the currently displayed overlays, effective in cases where system events do not automatically lead to their hiding. Note, however, that it has no effect when `persistentlyShowOverlays` is enabled, as overlays in this mode are intended to stay visible continuously.
 
 ### updateOverlaysContainerBoundingBox()
 
