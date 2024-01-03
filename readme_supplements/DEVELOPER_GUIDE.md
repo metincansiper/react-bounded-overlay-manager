@@ -14,6 +14,9 @@ This guide provides essential information for developers interested in contribut
 - Execute `npm run test` for unit or simpler integration tests. These tests typically focus on internal logic and functionality, not requiring a full browser environment.
 - Execute `npm run test:browser` for comprehensive tests that simulate a browser environment, including headless mode. This option is suitable for in-depth UI and interaction testing with Cypress, providing a closer approximation to user experiences.
 
+## Updating the Docs
+- Execute `npm run build-and-deploy-storybook`
+
 ## Contributing
 - Fork the repository and create a new branch for your feature or fix.
 - Make sure to include tests for new features.
