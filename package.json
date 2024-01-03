@@ -70,5 +70,10 @@
   "dependencies": {
     "events": "^3.3.0",
     "use-debounce": "^10.0.0"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/metincansiper/react-bounded-overlay-manager"
   }
 }
