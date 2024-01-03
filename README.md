@@ -46,4 +46,4 @@ const BasicExample = () => {
 For more detailed information on how to utilize `React Bounded Overlay Manager` to its fullest, explore the [documentation](./link/to/docs/here)
 
 ## For Developers
-If you are interested in contributing to the project or want to build and test the library, please refer to our [Developer Guide](./readme_suplements/DEVELOPER_GUIDE.md) for detailed instructions on setup, development, testing, and deployment.
+If you are interested in contributing to the project or want to build and test the library, please refer to our [Developer Guide](./readme_supplements/DEVELOPER_GUIDE.md) for detailed instructions on setup, development, testing, and deployment.
