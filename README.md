@@ -27,17 +27,20 @@ const BasicExample = () => {
   const boundingComponentRef = useRef(null);
 
   return (
-    <div>
+    <>
       <div ref={boundingComponentRef} style={{ width: '70vw', height: '50vh', border: '1px solid black' }}>
         Hover over this div to display overlays.
       </div>
+      {/* 
+        The BoundedOverlayManager component can be flexibly placed anywhere within the React component tree of your application's JSX. Its internal logic will handle the actual rendering location of overlays, ensuring consistent functionality regardless of its position in the JSX. 
+      */}
       <BoundedOverlayManager boundingComponentRef={boundingComponentRef}>
         <Overlay position={PredefinedPosition.BOTTOM_CENTER}>
           <button>Overlay Button</button>
         </Overlay>
         <!-- more overlays here -->
       </BoundedOverlayManager>
-    </div>
+    </>
   );
 };
 ```
