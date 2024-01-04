@@ -1,4 +1,4 @@
-import{j as e}from"./jsx-runtime-AgcCsxC8.js";import"./blocks-i5o0VK9R.js";import{useMDXComponents as t}from"./index-7MmEg4M7.js";import{M as r}from"./index-9ylO3ihc.js";import"./index-XiNr8FW2.js";import"./_commonjsHelpers-5-cIlDoe.js";import"./iframe-tWVOrtVB.js";import"../sb-preview/runtime.js";import"./index-9vG4XYWr.js";import"./index-ogXoivrg.js";import"./index-mLPG47JP.js";import"./index-PPLHz8o0.js";function i(o){const n=Object.assign({h1:"h1",h2:"h2",p:"p",code:"code",ul:"ul",li:"li",strong:"strong",pre:"pre",h3:"h3",a:"a"},t(),o.components);return e.jsxs(e.Fragment,{children:[e.jsx(r,{title:"Documentation/Introduction"}),`
+import{j as e}from"./jsx-runtime-AgcCsxC8.js";import"./blocks-i5o0VK9R.js";import{useMDXComponents as t}from"./index-7MmEg4M7.js";import{M as r}from"./index-Ebd_GBJe.js";import"./index-XiNr8FW2.js";import"./_commonjsHelpers-5-cIlDoe.js";import"./iframe-QoMV_NDT.js";import"../sb-preview/runtime.js";import"./index-9vG4XYWr.js";import"./index-ogXoivrg.js";import"./index-mLPG47JP.js";import"./index-PPLHz8o0.js";function i(o){const n=Object.assign({h1:"h1",h2:"h2",p:"p",code:"code",ul:"ul",li:"li",strong:"strong",pre:"pre",h3:"h3",a:"a"},t(),o.components);return e.jsxs(e.Fragment,{children:[e.jsx(r,{title:"Documentation/Introduction"}),`
 `,e.jsx(n.h1,{id:"react-bounded-overlay-manager",children:"React Bounded Overlay Manager"}),`
 `,e.jsx(n.h2,{id:"overview",children:"Overview"}),`
 `,e.jsxs(n.p,{children:[e.jsx(n.code,{children:"React Bounded Overlay Manager"})," is a React library designed to create and manage overlay components within a specified bounding container. It offers flexible positioning, dynamic show/hide behavior, customizable event handling, and an API for extended control."]}),`
@@ -20,17 +20,23 @@ const BasicExample = () => {
   const boundingComponentRef = useRef(null);
 
   return (
-    <div>
+    <>
       <div ref={boundingComponentRef} style={{ width: '70vw', height: '50vh', border: '1px solid black' }}>
         Hover over this div to display overlays.
       </div>
+      {/* 
+        The BoundedOverlayManager component can be flexibly placed anywhere within the React 
+        component tree of your application's JSX. Its internal logic will handle the actual 
+        rendering location of overlays, ensuring consistent functionality regardless of its position
+        in the JSX. 
+      */}
       <BoundedOverlayManager boundingComponentRef={boundingComponentRef}>
         <Overlay position={PredefinedPosition.BOTTOM_CENTER}>
           <button>Overlay Button</button>
         </Overlay>
         <!-- more overlays here -->
       </BoundedOverlayManager>
-    </div>
+    </>
   );
 };
 `})}),`
