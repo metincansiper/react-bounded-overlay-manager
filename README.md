@@ -2,7 +2,7 @@
 
 ## Overview
 
-`React Bounded Overlay Manager` is a React library designed to create and manage overlay components within a specified bounding container. It offers flexible positioning, dynamic show/hide behavior, customizable event handling, and an API for extended control.
+`React Bounded Overlay Manager` is a React library, with TypeScript support, designed to create and manage overlay components within a specified bounding container. It offers flexible positioning, dynamic show/hide behavior, customizable event handling, and an API for extended control.
 
 ## Key Features
 
