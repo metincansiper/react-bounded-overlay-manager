@@ -38,7 +38,7 @@ const BasicExample = () => {
         <Overlay position={PredefinedPosition.BOTTOM_CENTER}>
           <button>Overlay Button</button>
         </Overlay>
-        <!-- more overlays here -->
+        {/* more overlays here */}
       </BoundedOverlayManager>
     </>
   );
