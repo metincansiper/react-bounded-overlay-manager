@@ -15,26 +15,29 @@ To access the API, use the `onApiUpdated` property of the `BoundedOverlayManager
 Here's an example demonstrating how to use the API:
 
 ```jsx
-const boundingComponentRef = useRef(null);
-const apiRef = useRef<BoundedOverlayManagerApi>();
+import { useRef } from 'react';
+import BoundedOverlayManager, { BoundedOverlayManagerApi, Overlay, PredefinedPosition } from 'react-bounded-overlay-manager';
 
-const onApiUpdated = (api: BoundedOverlayManagerApi) => {
-    apiRef.current = api;
+const BasicApiSample = () => {
+  const boundingComponentRef = useRef(null);
+  const apiRef = useRef<BoundedOverlayManagerApi>();
+
+  const onApiUpdated = (api: BoundedOverlayManagerApi) => {
+      apiRef.current = api;
+  };
+
+  return (
+      <>
+          <div ref={boundingComponentRef} style={{ width: '75vw', height: '60vh', border: '1px solid black' }} />
+          <button onClick={() => apiRef.current?.renderOverlays()}>Render Overlays</button>
+          <BoundedOverlayManager onApiUpdated={onApiUpdated} boundingComponentRef={boundingComponentRef}>
+              <Overlay position={PredefinedPosition.BOTTOM_CENTER}>
+                  Overlay Content
+              </Overlay>
+          </BoundedOverlayManager>
+      </>
+  )
 };
-
-return (
-    <>
-        <div ref={boundingComponentRef}>
-            Bounding Component
-        </div>
-        <button onClick={() => apiRef?.renderOverlays()}>Render Overlays</button>
-        <BoundedOverlayManager onApiUpdated={onApiUpdated} boundingComponentRef={boundingComponentRef} persistentlyShowOverlays={true}>
-            <Overlay position={PredefinedPosition.BOTTOM_CENTER}>
-                Overlay Content
-            </Overlay>
-        </BoundedOverlayManager>
-    </>
-)
 ```
 
 ## API Methods
