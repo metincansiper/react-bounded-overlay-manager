@@ -37,7 +37,7 @@ const App = () => {
       <button onClick={() => apiRef.current?.clearOverlays()}>
         Clear Overlays
       </button>
-      <BoundedOverlayManager onApiUpdated={onApiUpdated} boundingComponentRef={boundingComponentRef} persistentlyShowOverlays={true}>
+      <BoundedOverlayManager onApiUpdated={onApiUpdated} boundingComponentRef={boundingComponentRef}>
           <Overlay position={PredefinedPosition.BOTTOM_CENTER} offset={{bottom: '10%', leftInPercent: 10}}>
             <button>Overlay Button</button>
           </Overlay>
