@@ -1,30 +1,33 @@
-import{j as e}from"./jsx-runtime-AgcCsxC8.js";import"./blocks-i5o0VK9R.js";import{useMDXComponents as i}from"./index-7MmEg4M7.js";import{M as r}from"./index-PpR5d8_H.js";import"./index-XiNr8FW2.js";import"./_commonjsHelpers-5-cIlDoe.js";import"./iframe-N4ny-NBT.js";import"../sb-preview/runtime.js";import"./index-9vG4XYWr.js";import"./index-ogXoivrg.js";import"./index-mLPG47JP.js";import"./index-PPLHz8o0.js";function t(o){const n=Object.assign({h1:"h1",h2:"h2",p:"p",code:"code",pre:"pre",h3:"h3",ul:"ul",li:"li"},i(),o.components);return e.jsxs(e.Fragment,{children:[e.jsx(r,{title:"Documentation/API Documentation"}),`
+import{j as e}from"./jsx-runtime-AgcCsxC8.js";import"./blocks-i5o0VK9R.js";import{useMDXComponents as i}from"./index-7MmEg4M7.js";import{M as t}from"./index-Gxh-yrjf.js";import"./index-XiNr8FW2.js";import"./_commonjsHelpers-5-cIlDoe.js";import"./iframe-4jgmBbDD.js";import"../sb-preview/runtime.js";import"./index-9vG4XYWr.js";import"./index-ogXoivrg.js";import"./index-mLPG47JP.js";import"./index-PPLHz8o0.js";function r(o){const n=Object.assign({h1:"h1",h2:"h2",p:"p",code:"code",pre:"pre",h3:"h3",ul:"ul",li:"li"},i(),o.components);return e.jsxs(e.Fragment,{children:[e.jsx(t,{title:"Documentation/API Documentation"}),`
 `,e.jsx(n.h1,{id:"api-documentation-for-react-bounded-overlay-manager",children:"API Documentation for React Bounded Overlay Manager"}),`
 `,e.jsx(n.h2,{id:"introduction",children:"Introduction"}),`
 `,e.jsxs(n.p,{children:["This section provides detailed information about the API methods available in the ",e.jsx(n.code,{children:"React Bounded Overlay Manager"})," library."]}),`
 `,e.jsx(n.h2,{id:"using-the-api",children:"Using the API"}),`
 `,e.jsxs(n.p,{children:["To access the API, use the ",e.jsx(n.code,{children:"onApiUpdated"})," property of the ",e.jsx(n.code,{children:"BoundedOverlayManager"})," component. This callback returns an API object."]}),`
 `,e.jsx(n.p,{children:"Here's an example demonstrating how to use the API:"}),`
-`,e.jsx(n.pre,{children:e.jsx(n.code,{className:"language-jsx",children:`const boundingComponentRef = useRef(null);
-const apiRef = useRef<BoundedOverlayManagerApi>();
+`,e.jsx(n.pre,{children:e.jsx(n.code,{className:"language-jsx",children:`import { useRef } from 'react';
+import BoundedOverlayManager, { BoundedOverlayManagerApi, Overlay, PredefinedPosition } from 'react-bounded-overlay-manager';
 
-const onApiUpdated = (api: BoundedOverlayManagerApi) => {
-    apiRef.current = api;
+const BasicApiSample = () => {
+  const boundingComponentRef = useRef(null);
+  const apiRef = useRef<BoundedOverlayManagerApi>();
+
+  const onApiUpdated = (api: BoundedOverlayManagerApi) => {
+      apiRef.current = api;
+  };
+
+  return (
+      <>
+          <div ref={boundingComponentRef} style={{ width: '75vw', height: '60vh', border: '1px solid black' }} />
+          <button onClick={() => apiRef.current?.renderOverlays()}>Render Overlays</button>
+          <BoundedOverlayManager onApiUpdated={onApiUpdated} boundingComponentRef={boundingComponentRef}>
+              <Overlay position={PredefinedPosition.BOTTOM_CENTER}>
+                  Overlay Content
+              </Overlay>
+          </BoundedOverlayManager>
+      </>
+  )
 };
-
-return (
-    <>
-        <div ref={boundingComponentRef}>
-            Bounding Component
-        </div>
-        <button onClick={() => apiRef?.renderOverlays()}>Render Overlays</button>
-        <BoundedOverlayManager onApiUpdated={onApiUpdated} boundingComponentRef={boundingComponentRef} persistentlyShowOverlays={true}>
-            <Overlay position={PredefinedPosition.BOTTOM_CENTER}>
-                Overlay Content
-            </Overlay>
-        </BoundedOverlayManager>
-    </>
-)
 `})}),`
 `,e.jsx(n.h2,{id:"api-methods",children:"API Methods"}),`
 `,e.jsx(n.h3,{id:"renderoverlays",children:"renderOverlays()"}),`
@@ -38,4 +41,4 @@ return (
 `,e.jsx(n.h3,{id:"updateoverlayscontainerboundingbox",children:"updateOverlaysContainerBoundingBox()"}),`
 `,e.jsxs(n.ul,{children:[`
 `,e.jsx(n.li,{children:"Updates the bounding box of the overlays container. While the library automatically updates the bounding box during window resizing or direct resizing of the bounding component, there are other situations where a manual update is necessary to ensure accurate overlay positioning such as when the bounding component is repositioned."}),`
-`]})]})}function x(o={}){const{wrapper:n}=Object.assign({},i(),o.components);return n?e.jsx(n,Object.assign({},o,{children:e.jsx(t,o)})):t(o)}export{x as default};
+`]})]})}function x(o={}){const{wrapper:n}=Object.assign({},i(),o.components);return n?e.jsx(n,Object.assign({},o,{children:e.jsx(r,o)})):r(o)}export{x as default};
