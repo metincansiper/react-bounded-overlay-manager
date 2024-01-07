@@ -25,9 +25,6 @@ const App = () => {
       >
         <div style={{width: '90vw', height: '60vh'}}>
           <div ref={boundingComponentRef} style={{ width: '100%', height: '100%', backgroundColor:'blue' }}>
-            <button onClick={() => setIsFullScreen(!isFullScreen)}>
-              {isFullScreen ? 'Exit Fullscreen' : 'Go Fullscreen'}
-            </button>
           </div>
         </div>
       </FullScreen>
@@ -39,7 +36,9 @@ const App = () => {
       </button>
       <BoundedOverlayManager onApiUpdated={onApiUpdated} boundingComponentRef={boundingComponentRef}>
           <Overlay position={PredefinedPosition.BOTTOM_CENTER} offset={{bottom: '10%', leftInPercent: 10}}>
-            <button>Overlay Button</button>
+            <button onClick={() => setIsFullScreen(!isFullScreen)}>
+              {isFullScreen ? 'Exit Fullscreen' : 'Go Fullscreen'}
+            </button>
           </Overlay>
       </BoundedOverlayManager>
     </>
