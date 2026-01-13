@@ -17,13 +17,21 @@ const OverlaysContainer: React.ForwardRefRenderFunction<HTMLDivElement, Props> =
     const shouldUnmountContent = unmountContentWhenHidden && !show;
 
     const content = shouldUnmountContent ? null : (
-        <div role='overlays-container-content' className={overlaysContainerContentClassName} style={{ display: displayContent }}>
+        <div
+            data-overlay-container-content
+            className={overlaysContainerContentClassName}
+            style={{ display: displayContent }}
+        >
             { children }
         </div>
     );
     
     return (
-        <div role='overlays-container' className={overlaysContainerClassName} ref={ref as ForwardedRef<HTMLDivElement>}>
+        <div
+            data-overlay-container
+            className={overlaysContainerClassName}
+            ref={ref as ForwardedRef<HTMLDivElement>}
+        >
             {
                 content
             }

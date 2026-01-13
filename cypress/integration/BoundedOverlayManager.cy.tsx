@@ -4,7 +4,7 @@ import BoundedOverlayManager, { Overlay, PredefinedPosition } from '../../lib/ma
 
 const boundingComponentId = 'bounding-component';
 const getBoundingComponent = () => cy.get(`#${boundingComponentId}`);
-const getOverlaysContainer = () => cy.get('[role="overlays-container"]');
+const getOverlaysContainer = () => cy.get('[data-overlay-container]');
 
 const OverlayManagerTestBundle = ({ boundingComponentChildren = null, boundingComponentStyle = {}, boundingComponentParentStyle = {}, overlayManagerProps = {}, overlayProps = {} }: any) => {
     const boundingComponentRef = useRef(null);
@@ -281,9 +281,9 @@ describe('BoundedOverlayManager Component', () => {
 
     describe('overlays container has the right bbox after api.updateOverlaysContainerBoundingBox is called ', () => {
         it('works correctly when the bounding component itself is repositioned and then api.updateOverlaysContainerBoundingBox is called', () => {
-            let api;
+            let api: any;
 
-            const onApiUpdated = (_api) => {
+            const onApiUpdated = (_api: any) => {
                 console.log('api up')
                 api = _api;
             };
